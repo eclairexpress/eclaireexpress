@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/cow.png" type="image/gif" sizes="16x16">
+    <title>Eclair Express</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+
+    <!-- using themeroller -->
+    <link rel="stylesheet" href="styles/ee.css" />
+    <link rel="stylesheet" href="styles/jquery.mobile.icons.min.css" />
+
+    <link rel="stylesheet" href="styles/index.css" />
+    <link href="https://fonts.googleapis.com/css?family=Patrick+Hand+SC" rel="stylesheet">
+</head>
+<body>
+    <!-- home/info page -->
+    <div data-role="page" id="main">
+        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            stuff 2 come
+        </div><!-- ui-content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" class="ui-btn-active ui-state-persist" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <!-- character list page -->
+    <div data-role="page" id="list" data-theme="a">
+        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            <div id="member-container"></div>
+        </div><!-- /content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <!-- housing page -->
+    <div data-role="page" id="house">
+        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            more stuff maybe
+        </div><!-- ui-content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" class="ui-btn-active ui-state-persist" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <!-- add gold page -->
+    <div data-role="page" id="add" data-theme="a">
+        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            add a form here...
+        </div><!-- /content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" class="ui-btn-active ui-state-persist" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <!--update character page -->
+    <div data-role="page" id="view" data-theme="a">
+        <div data-role="header">
+            <h1>ECLAIR EXPRESS</h1>
+            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="flow">Back</a>
+        </div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            <div class="userInfo" id="userInfo"></div>
+        </div><!-- /content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+    <!-- error page -->
+    <div data-role='page' id='error' data-theme="a">
+        <div data-role="header">
+            <h1>ECLAIR EXPRESS</h1>
+            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="slide">Back</a>
+        </div><!-- /header -->
+
+        <div role="main" class="ui-content">
+            <p>Something is wrong! Please refresh or try again later.</p>
+        </div><!-- /content -->
+
+        <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+    </div><!-- /page -->
+
+<!--
+Publish Sheet publicly to the web:
+
+  * File > Publish to the web…
+    * Link, Entire Document, Web Page
+    * If you want changes to automatically show up when the sheet is modified, make sure the “Automatically republish when changes are made” is checked.
+    * Click “Publish”
+
+Then you will be given the URL to access the document:
+https://docs.google.com/spreadsheets/d/1Vbi3IW5N2OYL9QyHn9p8zoHYitlMybLtxwIyrj9uFHA/pubhtml
+https://docs.google.com/spreadsheets/d/1uLSkKY1GbBC_fcgPz1EWGE-V97C-OzpW2kdDjx3AwdA/pubhtml
+
+In the above URL, the Google Sheet key is:
+1Vbi3IW5N2OYL9QyHn9p8zoHYitlMybLtxwIyrj9uFHA
+1uLSkKY1GbBC_fcgPz1EWGE-V97C-OzpW2kdDjx3AwdA
+
+-->
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="scripts/index.js"></script>
+</body>
+</html>

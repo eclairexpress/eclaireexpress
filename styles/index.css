@@ -1,0 +1,64 @@
+body {
+  background: rgba(130, 167, 112, 1);
+  text-align: center;
+  font-family: 'Patrick Hand SC', Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 16px;
+}
+
+#member-container {
+  margin: 1rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.cell-outer {
+  margin: 1rem 3rem 3rem 3rem;
+  position: relative;
+  z-index: 100;
+}
+
+.image {
+  background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
+  background-repeat: repeat;
+  z-index: 100;
+  width: 130px;
+  height: 55px;
+  margin: 0rem 0rem 1rem 1rem;
+  padding: 1rem 1rem 2rem 1rem;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+}
+
+.username {
+  white-space: nowrap;
+  position: absolute;
+  background-image: url("http://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
+  background-repeat: repeat;
+  padding: 3px 10px 10px 10px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px solid black;
+  top: -25px;
+  left: 25px;
+  z-index: -100;
+}
+
+a:hover#userCell {
+  color: #ddaf9f;
+}
+
+@media (max-width: 850px) {
+  #container {
+    margin: 2rem 1rem 2rem 1rem;
+  }
+
+  .cell-outer {
+    margin: 1rem 0rem 3rem 0rem;
+  }
+}

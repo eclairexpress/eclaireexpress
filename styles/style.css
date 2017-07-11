@@ -1,0 +1,121 @@
+/*--------------------------------------
+GENERAL CSS
+--------------------------------------*/
+h1 span, #home b{
+  color:#c49376;
+}
+
+#home u{
+  color: #583f3b;
+  font-style: italic;
+}
+
+#home img{
+  max-width:100%;
+}
+
+#list img{
+  border-radius: 50%;
+  margin-right:10px;
+  border:2px dashed #d6a88d;
+  max-width: 100px;
+  max-height: 120px;
+}
+
+#content a{
+  text-decoration: none;
+  font-weight: normal;
+  color:#88635d;
+}
+
+hr{
+  border: 0;
+  border-bottom: 1px dashed #583f3b;
+  background: none;
+}
+
+span.cname{
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+span.cage,span.cage2,span.cgender{
+  color:#967b6c;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+span.cjob{
+  color: #9f756e;
+  font-style: italic;
+  font-size: 1.1em;
+}
+
+/*--------------------------------------
+FORM CSS
+--------------------------------------*/
+form i{
+  font-size:0.8em;
+  opacity:0.75;
+}
+
+textarea{
+  background-image: url(../img/bodybg.png);
+}
+
+select {
+	background:#583f3b;
+	color: #ddaf9f;
+	cursor:pointer;
+}
+
+#cid, #editchara > div.ui-input-text.ui-body-inherit.ui-corner-all.ui-shadow-inset{
+  display:none;
+}
+
+/*--------------------------------------
+CONTENT DIVS
+--------------------------------------*/
+#home, #list, #add, #update, #error{
+  background-color: #cccccc;
+  background-image: url(../img/contentbg.png);
+}
+
+#home{
+  text-align: center;
+}
+
+.character, .main{
+  padding: 10px;
+  margin: 20px;
+  border-radius:15px;
+  border: 2px solid white;
+  background-color: #cccccc;
+  background-image: url(../img/bodybg.png);
+  color:#88635d
+}
+
+.sprites{
+  margin-bottom:-25px;
+}
+
+.about{
+  padding-left:120px;
+}
+
+/*--------------------------------------
+MEDIA QUERIES FOR DESKTOP
+--------------------------------------*/
+@media (min-width: 829px) {
+  div.ui-content{
+    margin: 0 auto;
+    width:75%;
+  }
+}
+
+@media (min-width: 1300px) {
+  div.ui-content{
+    margin: 0 auto;
+    width:50%;
+  }
+}
