@@ -1,3 +1,7 @@
+* {
+  text-shadow: none !important;
+}
+
 body {
   background: rgba(130, 167, 112, 1);
   text-align: center;
