@@ -102,7 +102,6 @@ a:hover#userCell {
 
 .ui-header .ui-title, .ui-footer .ui-title {
   font-size: 1.5em;
-  letter-spacing: 10px;
 }
 
 .ui-btn-icon-top {
@@ -116,7 +115,6 @@ a:hover#userCell {
 .userContentHeader {
   background: #4c322b;
   color:#ffefd1;
-  letter-spacing: 5px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   padding:1rem;
@@ -133,7 +131,6 @@ a:hover#userCell {
 
 .ui-navbar li .ui-btn {
   font-size: 20px;
-  letter-spacing: 5px;
 }
 
 .userCells {
