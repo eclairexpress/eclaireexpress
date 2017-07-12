@@ -6,15 +6,17 @@
 }
 
 body {
-  background: rgba(130, 167, 112, 2);
+  background: rgba(255, 255, 255, 2);
   color: white;
   font-size: 18px;
 }
 
 .ui-content {
-  max-width: 85%;
+  max-height:100%;
+  width:80%;
   margin: 0 auto;
   margin-top: 2rem;
+  overflow: auto;
 }
 
 .shorter {
@@ -22,6 +24,7 @@ body {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
 
 #member-container {
   margin: 1rem 1rem 1rem 1rem;
@@ -42,6 +45,7 @@ body {
   background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
   background-repeat: repeat;
   background-position: -2px 0px;
+  text-align:center;
   z-index: 100;
   width: 130px;
   height: 55px;
@@ -67,7 +71,7 @@ body {
 }
 
 a:hover#userCell {
-  color: #ddaf9f;
+  color: #e6587b;
 }
 
 .userInfo1 {
@@ -254,31 +258,33 @@ hr:after {
   white-space: normal;
 }
 
-@media (max-width: 1200px) {
-  .shorter {
-    max-width: 65%;
-  }
+.ui-btn-icon-notext.ui-btn-left {
+  margin-top:20px;
+  margin-left:5px;
 }
 
-@media (max-width: 1000px) {
+.ui-overlay-a,
+.ui-page-theme-a,
+.ui-page-theme-a .ui-panel-wrapper {
+	background-image: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png");
+  background-repeat: no-repeat;
+  background-position: -200px -100px;
+  background-attachment: fixed;
+}
+
+@media (max-width: 1060px) {
   .shorter {
-    max-width: 75%;
+    max-width: 70%;
+    width:100%;
   }
 }
 
 @media (max-width: 850px) {
-  #container {
-    margin: 1rem 1rem 1rem 1rem;
-  }
-
-  .shorter {
+  .shorter, .ui-content {
+    margin-left: 0;
+    margin-right: 0;
     max-width: 90%;
-  }
-}
-
-@media (max-width: 710px) {
-  .shorter {
-    max-width: 100%;
+    width:99%;
   }
 
   .ui-header .ui-title, .ui-footer .ui-title {
@@ -292,7 +298,7 @@ hr:after {
   }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 475px) {
   .userCharacter {
     padding: 0;
     display: flex;
