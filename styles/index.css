@@ -263,13 +263,20 @@ hr:after {
   margin-left:5px;
 }
 
-.ui-overlay-a,
-.ui-page-theme-a,
-.ui-page-theme-a .ui-panel-wrapper {
-	background-image: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png");
-  background-repeat: no-repeat;
-  background-position: -200px -100px;
-  background-attachment: fixed;
+body:before {
+  content: "";
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 @media only screen {
