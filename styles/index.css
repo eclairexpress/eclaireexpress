@@ -44,10 +44,10 @@ body {
 .image {
   background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
   background-repeat: repeat;
-  background-position: -2px 0px;
+  background-position: -155px 0px;
   text-align:center;
   z-index: 100;
-  width: 130px;
+  width: 150px;
   height: 55px;
   margin: 0rem 0rem 1rem 1rem;
   padding: 1rem 1rem 2rem 1rem;
@@ -270,6 +270,10 @@ hr:after {
   background-repeat: no-repeat;
   background-position: -200px -100px;
   background-attachment: fixed;
+}
+
+@media only screen {
+  background-position: scroll;
 }
 
 @media (max-width: 1060px) {
