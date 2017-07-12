@@ -22,9 +22,9 @@ select,
 textarea,
 button,
 .ui-btn {
-	font-size: 1em;
+	font-size: 2em;
 	line-height: 1.3;
-	 font-family: sans-serif /*{global-font-family}*/;
+	 font-family: sans-serif; /*{global-font-family}*/;
 }
 legend,
 .ui-input-text input,
@@ -36,7 +36,7 @@ legend,
 .ui-mobile label,
 div.ui-controlgroup-label {
 	font-weight: normal;
-	font-size: 16px;
+	font-size: 18px;
 }
 /* Separators
 -----------------------------------------------------------------------------------------------------------*/
@@ -105,8 +105,8 @@ label.ui-btn {
 /* Icon-only buttons */
 .ui-btn-icon-notext.ui-btn-corner-all,
 .ui-btn-icon-notext.ui-corner-all {
-	-webkit-border-radius: 1em;
-	border-radius: 1em;
+	-webkit-border-radius: 2em;
+	border-radius: 2em;
 }
 /* Radius clip workaround for cleaning up corner trapping */
 .ui-btn-corner-all,
@@ -146,11 +146,11 @@ label.ui-btn {
 .ui-btn-icon-bottom:after,
 .ui-btn-icon-notext:after {
 	background-color: #666666 /*{global-icon-color}*/;
-	background-color: rgba(0,0,0,.15) /*{global-icon-disc}*/;
+	background-color: rgba(0,0,0,.30) /*{global-icon-disc}*/;
 	background-position: center center;
 	background-repeat: no-repeat;
-	-webkit-border-radius: 1em;
-	border-radius: 1em;
+	-webkit-border-radius: 2em;
+	border-radius: 2em;
 }
 /* Alt icons */
 .ui-alt-icon.ui-btn:after,
@@ -374,11 +374,12 @@ html .ui-body-a .ui-focus,
 html body .ui-group-theme-a .ui-focus,
 html head + body .ui-btn-a.ui-focus,
 html head + body .ui-body-a.ui-focus {
-	-webkit-box-shadow: 0 0 12px #896345 /*{a-active-background-color}*/;
-	-moz-box-shadow: 0 0 12px #896345 /*{a-active-background-color}*/;
-	box-shadow: 0 0 12px #896345 /*{a-active-background-color}*/;
+	-webkit-box-shadow: 0 0 0 #896345 /*{a-active-background-color}*/;
+	-moz-box-shadow: 0 0 0 #896345 /*{a-active-background-color}*/;
+	box-shadow: 0 0 0 #896345 /*{a-active-background-color}*/;
 }
-/* B
+
+/* Bar
 -----------------------------------------------------------------------------------------------------------*/
 /* Bar: Toolbars, dividers, slider track */
 .ui-bar-b,
