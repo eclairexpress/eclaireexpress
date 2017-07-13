@@ -301,11 +301,16 @@ function parseLocation(location, characterName) {
 		address = getAddress(location.address);
 		template = `
 			<br>Address: ${address}
-			<br>Housemate(s): ${housemates}`;
+			${housemates}`;
 
 		if (!location.isCommunal) {
 			//standard housing has upgrades
 			var upgradesTemplate = parseUpgrades(location);
+
+			if (upgradesTemplate === "") {
+				// we are done
+				return template;
+			}
 
 			template = template.concat(`
 				<br>Upgrades:
@@ -353,7 +358,7 @@ function getHousemates(housematesString, characterName) {
 		}
 	});
 
-	return newHousemateList;
+	return newHousemateList !== "" ? `<br>Housemate(s): ${newHousemateList}` : "";
 }
 
 function parseUpgrades (locationObj) {
