@@ -19,90 +19,19 @@
 <body>
     <!-- home/info page -->
     <div data-role="page" id="main">
-        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+        <div data-role="header" data-position="fixed"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
 
-        <div role="main" class="ui-content shorter">
-            <div class="cell-outer">
-                <div class="userInfo1" id="userInfo1">
-                    <!--flex box -->
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            stats
-                        </div>
-                        <div class="userContent userStats" id="userStats">
-                            <b>Username:</b> <a href="http://arcanium.deviantart.com">arcanium</a>
-                            <br><b>Member Since:</b> <i>Forever</i>
-                            <br><br>
-                            <img src="http://orig12.deviantart.net/4ce3/f/2017/192/c/a/memory_2014kidswillremember_by_arcanium_dad0kf2_by_toffeebot-dbfz7no.png">
-                            <img src="http://orig15.deviantart.net/dd35/f/2017/192/8/6/memory_environmentallyfriendly_by_arcanium_daonm0c_by_toffeebot-dbfz7of.png">
-                            <img src="http://orig10.deviantart.net/2aa2/f/2017/192/a/6/memory_highschoolneverends_by_arcanium_dayrf9w_by_toffeebot-dbfz7od.png">
-                            <img src="http://orig13.deviantart.net/6f6e/f/2017/192/e/f/memory_birthofagoddess_by_arcanium_davy0zj_by_toffeebot-dbfz7or.png">
-                            <img src="http://orig06.deviantart.net/d0be/f/2017/192/d/0/memory_savedyourgame_by_arcanium_daitohd_by_toffeebot-dbfz7o0.png">
-                            <img src="http://orig13.deviantart.net/2d28/f/2017/192/b/c/memory_adimlylitdream_by_arcanium_dajqkf3_by_toffeebot-dbfz7ov.png">
-                            <img src="http://orig15.deviantart.net/8a29/f/2017/192/f/7/memory_atinydream_by_arcanium_dar20qg_by_toffeebot-dbfz7os.png">
-
-                        </div>
-                    </div>
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            gold
-                        </div>
-                        <div class="userContent userGold" id="userGold">
-                            <span class="userCells userGross"><b>Earned</b>: 122,525</span>
-                            <span class="userCells userBonus"><b>Bonuses</b>: 7,050</span>
-                            <span class="userCells userSpendings"><b>Spent</b>: 71,650</span>
-                            <hr/>
-                            <span class="userGoldTotal"><b>Total</b>: 57,925</span>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            tobias toffee
-                        </div>
-                        <div class="userContent userCharacter" id="userCharacter1">
-                            <div class="userCharaLeft">
-                                <div class="userCharaPortrait" style="background-image: url('https://pbs.twimg.com/media/DEUYl3NWsAEhfDC.png:large');"></div>
-                                <div class="userCharaInfo">
-                                    <img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png">
-                                    <img src="http://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">
-                                    <img src="http://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">
-                                    <!--question mark : app
-                                    hybrid (optional, only if hybrid)
-                                    npc (optional, only if NPC)-->
-                                </div>
-                            </div>
-                            <div class="userCharaRight">
-                                <div class="charaHousingInfo">
-                                    <b>Address:</b> Flan Forest 24
-                                    <br><b>Housemate:</b> Seifer Xlvysarell
-                                    <br><b>Upgrades:</b>
-                                    <br><div class="charaHouseUpgrades"><ul>
-                                        <li>Kitchen<ul><li>level 1</li></ul></li>
-                                        <li>Bathroom<ul><li>level 1</li></ul></li>
-                                        <li>Room A<ul><li>level 1</li></ul></li>
-                                    </ul></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div role="main" class="ui-content">
+            calendar here maybe? 
         </div><!-- ui-content -->
-
-<!--
-{name: "Tobias Toffee", race: "human", gender: "male", app: "https://arcanium.deviantart.com/art/Eclair-Express-Tobi-474252504", isNPC: false, isHybrid: true, homeLocation: "", homeNumber: "", img: ""}
-{name: "Isaac Lettell", race:"human", gender: "male", app:"http://arcanium.deviantart.com/art/Eclair-Express-Isaac-544622312", isNPC: false, isHybrid: false, img:"http://orig03.deviantart.net/fdab/f/2017/191/4/7/px_isaac_by_toffeebot-dbfv2de.png"}
-{name: "Velia Lovelace", race: "hybrid", gender: "female", app: "http://arcanium.deviantart.com/art/Eclair-Express-Velia-499726050", isNPC: true, isHybrid: true, img:"http://orig05.deviantart.net/05b4/f/2017/191/3/b/px_velia_by_toffeebot-dbfv2e7.png"}
--->
 
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" class="ui-btn-active ui-state-persist" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" class="ui-btn-active ui-state-persist" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -110,7 +39,7 @@
 
     <!-- character list page -->
     <div data-role="page" id="list" data-theme="a">
-        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+        <div data-role="header" data-position="fixed"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
 
         <div role="main" class="ui-content">
             <div id="member-container"></div>
@@ -119,10 +48,10 @@
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" class="ui-btn-active ui-state-persist" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -130,7 +59,7 @@
 
     <!-- housing page -->
     <div data-role="page" id="house">
-        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+        <div data-role="header" data-position="fixed"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
 
         <div role="main" class="ui-content">
             more stuff maybe
@@ -139,10 +68,10 @@
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" class="ui-btn-active ui-state-persist" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" class="ui-btn-active ui-state-persist" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -150,42 +79,67 @@
 
     <!-- add gold page -->
     <div data-role="page" id="add" data-theme="a">
-        <div data-role="header"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
+        <div data-role="header" data-position="fixed"><h1>ECLAIR EXPRESS</h1></div><!-- /header -->
 
         <div role="main" class="ui-content">
-            add a form here...
+            
+<!--            
+
+        <form>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Name</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" placeholder="Enter Your Name" id="nameInput" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-search-input" class="col-2 col-form-label">Phone</label>
+                <div class="col-10">
+                    <input class="form-control" type="tel" placeholder="Enter Your Phone Number" id="phoneInput" required="required">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-url-input" class="col-2 col-form-label">Message</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" placeholder="Leave your Message" id="textInput" required="required">
+                </div>
+            </div>
+            <input class="btn" type="button" value="Send" onclick="SendScore()">
+        </form>-->
+
+
         </div><!-- /content -->
 
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" class="ui-btn-active ui-state-persist" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" class="ui-btn-active ui-state-persist" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
-    <!--update character page -->
+    <!--view character page -->
     <div data-role="page" id="view" data-theme="a">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>ECLAIR EXPRESS</h1>
-            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="slide">Back</a>
+            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="none">Back</a>
         </div><!-- /header -->
 
-        <div role="main" class="ui-content">
+        <div role="main" class="ui-content shorter">
             <div class="userInfo" id="userInfo"></div>
         </div><!-- /content -->
 
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
@@ -193,9 +147,9 @@
 
     <!-- error page -->
     <div data-role='page' id='error' data-theme="a">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>ECLAIR EXPRESS</h1>
-            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="slide">Back</a>
+            <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="none">Back</a>
         </div><!-- /header -->
 
         <div role="main" class="ui-content">
@@ -205,15 +159,23 @@
         <div data-role="footer" data-id="foo1" data-position="fixed" data-theme="a">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#main" data-icon="info" data-transition="slide">Home</a></li>
-                    <li><a href="#list" data-icon="bullets" data-transition="slide">Members</a></li>
-                    <li><a href="#house" data-icon="home" data-transition="slide">Housing</a></li>
-                    <li><a href="#add" data-icon="plus" data-transition="slide">Add Gold</a></li>
+                    <li><a href="#main" data-icon="info" data-transition="none">Home</a></li>
+                    <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                    <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    <li><a href="#add" data-icon="plus" data-transition="none">Add Gold</a></li>
                 </ul>
             </div><!-- /navbar -->
         </div><!-- /footer -->
     </div><!-- /page -->
 
+<div class="loader" id="loader">
+  <div class="auto-center"></div><!--
+  --><div class="bounce-conteneur">
+    <div class="bounce bounce-left"></div>
+    <div class="bounce bounce-center"></div>
+    <div class="bounce bounce-right"></div>
+  </div>
+</div>
 <!--
 Publish Sheet publicly to the web:
 
