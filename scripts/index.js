@@ -103,8 +103,8 @@ function compileData (main, housing) {
 			var user = ev.currentTarget.dataset['id'],
 				pageContent = appendUserInfo(user);
 			
-			$('div#userInfo').html(`${pageContent}`);
-			$.mobile.changePage('#view', {transition:'none'});
+			$('div#userInfo').empty().append(pageContent);
+			$.mobile.changePage('#view', {transition:'slide'});
 		});
 
 		$('div#member-container').append(div);
@@ -193,9 +193,10 @@ function appendUserInfo (user) {
 		userTotal = userData.total,
 		memberSince = userData.enroll,
 		userCharacterData = appendCharacterInfo(userData.characters),
-	  	template;
+	  	div = document.createElement('div');
 
-	template = `
+		div.className = 'cell-outer';
+		div.innerHTML = `
 		<div class="userInfoItem">
 			<div class="userContentHeader">
 				stats
@@ -220,7 +221,7 @@ function appendUserInfo (user) {
 		</div>
 		${userCharacterData}`;
 
-	return template;
+	return div;
 }
 
 function appendCharacterInfo (characterObj) {
