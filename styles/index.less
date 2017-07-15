@@ -258,6 +258,7 @@ body:before {
   background-size: cover;
 }
 
+@red: #e66b6b;
 @color: #ad8361;
 @bounce-color: #ffefd1;
 @bounce-size: 13px;
@@ -365,9 +366,84 @@ body {
   }
 }
 
+.home-content {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td {
+  padding: 0;
+}
+
+.day {
+  font-size: 8em;
+  line-height: 1em;
+}
+
+.month {
+  font-size: 4em;
+  line-height: 1em;
+  text-transform: lowercase;
+}
+
+.calendar {
+  background: #fff;
+  border-radius: 0 0 1em 1em;
+  box-shadow: 0 2px 1px rgba(76, 50, 43, 0.3), 0 3px 1px #fff;
+  color: #555;
+  display: inline-block;
+  padding: 1em 2em 1.5em 2em;
+}
+
+.calendar-container {
+  display: inline-block;
+}
+
+.calendar-header {
+  background: @red;
+  color: white;
+  padding: 1em;
+  border-top-right-radius: 1em;
+  border-top-left-radius: 1em;
+}
+
+.calendar thead {
+  color: @red;
+}
+
+.calendar td {
+  padding: .5em 1em;
+  text-align: center;
+}
+
+.calendar tbody td:hover {
+  background: @red;
+  opacity: 0.8;
+  color: #fff;
+  border-radius: 1em;
+}
+
+.current-day {
+  color: @red;
+}
+
 @media (max-width: 750px) { 
     .shorter {
       max-width: 70%;
+    }
+}
+
+@media (max-width: 650px) { 
+    .calendar {
+      padding: 1em;
+    }
+
+    .calendar td {
+      padding: .5em;
     }
 }
 
@@ -377,5 +453,20 @@ body {
       width:95%;
       padding-left:0;
       padding-right:0;
+    }
+}
+
+@media (max-width: 450px) { 
+    .ui-content {
+      width: 100%;
+      padding: 0;
+    }
+
+    .calendar {
+      padding: 0.5em;
+    }
+
+    .calendar td {
+      padding: .25em;
     }
 }
