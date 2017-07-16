@@ -13,7 +13,8 @@ https://codepen.io/volv/pen/bpwRLL
 // local database where the info from the spreadsheets are compiled
 var userDB = {},
 	characterDB = {},
-	housingDB = {};
+	housingDB = {},
+	bdayDB = [];
 
 $(function() {  
 	// Load events
@@ -41,6 +42,15 @@ function resizeBackground() {
     $("#bg").height($(window).height());
 }
 
+function createBdayDB() {
+	for (var i=0; i<4; i++) {
+		bdayDB.push([]);
+		for (var j=0; j<28; j++) {
+			bdayDB[i].push([]);
+		}
+	}
+}
+
 // Process the gold calculation based on the spreadsheets.
 function compileData (main, housing) {
 	console.log(main);
@@ -50,6 +60,9 @@ function compileData (main, housing) {
 	if (!main[0] || !housing[0]) {
 		return;
 	}
+
+	createBdayDB();
+	console.log(bdayDB);
 
 	var mainFeed = main[0].feed,
 		housingFeed = housing[0].feed,
@@ -118,10 +131,92 @@ function compileData (main, housing) {
 		$('div#member-container').append(div);
 	}, this);
 
+	// Construct the calendar
+	createInitialCalendar();
+
 	// Show page
 	$("#loader").delay(1500).slideToggle("slow");
 	console.log(userDB);
 	console.log(characterDB);
+}
+
+function createInitialCalendar() {
+	var table = $('<table></table>'),
+		tbody = $('<tbody></tbody>'),
+		date = 1;
+
+	table.attr('class', "calendar");
+	table.attr('id', "calendar-numbers");
+	table.html(`
+						<thead>
+							<tr>
+								<td>Sun</td>
+								<td>Mon</td>
+								<td>Tue</td>
+								<td>Wed</td>
+								<td>Thu</td>
+								<td>Fri</td>
+								<td>Sat</td>
+							</tr>
+						</thead>`);
+	
+	for (var i = 0; i < 4; i++) {
+		var tr = $('<tr></tr>');
+
+		for (var j = 0; j < 7; j++) {
+			var td = $('<td></td>'),
+				tdId = 'day' + date;
+
+			td.attr('id', tdId);
+			td.attr('data-season', 0);
+			td.attr('data-day', date-1);
+			td.text(date);
+
+			if (bdayDB[0][date-1].length > 0) {
+				td.attr('class', 'has-bday');
+			}
+
+			td.on( 'click', function( ev ){
+				var season = $(this).attr('data-season'),
+					day = $(this).attr('data-day'),
+					pageContent = getBdayDiv(season, day);
+				
+				$('div#bdayList').empty().append(pageContent);
+			});
+
+			tr.append(td);
+			date++;
+		}
+
+		tbody.append(tr);
+	}
+
+	table.append(tbody);
+	$('div#calendar').append(table);
+}
+
+function getBdayDiv(season, day) {
+	var bdayArray = bdayDB[season][day];
+	if (bdayArray.length === 0) {
+		return "";
+	} else {
+		var bdayString = `${bdayArray[0]}`;
+		for (var i=1; i<bdayArray.length; i++) {
+			bdayString += `<br>${bdayArray[i]}`;
+		}
+
+		var template = `
+			<div class="userInfoItem">
+				<div class="userContentHeader">
+					birthdays
+				</div>
+				<div class="userContent userStats" id="userStats">
+					${bdayString}
+				</div>
+			</div>`;
+
+		return template;
+	}
 }
 
 function getActiveSinceDate(enrollNum) {
@@ -141,12 +236,17 @@ function getActiveSinceDate(enrollNum) {
 	return enrollDate;
 }
 
+function addToBdayDB(bdayArray, characterName) {
+	bdayDB[bdayArray[0]-1][bdayArray[1]-1].push(characterName);
+}
+
 function getCharacterArray(row) {
 	var characters = {},
 		characterNum,
 		characterString,
 		characterArray,
-		characterName;
+		characterName,
+		characterBirthday;
 
 	for (var i = 1; i <= 9; i++) {
 		characterNum = "gsx$character" + i;
@@ -154,12 +254,15 @@ function getCharacterArray(row) {
 		if (row[characterNum].$t !== "") {
 			characterString = row[characterNum].$t;
 			characterArray = characterString.split(',');
-			characterName = characterArray[0].toLowerCase();
+			characterName = characterArray[0].toLowerCase(),
+			characterBirthday = characterArray[1].split('/');
+
+			addToBdayDB(characterBirthday, characterName);
 
 			//add to object
 			characters[characterName] = {
 				name: characterArray[0],
-				birthday: characterArray[1].split('/'),
+				birthday: characterBirthday,
 				app: characterArray[2],
 				isHybrid: characterArray[3],
 				isNPC: characterArray[4],

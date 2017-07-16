@@ -387,11 +387,17 @@ td {
   display: inline-block;
 }
 .calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: #e66b6b;
   color: white;
   padding: 1em;
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
+}
+a.ui-btn {
+  font-size: 1em;
 }
 .calendar thead {
   color: #e66b6b;
@@ -406,8 +412,11 @@ td {
   color: #fff;
   border-radius: 1em;
 }
-.current-day {
+.has-bday {
   color: #e66b6b;
+}
+#bdayList {
+  margin-top: 1em;
 }
 @media (max-width: 750px) {
   .shorter {

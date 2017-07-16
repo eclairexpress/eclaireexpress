@@ -402,11 +402,18 @@ td {
 }
 
 .calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: @red;
   color: white;
   padding: 1em;
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
+}
+
+a.ui-btn {
+  font-size: 1em;  
 }
 
 .calendar thead {
@@ -425,8 +432,12 @@ td {
   border-radius: 1em;
 }
 
-.current-day {
+.has-bday {
   color: @red;
+}
+
+#bdayList {
+  margin-top: 1em;
 }
 
 @media (max-width: 750px) { 
