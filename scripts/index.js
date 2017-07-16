@@ -16,8 +16,11 @@ var userDB = {},
 	housingDB = {};
 
 $(function() {  
+	// Load events
+	$(window).resize(resizeBackground);
+	resizeBackground();
 
-    //JSONP
+	//JSONP
     $.when(
 		$.ajax({
 			url: 'https://spreadsheets.google.com/feeds/list/12rNhHS0HsSpKjfovyb26ZQ4x4eOA_2rbLDMC7uc5R1s/od6/public/values?alt=json-in-script',
@@ -32,6 +35,11 @@ $(function() {
 		$.mobile.changePage('#error',{transition:'slide'})
 	});
   });
+
+// Resize the background
+function resizeBackground() {
+    $("#bg").height($(window).height());
+}
 
 // Process the gold calculation based on the spreadsheets.
 function compileData (main, housing) {
@@ -104,7 +112,7 @@ function compileData (main, housing) {
 				pageContent = appendUserInfo(user);
 			
 			$('div#userInfo').empty().append(pageContent);
-			$.mobile.changePage('#view', {transition:'slide'});
+			$.mobile.changePage('#view', {transition:'none'});
 		});
 
 		$('div#member-container').append(div);

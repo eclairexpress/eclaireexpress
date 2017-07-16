@@ -1,20 +1,45 @@
+@red: #e66b6b;
+@color: #ad8361;
+@bounce-color: #ffefd1;
+@bounce-size: 13px;
+@loading-duration: 3s;
+
 * {
   text-shadow: none !important;
   font-family: 'Itim', Arial, Helvetica, sans-serif !important;
   text-transform: lowercase !important;
   font-weight: 400 !important;
 }
+
 body {
   background: #ffffff;
   color: white;
   font-size: 18px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
+
+#bg {
+position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .ui-content {
   max-height: 100%;
-  width: 80%;
   margin: 0 auto;
   margin-top: 2rem;
   overflow: auto;
+  position: relative;
 }
 .shorter {
   max-width: 55%;
@@ -22,7 +47,7 @@ body {
   margin-bottom: 0.5rem;
 }
 #member-container {
-  margin: 1rem 1rem 1rem 1rem;
+  margin: 2rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -156,7 +181,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 
 .userCharaPortrait {
-  height: 175px;
+  height: 125px;
   background-repeat: no-repeat;
   background-position: center top;
   -webkit-background-size: cover;
@@ -216,15 +241,15 @@ hr:after {
   content: "+";
   padding-right: 5px;
 }
-::-webkit-scrollbar {
+.ui-content ::-webkit-scrollbar {
   width: 12px;
 }
-::-webkit-scrollbar-track {
+.ui-content ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(76, 50, 43, 0.3);
   -webkit-box-shadow: inset 0 0 6px rgba(76, 50, 43, 0.3);
   border-radius: 10px;
 }
-::-webkit-scrollbar-thumb {
+.ui-content ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #ad8361;
 }
@@ -241,33 +266,6 @@ hr:after {
 .ui-page-theme-a .ui-panel-wrapper {
   background: rgba(255, 255, 255, 0);
   margin: 0 auto;
-}
-body:before {
-  content: "";
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -10;
-  background: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-@red: #e66b6b;
-@color: #ad8361;
-@bounce-color: #ffefd1;
-@bounce-size: 13px;
-@loading-duration: 3s;
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
 }
 
 .loader {
