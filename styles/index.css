@@ -62,7 +62,7 @@ body {
   padding: 1rem 1rem 2rem 1rem;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
 }
 .username {
   white-space: nowrap;
@@ -184,7 +184,7 @@ html body .ui-group-theme-a a:visited {
   background: #ad8361;
   padding: 3px;
   padding-top: 8px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 3px 0px rgba(76, 50, 43, 0.75);
 }
 .userCharaRight {
   width: 100%;
@@ -193,6 +193,8 @@ html body .ui-group-theme-a a:visited {
   padding: 0.5rem;
   height: 150px;
   overflow: auto;
+  font-size: 0.8em;
+  line-height: 1.5em;
 }
 hr {
   padding: 0;
@@ -365,12 +367,16 @@ span span {
     transform: scale(1.5);
   }
 }
-.calendar-content {
+.add-center {
   text-align: center;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+.ui-bar-a {
+  border: 0;
+  border-top: 1px solid #4c322b;
 }
 td {
   padding: 0;
@@ -436,6 +442,12 @@ a.ui-btn {
 }
 .fall-color {
   color: #e66b6b;
+}
+#charaStats {
+  font-size: 0.8em;
+}
+#charaCount {
+  color: #4c322b;
 }
 .winter-background {
   background: #2595A8;

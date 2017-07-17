@@ -15,7 +15,24 @@ var userDB = {},
 	characterDB = {},
 	housingDB = {},
 	jobDB = {},
-	bdayDB = [];
+	bdayDB = [],
+
+	// for stats
+	characterCount = 0,
+	hybridCount = 0,
+	npcCount = 0,
+	bdayCount = {
+		0: 0,
+		1: 0,
+		2: 0,
+		3: 0
+	},
+	housingCount = {
+		tt: 0,
+		ll: 0,
+		ff: 0,
+		cm: 0
+	};
 
 $.fn.delay = function(time, callback){
 	jQuery.fx.step.delay = function(){};
@@ -152,6 +169,30 @@ function compileData (main, housing, jobList) {
 	$("#loader").delay(1500).slideToggle("slow");
 	console.log(userDB);
 	console.log(characterDB);
+
+	console.log(characterCount);
+	console.log(hybridCount);
+	console.log(bdayCount);
+	console.log(housingCount);
+
+	$("span#charaCount").text(characterCount);
+
+	$("span#hybridRatio").text("are hybrid: " + getPercentage(hybridCount) + "%");
+	$("span#npcRatio").text("are npcs: " + getPercentage(npcCount) + "%");
+
+	$("span#bday-spring").text("were born in spring: " + getPercentage(bdayCount[0]) + "%");
+	$("span#bday-summer").text("were born in summer: " + getPercentage(bdayCount[1]) + "%");
+	$("span#bday-fall").text("were born in fall: " + getPercentage(bdayCount[2]) + "%");
+	$("span#bday-winter").text("were born in winter: " + getPercentage(bdayCount[3]) + "%");
+
+	$("span#home-tt").text("moved to toffee town's residential area: " + getPercentage(housingCount["tt"]) + "%");
+	$("span#home-ll").text("moved to lemon lake's residential area: " + getPercentage(housingCount["ll"]) + "%");
+	$("span#home-ff").text("moved to flan forest's residential area: " + getPercentage(housingCount["ff"]) + "%");
+	$("span#home-res").text("stayed in shop residence or provided lodging: " + getPercentage(housingCount["cm"]) + "%");
+}
+
+function getPercentage(number) {
+	return (number / characterCount * 100).toFixed(1);
 }
 
 function createJobDB(jobRows) {
@@ -277,6 +318,8 @@ function getActiveSinceDate(enrollNum) {
 
 function addToBdayDB(bdayArray, characterName) {
 	bdayDB[bdayArray[0]-1][bdayArray[1]-1].push(characterName);
+
+	bdayCount[bdayArray[0]-1]++;
 }
 
 function getCharacterArray(row) {
@@ -310,6 +353,16 @@ function getCharacterArray(row) {
 				image: characterArray[7] ? characterArray[7] : ""
 			};
 
+			if (characterArray[3] === "true") {
+				hybridCount++;
+			}
+
+			if (characterArray[4] === "true") {
+				npcCount++;
+			}
+
+			characterCount ++;
+
 			characterDB[characterName] = characters[characterName];
 		} else {
 			break;
@@ -320,13 +373,20 @@ function getCharacterArray(row) {
 }
 
 function getJob(jobArray) {
-	console.log(jobArray[0]);
 	return jobDB[jobArray[0]]["job" + jobArray[1]];
 }
 
 function getHousing(housingObj, characterName) {
 	var needsDB = housingObj.includes("/") ? true : false,
+		housingArray = housingObj.split('/'),
 		housing, residentsString;
+
+	// get the count first
+	if (housingArray[0] !== "tt" && housingArray[0] !== "ll" && housingArray[0] !== "ff") {
+		housingCount["cm"]++;
+	} else {
+		housingCount[housingArray[0]]++;
+	}
 
 	if (needsDB) {
 		var residentsString = housingDB[housingObj].residents === "" ? characterName : "," + characterName;
@@ -543,7 +603,6 @@ function SendScore() {
 
 function toggleSeasonPrev() {
 	var currSeason = parseInt($("td#day1").attr('data-season'));
-	console.log(currSeason);
 		newSeason = currSeason === 0 ? 3 : currSeason - 1;
 
 	constructBdayForSeason(newSeason);
