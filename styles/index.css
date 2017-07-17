@@ -5,8 +5,8 @@
   font-weight: 400 !important;
 }
 body {
-  background: #ffffff;
-  color: white;
+  background: #fff;
+  color: #fff;
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -78,7 +78,7 @@ body {
   z-index: -100;
 }
 a:hover#userCell {
-  color: #e6587b;
+  color: #e66b6b;
 }
 .userInfo1 {
   display: flex;
@@ -154,7 +154,11 @@ html head + body .ui-btn.ui-btn-a:visited {
 .userStats {
   text-align: center;
 }
+.userBonus {
+  color: #F7A541;
+}
 .userGoldTotal {
+  color: #2595A8;
   font-size: 1.5rem;
   float: right;
 }
@@ -162,7 +166,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #4a8651;
 }
 .userSpendings {
-  color: darkred;
+  color: #e66b6b;
 }
 .clear {
   clear: both;
@@ -265,6 +269,7 @@ hr:after {
   height: 100%;
   width: 100%;
   background: #ad8361;
+  text-align: center;
 }
 .loader .auto-center {
   height: 100%;
@@ -273,7 +278,6 @@ hr:after {
 }
 .loader .bounce-conteneur {
   display: inline-block;
-  width: 100%;
   vertical-align: middle;
   text-align: center;
 }
@@ -360,7 +364,7 @@ hr:after {
     transform: scale(1.5);
   }
 }
-.home-content {
+.calendar-content {
   text-align: center;
 }
 table {
@@ -394,7 +398,7 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: #fff;
   padding: 1em;
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
@@ -415,10 +419,10 @@ a.ui-btn {
   text-decoration: underline;
 }
 .spring-background {
-  background: #7AB317;
+  background: #4a8651;
 }
 .spring-color {
-  color: #7AB317;
+  color: #4a8651;
 }
 .summer-background {
   background: #F7A541;
@@ -440,6 +444,16 @@ a.ui-btn {
 }
 #bdayList {
   margin-top: 1em;
+}
+@media (min-width: 1260px) {
+  .shrink {
+    max-width: 50%;
+  }
+}
+@media (min-width: 900px) {
+  .shrink {
+    max-width: 75%;
+  }
 }
 @media (max-width: 750px) {
   .shorter {

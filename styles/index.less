@@ -1,10 +1,14 @@
 // colours
-@spring: #7AB317;
+@spring: #4a8651;
 @summer: #F7A541;
 @fall: #e66b6b;
 @winter: #2595A8;
-@color: #ad8361;
-@bounce-color: #ffefd1;
+@lightBrown: #caa380;
+@brown: #ad8361;
+@dkBrown: #4c322b;
+@white: #fff;
+@cream: #ffefd1;
+@dkGrey: #555;
 @bounce-size: 13px;
 @loading-duration: 3s;
 
@@ -16,8 +20,8 @@
 }
 
 body {
-  background: #ffffff;
-  color: white;
+  background: @white;
+  color: @white;
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -85,13 +89,13 @@ position: fixed;
   padding: 3px 10px 10px 10px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  border: 1px solid #4c322b;
+  border: 1px solid @dkBrown;
   top: -25px;
   left: 25px;
   z-index: -100;
 }
 a:hover#userCell {
-  color: #e6587b;
+  color: @fall;
 }
 .userInfo1 {
   display: flex;
@@ -117,8 +121,8 @@ a:hover#userCell {
 }
 
 .ui-header-fixed {
-  background: #4c322b;
-  color: #ffefd1;
+  background: @dkBrown;
+  color: @cream;
   border: none;
 }
 .ui-header .ui-title,
@@ -141,12 +145,12 @@ html head + body .ui-btn.ui-btn-a:visited {
   border: none;
 }
 .userContentHeader {
-  background: #4c322b;
-  color: #ffefd1;
+  background: @dkBrown;
+  color: @cream;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   padding: 1rem;
-  border: 1px solid #4c322b;
+  border: 1px solid @dkBrown;
   padding-top: 0;
   text-align: left;
 }
@@ -156,7 +160,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 .userContent {
   background-image: url("http://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
   padding: 1rem;
-  border: 1px solid #4c322b;
+  border: 1px solid @dkBrown;
   margin-top: -1rem;
 }
 .ui-navbar li .ui-btn {
@@ -168,15 +172,19 @@ html head + body .ui-btn.ui-btn-a:visited {
 .userStats {
   text-align: center;
 }
+.userBonus{
+  color: @summer;
+}
 .userGoldTotal {
+  color: @winter;
   font-size: 1.5rem;
   float: right;
 }
 .userGross {
-  color: #4a8651;
+  color: @spring;
 }
 .userSpendings {
-  color: darkred;
+  color: @fall;
 }
 .clear {
   clear: both;
@@ -204,7 +212,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .userCharaInfo {
   text-align: right;
-  background: #ad8361;
+  background: @brown;
   padding: 3px;
   padding-top: 8px;
 }
@@ -220,8 +228,8 @@ html head + body .ui-btn.ui-btn-a:visited {
 hr {
   padding: 0;
   border: none;
-  border-top: 1px dashed #4c322b;
-  color: #4c322b;
+  border-top: 1px dashed @dkBrown;
+  color: @dkBrown;
   text-align: center;
 }
 hr:after {
@@ -259,7 +267,7 @@ hr:after {
 }
 .ui-content ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #ad8361;
+  background-color: @brown;
 }
 .ui-header .ui-title,
 .ui-footer .ui-title {
@@ -281,7 +289,8 @@ hr:after {
   z-index: 99999;
   height: 100%;
   width: 100%;
-  background: @color;
+  background: @brown;
+  text-align: center;
 
   .auto-center {
     height: 100%;
@@ -291,7 +300,6 @@ hr:after {
 
   .bounce-conteneur {
     display: inline-block;
-    width: 100%;
     vertical-align: middle;
     text-align: center;
 
@@ -299,7 +307,7 @@ hr:after {
       display: inline-block;
       height: @bounce-size;
       width: @bounce-size; 
-      background: @bounce-color;
+      background: @cream;
       border-radius: 100%;
       margin: 2px;
     }
@@ -372,7 +380,7 @@ hr:after {
   }
 }
 
-.home-content {
+.calendar-content {
   text-align: center;
 }
 
@@ -397,10 +405,10 @@ td {
 }
 
 .calendar {
-  background: #fff;
+  background: @white;
   border-radius: 0 0 1em 1em;
-  box-shadow: 0 2px 1px rgba(76, 50, 43, 0.3), 0 3px 1px #fff;
-  color: #555;
+  box-shadow: 0 2px 1px rgba(76, 50, 43, 0.3), 0 3px 1px @white;
+  color: @dkGrey;
   display: inline-block;
   padding: 1em 2em 1.5em 2em;
 }
@@ -413,7 +421,7 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
+  color: @white;
   padding: 1em;
   border-top-right-radius: 1em;
   border-top-left-radius: 1em;
@@ -429,8 +437,8 @@ a.ui-btn {
 }
 
 .calendar tbody td:hover {
-  background: #caa380;
-  color: #fff;
+  background: @lightBrown;
+  color: @white;
   border-radius: 1em;
 }
 
@@ -472,6 +480,18 @@ a.ui-btn {
 
 #bdayList {
   margin-top: 1em;
+}
+
+@media (min-width: 1260px) {
+  .shrink {
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 900px) {
+  .shrink {
+    max-width: 75%;
+  }
 }
 
 @media (max-width: 750px) { 

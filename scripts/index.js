@@ -16,6 +16,11 @@ var userDB = {},
 	housingDB = {},
 	bdayDB = [];
 
+$.fn.delay = function(time, callback){
+	jQuery.fx.step.delay = function(){};
+	return this.animate({delay:1}, time, callback);
+}
+
 $(function() {  
 	// Load events
 	$(window).resize(resizeBackground);
@@ -491,25 +496,6 @@ function SendScore() {
             console.log(data);
         }
     );
-}
-
-function startLoading() {
-	$.mobile.loading( 'show', {
-		text: "please wait...",
-		textVisible: true,
-		theme: "b",
-		textonly: false
-	});	
-}
-
-function stopLoading() {
-  $.mobile.loading( "hide" );
-}
-
-
-$.fn.delay = function(time, callback){
-	jQuery.fx.step.delay = function(){};
-	return this.animate({delay:1}, time, callback);
 }
 
 function toggleSeasonPrev() {
