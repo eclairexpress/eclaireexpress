@@ -80,22 +80,8 @@ body {
 a:hover#userCell {
   color: #e66b6b;
 }
-.userInfo1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
-  background-repeat: repeat;
-  background-position: -2px 0px;
-  z-index: 100;
-  margin: 0 auto;
-  padding: 1rem 1rem 1rem 1rem;
+.userInfo {
   padding-top: 2rem;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
 }
 .userInfoItem {
   margin: 0 auto;
@@ -174,11 +160,12 @@ html head + body .ui-btn.ui-btn-a:visited {
 .userCharacter {
   padding: 0;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-direction: row;
 }
 .userCharaPortrait {
-  height: 125px;
+  width: 100px;
+  height: 200px;
+  border-right: 1px solid #4c322b;
   background-repeat: no-repeat;
   background-position: center top;
   -webkit-background-size: cover;
@@ -186,21 +173,16 @@ html head + body .ui-btn.ui-btn-a:visited {
   -o-background-size: cover;
   background-size: cover;
 }
-.userCharaHousingPic {
-  height: 100%;
-  background-position: -50px 0px;
-}
 .userCharaInfo {
   text-align: right;
   background: #ad8361;
   padding: 3px;
   padding-top: 8px;
 }
-.userCharaLeft {
-  flex-basis: 30%;
-}
 .userCharaRight {
-  flex-basis: 50%;
+  width: 100%;
+  height: 200px;
+  overflow: auto;
 }
 .charaHousingInfo {
   padding: 0.5rem;
@@ -221,7 +203,7 @@ hr:after {
 }
 .charaHouseUpgrades {
   margin: 0rem 1rem;
-  height: 75px;
+  max-height: 75px;
   overflow: auto;
 }
 .ui-content ul {
@@ -269,7 +251,6 @@ hr:after {
   height: 100%;
   width: 100%;
   background: #ad8361;
-  text-align: center;
 }
 .loader .auto-center {
   height: 100%;
@@ -278,6 +259,7 @@ hr:after {
 }
 .loader .bounce-conteneur {
   display: inline-block;
+  width: 100%;
   vertical-align: middle;
   text-align: center;
 }

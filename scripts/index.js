@@ -363,13 +363,13 @@ function appendCharacterInfo (characterObj) {
 				<div class="userContent userCharacter">
 					<div class="userCharaLeft">
 						<div class="userCharaPortrait" style="background-image: url('${character.image}');"></div>
+					</div>
+					<div class="userCharaRight">
 						<div class="userCharaInfo">
 							<a href="${character.app}"><img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
 							${isHybrid}
 							${isNPC}
 						</div>
-					</div>
-					<div class="userCharaRight">
 						<div class="charaHousingInfo">
 							birthday: ${birthday}
 							${location}
