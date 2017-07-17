@@ -1,4 +1,8 @@
-@red: #e66b6b;
+// colours
+@spring: #7AB317;
+@summer: #F7A541;
+@fall: #e66b6b;
+@winter: #2595A8;
 @color: #ad8361;
 @bounce-color: #ffefd1;
 @bounce-size: 13px;
@@ -144,6 +148,10 @@ html head + body .ui-btn.ui-btn-a:visited {
   padding: 1rem;
   border: 1px solid #4c322b;
   padding-top: 0;
+  text-align: left;
+}
+.seasonTitle {
+  font-size: 1.5em;
 }
 .userContent {
   background-image: url("http://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
@@ -405,7 +413,6 @@ td {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: @red;
   color: white;
   padding: 1em;
   border-top-right-radius: 1em;
@@ -416,24 +423,51 @@ a.ui-btn {
   font-size: 1em;  
 }
 
-.calendar thead {
-  color: @red;
-}
-
 .calendar td {
   padding: .5em 1em;
   text-align: center;
 }
 
 .calendar tbody td:hover {
-  background: @red;
-  opacity: 0.8;
+  background: #caa380;
   color: #fff;
   border-radius: 1em;
 }
 
 .has-bday {
-  color: @red;
+  text-decoration: underline;
+}
+
+.spring-background {
+  background: @spring;
+}
+
+.spring-color {
+  color: @spring;
+}
+
+.summer-background {
+  background: @summer;
+}
+
+.summer-color {
+  color: @summer;
+}
+
+.fall-background {
+  background: @fall;
+}
+
+.fall-color {
+  color: @fall;
+}
+
+.winter-background {
+  background: @winter;
+}
+
+.winter-color {
+  color: @winter;
 }
 
 #bdayList {

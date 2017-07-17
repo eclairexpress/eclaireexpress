@@ -148,7 +148,7 @@ function createInitialCalendar() {
 	table.attr('class', "calendar");
 	table.attr('id', "calendar-numbers");
 	table.html(`
-						<thead>
+						<thead class="spring-color">
 							<tr>
 								<td>Sun</td>
 								<td>Mon</td>
@@ -173,7 +173,7 @@ function createInitialCalendar() {
 			td.text(date);
 
 			if (bdayDB[0][date-1].length > 0) {
-				td.attr('class', 'has-bday');
+				td.attr('class', 'has-bday spring-color');
 			}
 
 			td.on( 'click', function( ev ){
@@ -510,4 +510,67 @@ function stopLoading() {
 $.fn.delay = function(time, callback){
 	jQuery.fx.step.delay = function(){};
 	return this.animate({delay:1}, time, callback);
+}
+
+function toggleSeasonPrev() {
+	var currSeason = parseInt($("td#day1").attr('data-season'));
+	console.log(currSeason);
+		newSeason = currSeason === 0 ? 3 : currSeason - 1;
+
+	constructBdayForSeason(newSeason);
+}
+
+function toggleSeasonNext() {
+	var currSeason = parseInt($("td#day1").attr('data-season')),
+		newSeason = currSeason === 3 ? 0 : currSeason + 1;
+
+		constructBdayForSeason(newSeason);
+}
+
+function constructBdayForSeason(season) {
+	var day = 1,
+		seasonTitle = $("span#seasonTitle"),
+		seasonColor,
+		thead = $(".calendar > thead"),
+		header = $(".calendar-header");
+
+	switch (season) {
+		case 0:
+			seasonTitle.text("spring");
+			seasonColor = 'spring-color';
+			thead.attr('class', 'spring-color');
+			header.attr('class', 'calendar-header spring-background');
+			break;
+		case 1:
+			seasonTitle.text("summer");
+			seasonColor = 'summer-color';
+			thead.attr('class', 'summer-color');
+			header.attr('class', 'calendar-header summer-background');
+			break;
+		case 2:
+			seasonTitle.text("fall");
+			seasonColor = 'fall-color';
+			thead.attr('class', 'fall-color');
+			header.attr('class', 'calendar-header fall-background');
+			break;
+		default:
+			seasonTitle.text("winter");
+			seasonColor = 'winter-color';
+			thead.attr('class', 'winter-color');
+			header.attr('class', 'calendar-header winter-background');
+	}
+
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 7; j++) {
+			var td = $("td#day" + day);
+
+			td.attr('data-season', season);
+			if (bdayDB[season][day-1].length > 0) {
+				td.attr('class', 'has-bday ' + seasonColor);
+			} else {
+				td.attr('class', '');
+			}
+			day++;
+		}
+	}
 }
