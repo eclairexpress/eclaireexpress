@@ -14,6 +14,7 @@ https://codepen.io/volv/pen/bpwRLL
 var userDB = {},
 	characterDB = {},
 	housingDB = {},
+	jobDB = {},
 	bdayDB = [];
 
 $.fn.delay = function(time, callback){
@@ -35,11 +36,13 @@ $(function() {
 		$.ajax({
 			url: 'https://spreadsheets.google.com/feeds/list/1uLSkKY1GbBC_fcgPz1EWGE-V97C-OzpW2kdDjx3AwdA/od6/public/values?alt=json-in-script',
 			dataType: 'jsonp'
-	}))
-	.done((main, housing) => compileData(main, housing))
-	.fail(function(xhr){
-		$.mobile.changePage('#error',{transition:'slide'})
-	});
+		}),
+		$.ajax({
+			url: 'https://spreadsheets.google.com/feeds/list/1akcljZBuQ8vzDrz3cFvEAGyma_GSBMo6YynH56uT2p4/od6/public/values?alt=json-in-script',
+			dataType: 'jsonp'
+		})
+	)
+	.done((main, housing, jobList) => compileData(main, housing, jobList));
   });
 
 // Resize the background
@@ -57,12 +60,13 @@ function createBdayDB() {
 }
 
 // Process the gold calculation based on the spreadsheets.
-function compileData (main, housing) {
+function compileData (main, housing, jobList) {
 	console.log(main);
   	console.log(housing);
+	console.log(jobList);
 
 	// If something messed up here, stop processing.
-	if (!main[0] || !housing[0]) {
+	if (!main[0] || !housing[0] || !jobList[0]) {
 		return;
 	}
 
@@ -71,8 +75,13 @@ function compileData (main, housing) {
 
 	var mainFeed = main[0].feed,
 		housingFeed = housing[0].feed,
+		jobFeed = jobList[0].feed,
 		mainRows = mainFeed.entry || [],
-		housingRows = housingFeed.entry || [];
+		housingRows = housingFeed.entry || [],
+		jobRows = jobFeed.entry || [];
+
+	createJobDB(jobRows);
+	console.log(jobDB);
 
 	// set up housing DB
 	housingRows.forEach(function(row) {
@@ -145,6 +154,17 @@ function compileData (main, housing) {
 	console.log(characterDB);
 }
 
+function createJobDB(jobRows) {
+	jobRows.forEach(function(row) {
+		jobDB[row['gsx$key'].$t] = {
+			building: row['gsx$building'].$t,
+			job1: row['gsx$job1'].$t,
+			job2: row['gsx$job2'].$t,
+			job3: row['gsx$job3'].$t
+		}
+	});
+}
+
 function createInitialCalendar() {
 	var table = $('<table></table>'),
 		tbody = $('<tbody></tbody>'),
@@ -205,9 +225,11 @@ function getBdayDiv(season, day) {
 	if (bdayArray.length === 0) {
 		return "";
 	} else {
-		var bdayString = `${bdayArray[0]}`;
+		var appLink = characterDB[bdayArray[0]].app;
+			bdayString = `<a href="${appLink}" target="_blank">${bdayArray[0]}</a>`;
 		for (var i=1; i<bdayArray.length; i++) {
-			bdayString += `<br>${bdayArray[i]}`;
+			appLink = characterDB[bdayArray[i]].app;
+			bdayString += `<br><a href="${appLink}" target="_blank">${bdayArray[i]}</a>`;
 		}
 
 		var template = `
@@ -228,14 +250,26 @@ function getActiveSinceDate(enrollNum) {
 	var enrollDate;
 
 	switch (enrollNum) {
+		case "0": 
+			enrollDate = "the beginning (june 3rd, 2014)";
+			break;
 		case "1":
-			enrollDate = "August 1st, 2014";
+			enrollDate = "enrollment 1 (August 3rd, 2014)";
 			break;
 		case "2":
-			enrollDate = "January 21st 2015";
+			enrollDate = "enrollment 2 (January 13th 2015)";
+			break;
+		case "3":
+			enrollDate = "enrollment 3 (July 14th 2015)";
+			break;
+		case "4":
+			enrollDate = "enrollment 4 (January 24th 2016)";
+			break;
+		case "5":
+			enrollDate = "enrollment 5 (September 3rd 2016)";
 			break;
 		default:
-			enrollDate = "Forever";
+			enrollDate = "via invite";
 	}
 	
 	return enrollDate;
@@ -272,7 +306,8 @@ function getCharacterArray(row) {
 				isHybrid: characterArray[3],
 				isNPC: characterArray[4],
 				housing: getHousing(characterArray[5], characterName),
-				image: characterArray[6] ? characterArray[6] : "http://orig03.deviantart.net/6fdd/f/2017/193/6/2/se5_10_restoredwoolyisland_by_toffeebot-dbg4gsi.png"
+				job: getJob(characterArray[6].split('/')),
+				image: characterArray[7] ? characterArray[7] : ""
 			};
 
 			characterDB[characterName] = characters[characterName];
@@ -282,6 +317,11 @@ function getCharacterArray(row) {
 	}
 
 	return characters;
+}
+
+function getJob(jobArray) {
+	console.log(jobArray[0]);
+	return jobDB[jobArray[0]]["job" + jobArray[1]];
 }
 
 function getHousing(housingObj, characterName) {
@@ -318,8 +358,8 @@ function appendUserInfo (user) {
 				stats
 			</div>
 			<div class="userContent userStats" id="userStats">
-				<span class="userCells usersName">Username: <a href="${userLink}">${username}</a></span>
-				<span class="userCells userEnroll">Member Since: ${memberSince}</span>
+				<span class="userCells usersName">Username: <a href="${userLink}" target="_blank">${username}</a></span>
+				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
 			</div>
 		</div>
 		<div class="userInfoItem">
@@ -347,7 +387,8 @@ function appendCharacterInfo (characterObj) {
 		birthday,
 		location,
 		isHybrid,
-		isNPC;
+		isNPC,
+		image;
 
 	Object.keys(characterObj).forEach(function (characterName) {
 		character = characterObj[characterName];
@@ -355,6 +396,7 @@ function appendCharacterInfo (characterObj) {
 		isNPC = character.isNPC === "true" ? `<img src="http://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
+		image = character.image === "" ? "" : ` style="background-image: url('${character.image}');"`;
 
 		template = `<div class="userInfoItem">
 				<div class="userContentHeader">
@@ -362,16 +404,17 @@ function appendCharacterInfo (characterObj) {
 				</div>
 				<div class="userContent userCharacter">
 					<div class="userCharaLeft">
-						<div class="userCharaPortrait" style="background-image: url('${character.image}');"></div>
+						<div class="userCharaPortrait"${image}></div>
 					</div>
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
-							<a href="${character.app}"><img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
+							<a href="${character.app}" target="_blank"><img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
 							${isHybrid}
 							${isNPC}
 						</div>
 						<div class="charaHousingInfo">
-							birthday: ${birthday}
+							<span>birthday: <span>${birthday}</span></span>
+							<br><span>job: <span>${character.job}</span></span>
 							${location}
 						</div>
 					</div>
@@ -411,12 +454,12 @@ function parseLocation(location, characterName) {
 
 	if (!location.residents) {
 		// not an object, would be a shop building
-		template = `<br>Address: ${location}`
+		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName);
 		address = getAddress(location.address);
 		template = `
-			<br>Address: ${address}
+			<br><span>Home Address: <span>${address}</span></span>
 			${housemates}`;
 
 		if (!location.isCommunal) {
@@ -474,7 +517,7 @@ function getHousemates(housematesString, characterName) {
 		}
 	});
 
-	return newHousemateList !== "" ? `<br>Housemate(s): ${newHousemateList}` : "";
+	return newHousemateList !== "" ? `<br><span>Housemate(s): <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
