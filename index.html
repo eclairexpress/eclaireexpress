@@ -17,6 +17,24 @@
         <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
     </head>
     <body>
+        <div class="userInfoItem inline-block dialog" id="dialog">
+            <div class="userContentHeader" id="dialogTitle">
+            </div>
+            <div class="userContent userCharacter">
+                <div class="userCharaLeft">
+                    <div class="userCharaPortrait"></div>
+                </div>
+					<div class="userCharaRight">
+						<div class="userCharaInfo">
+							<a href="#" onclick="closeDialog()" id="closeDialog"><img src="http://orig08.deviantart.net/c7e3/f/2017/200/3/d/closebtn_by_toffeebot-dbgzhhr.png"></a>
+						</div>
+						<div class="charaHousingInfo" id="charaHousingInfo">
+						</div>
+					</div>
+				</div>
+			</div></div>
+        <div class="overlay-bg" id="overlay-bg"></div>
+
         <!-- home/info page -->
         <div data-role="page" id="main">
             <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">
@@ -35,6 +53,8 @@
                             <br><span><span style="font-size:0.8em;">if you find any bugs, please report to <a href="http://arcanium.deviantart.com/" target="_blank">arcanium</a></span></span>
                             <hr/>
                             <span>current version: <span>1.0 (beta)</span></span>
+
+                            <button onclick="test()">test meh</button>
                         </div>
                     </div>
 
@@ -183,7 +203,7 @@
         <div data-role="page" id="view" data-theme="a">
             <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">
                 <h1>ECLAIR EXPRESS</h1>
-                <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button" data-transition="fade">Back</a>
+                <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button">Back</a>
             </div><!-- /header -->
 
             <div role="main" class="ui-content shorter">

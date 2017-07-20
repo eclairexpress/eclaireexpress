@@ -511,20 +511,29 @@ function parseBirthday(bdayArray) {
 	return season + " " + day;
 }
 
-function parseLocation(location, characterName) {
+function parseLocation(location, characterName = null) {
 	var template,
 		housemates,
 		address;
 
-	if (!location.residents) {
+		console.log(location);
+		console.log(location.residents);
+	if (location.residents === undefined) {
 		// not an object, would be a shop building
+		console.log("O.o???");
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName);
 		address = getAddress(location.address);
-		template = `
-			<br><span>Home Address: <span>${address}</span></span>
-			${housemates}`;
+		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
+
+		if (!characterName) {
+			$("div#dialogTitle").text(address);
+
+			if (housemates === "") {
+				return `<span class="add-center">This lot is unoccupied!<br><span>Make it your home today!</span></span>`;
+			}
+		}
 
 		if (!location.isCommunal) {
 			//standard housing has upgrades
@@ -572,16 +581,16 @@ function getAddress(addressArray) {
 	return location + " " + number;
 }
 
-function getHousemates(housematesString, characterName) {
+function getHousemates(housematesString, characterName = null) {
 	var housemateArray = housematesString.split(','),
 		newHousemateList = "";
 	housemateArray.forEach(function(housemateName) {
-		if (housemateName !== characterName) {
+		if (!characterName || housemateName !== characterName) {
 			newHousemateList = newHousemateList === "" ? newHousemateList.concat(housemateName) : newHousemateList.concat(", " + housemateName)
 		}
 	});
 
-	return newHousemateList !== "" ? `<br><span>Housemate(s): <span>${newHousemateList}</span></span>` : "";
+	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : "<span>Resident") + `(s): <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
@@ -670,6 +679,16 @@ function constructBdayForSeason(season) {
 	}
 }
 
+function closeDialog() {
+	$("div#dialog").hide();
+	$("div#overlay-bg").hide();
+}
+
+function openDialog() {
+	$("div#dialog").show();
+	$("div#overlay-bg").show();
+}
+
 function populateHousing() {
 	var keys = Object.keys(housingDB),
 		startIndex = 0;
@@ -735,8 +754,13 @@ function populateHousing() {
 				}
 
 				div.on( 'click', function( ev ){
-					var house = $(this).attr('data-id');
+					var house = $(this).attr('data-id'),
+						template = parseLocation(housingDB[house]);
+
 					console.log(housingDB[house]);
+
+					$("div#charaHousingInfo").empty().append(template);
+					openDialog();
 				});
 
 				$('div#map-' + key).append(div);
