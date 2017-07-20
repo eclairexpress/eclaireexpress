@@ -516,11 +516,8 @@ function parseLocation(location, characterName = null) {
 		housemates,
 		address;
 
-		console.log(location);
-		console.log(location.residents);
 	if (location.residents === undefined) {
 		// not an object, would be a shop building
-		console.log("O.o???");
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName);
@@ -583,10 +580,19 @@ function getAddress(addressArray) {
 
 function getHousemates(housematesString, characterName = null) {
 	var housemateArray = housematesString.split(','),
-		newHousemateList = "";
+		newHousemateList = "",
+		housemateURL,
+		housemateFullLink;
+	if (housemateArray[0] === "") {
+		return "";
+	}
+
 	housemateArray.forEach(function(housemateName) {
 		if (!characterName || housemateName !== characterName) {
-			newHousemateList = newHousemateList === "" ? newHousemateList.concat(housemateName) : newHousemateList.concat(", " + housemateName)
+			housemateUrl = characterDB[housemateName].app;
+			housemateFullLink = `<a href="${housemateUrl}" target="_blank">${housemateName}</a>`;
+
+			newHousemateList = newHousemateList === "" ? newHousemateList.concat(housemateFullLink) : newHousemateList.concat(", " + housemateFullLink)
 		}
 	});
 
@@ -711,8 +717,6 @@ function populateHousing() {
 
 
 	}
-	console.log(housingSplit);
-	console.log(allHousing);
 
 	// DELETE LATER
 	allHousing = ["tt","ll"];
@@ -756,8 +760,6 @@ function populateHousing() {
 				div.on( 'click', function( ev ){
 					var house = $(this).attr('data-id'),
 						template = parseLocation(housingDB[house]);
-
-					console.log(housingDB[house]);
 
 					$("div#charaHousingInfo").empty().append(template);
 					openDialog();

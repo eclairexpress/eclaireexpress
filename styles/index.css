@@ -404,6 +404,9 @@ td {
   display: inline-block;
   padding: 1em 2em 1.5em 2em;
 }
+.dialog a {
+  color: #4a8651;
+}
 .calendar-container {
   display: inline-block;
 }
