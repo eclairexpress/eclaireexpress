@@ -120,8 +120,6 @@ function compileData (main, housing, jobList) {
 		}
 	});
 
-	console.log(housingDB);
-
 	mainRows.forEach(function(row) {
 		var rowUsername = row['gsx$username'].$t,
 			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
@@ -165,15 +163,8 @@ function compileData (main, housing, jobList) {
 	// Construct the calendar
 	createInitialCalendar();
 
-	// Show page
-	$("#loader").delay(1500).slideToggle("slow");
-	console.log(userDB);
-	console.log(characterDB);
-
-	console.log(characterCount);
-	console.log(hybridCount);
-	console.log(bdayCount);
-	console.log(housingCount);
+	// Populate housing
+	populateHousing();
 
 	$("span#charaCount").text(characterCount);
 
@@ -189,6 +180,19 @@ function compileData (main, housing, jobList) {
 	$("span#home-ll").text("moved to lemon lake's residential area: " + getPercentage(housingCount["ll"]) + "%");
 	$("span#home-ff").text("moved to flan forest's residential area: " + getPercentage(housingCount["ff"]) + "%");
 	$("span#home-res").text("stayed in shop residence or provided lodging: " + getPercentage(housingCount["cm"]) + "%");
+
+	// REMOVE LATER
+	console.log(userDB);
+	console.log(characterDB);
+	console.log(housingDB);
+
+	console.log(characterCount);
+	console.log(hybridCount);
+	console.log(bdayCount);
+	console.log(housingCount);
+
+	// Show page
+	$("#loader").delay(1500).slideToggle("slow");
 }
 
 function getPercentage(number) {
@@ -622,6 +626,9 @@ function constructBdayForSeason(season) {
 		thead = $(".calendar > thead"),
 		header = $(".calendar-header");
 
+	// empty last months displayed bdays
+	$('div#bdayList').empty();
+
 	switch (season) {
 		case 0:
 			seasonTitle.text("spring");
@@ -659,6 +666,81 @@ function constructBdayForSeason(season) {
 				td.attr('class', '');
 			}
 			day++;
+		}
+	}
+}
+
+function populateHousing() {
+	var keys = Object.keys(housingDB),
+		startIndex = 0;
+		houseKey = "",
+		currKeyArr = "",
+		housingSplit = {},
+		allHousing = [];
+
+	for (var i = 0; i < keys.length; i++) {
+		currKeyArr = keys[i].split("/");
+		if (currKeyArr[0] !== houseKey || i+1 === keys.length) {
+			if (i > 0) {
+				housingSplit[houseKey] = keys.slice(startIndex, (i+1 === keys.length ? i+1 : i));
+			}
+
+			houseKey = currKeyArr[0];
+			allHousing.push(houseKey);
+			startIndex = i;
+		}
+
+
+	}
+	console.log(housingSplit);
+	console.log(allHousing);
+
+	// DELETE LATER
+	allHousing = ["tt","ll"];
+
+	var houseImageClass, fenceImageClass, key, top;
+
+	for (var h=0; h<allHousing.length; h++) {
+		key = allHousing[h];
+
+		for (var i = 0; i<6; i++) {
+			if (i%2 === 0) {
+				houseImageClass = 'house-top-' + key;
+				fenceImageClass = 'fence-top-' + key;
+			} else {
+				houseImageClass = 'house-bottom-' + key;
+				fenceImageClass = 'fence-bottom-' + key;
+			}
+
+			top = (25 + 50*i);
+
+			for (var j = 0; j < 9; j++) {
+				var div = $('<div></div>'),
+					houseId = housingSplit[key][i*9 + j],
+					houseNum = (houseId.split("/"))[1];
+					houseData = housingDB[houseId],
+					hasResidents = houseData.residents !== "";
+
+				div.attr('data-id', houseId);
+				div.attr('class', "house-button " + (hasResidents ? houseImageClass : fenceImageClass));
+				div.text(houseNum);
+				div.css('top', top + 'px');	
+
+				if (j < 2) {
+					div.css('left', (40 + 25*j) + 'px');
+				} else if (j < 7 ) {
+					div.css('left', (40 + 25 + 25*j) + 'px');
+				} else {
+					div.css('left', (40 + 25 + 25 + 25*j) + 'px');
+				}
+
+				div.on( 'click', function( ev ){
+					var house = $(this).attr('data-id');
+					console.log(housingDB[house]);
+				});
+
+				$('div#map-' + key).append(div);
+			}
 		}
 	}
 }

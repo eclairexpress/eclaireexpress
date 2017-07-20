@@ -13,7 +13,6 @@
 @loading-duration: 3s;
 
 * {
-  text-shadow: none !important;
   font-family: 'Itim', Arial, Helvetica, sans-serif !important;
   text-transform: lowercase !important;
   font-weight: 400 !important;
@@ -191,7 +190,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   width: 100px;
   height: 200px;
   border-right: 1px solid @dkBrown;
-
 }
 .userCharaInfo {
   text-align: right;
@@ -494,6 +492,75 @@ a.ui-btn {
 
 #bdayList {
   margin-top: 1em;
+}
+
+.map {
+  width: 355px;
+  height: 325px;
+  padding: 0;
+  position:relative;
+}
+
+#map-tt {
+  background-image: url("http://orig09.deviantart.net/a778/f/2017/200/3/c/map_res_tt_by_toffeebot-dbgyrbh.png");
+}
+
+#map-ll {
+  background-image: url("http://orig00.deviantart.net/f1cd/f/2017/200/f/3/map_res_ll_by_toffeebot-dbgyrbj.png");
+}
+.inline-block {
+  width: auto;
+  display: inline-block;
+}
+
+.house-button {
+  width:15px;
+  height:15px;
+  padding:5px;
+  font-size: 0.6em;
+  color:@dkBrown;
+  position: absolute;
+  text-shadow:
+    -1px -1px 0 @cream,  
+    1px -1px 0 @cream,
+    -1px 1px 0 @cream,
+    1px 1px 0 @cream;
+}
+
+.house-top-ll {
+  background-image: url("http://orig09.deviantart.net/7e50/f/2017/200/6/4/house_top_ll_by_toffeebot-dbgyrf8.png");
+}
+
+.house-bottom-ll {
+  background-image: url("http://orig12.deviantart.net/8cb4/f/2017/200/b/6/house_bottom_ll_by_toffeebot-dbgyrf4.png");
+}
+
+.fence-top-ll {
+  background-image: url("http://orig11.deviantart.net/a16a/f/2017/200/9/e/fence_top_ll_by_toffeebot-dbgyrg1.png");
+}
+
+.fence-bottom-ll {
+  background-image: url("http://orig12.deviantart.net/a2fd/f/2017/200/f/9/fence_bottom_ll_by_toffeebot-dbgyrg5.png");
+}
+
+.house-top-tt {
+  background-image: url("http://orig05.deviantart.net/9800/f/2017/200/7/6/house_top_tt_by_toffeebot-dbgyre1.png");
+}
+
+.house-bottom-tt {
+  background-image: url("http://orig11.deviantart.net/944e/f/2017/200/8/b/house_bottom_tt_by_toffeebot-dbgyre7.png");
+}
+
+.fence-top-tt {
+  background-image: url("http://orig05.deviantart.net/2a90/f/2017/200/4/9/fence_top_tt_by_toffeebot-dbgyrec.png");
+}
+
+.fence-bottom-tt {
+  background-image: url("http://orig10.deviantart.net/cea1/f/2017/200/c/a/fence_bottom_tt_by_toffeebot-dbgyre4.png");
+}
+
+.ui-page-theme-a .ui-btn, html .ui-bar-a .ui-btn, html .ui-body-a .ui-btn, html body .ui-group-theme-a .ui-btn, html head+body .ui-btn.ui-btn-a, .ui-page-theme-a .ui-btn:visited, html .ui-bar-a .ui-btn:visited, html .ui-body-a .ui-btn:visited, html body .ui-group-theme-a .ui-btn:visited, html head+body .ui-btn.ui-btn-a:visited {
+  text-shadow: none;
 }
 
 @media (min-width: 1260px) {
