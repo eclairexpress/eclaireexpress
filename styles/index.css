@@ -483,7 +483,7 @@ a.ui-btn {
   background-image: url("http://orig00.deviantart.net/f1cd/f/2017/200/f/3/map_res_ll_by_toffeebot-dbgyrbj.png");
 }
 #map-ff {
-  background-image: url("http://orig06.deviantart.net/065d/f/2017/201/8/7/map_res_ff_by_toffeebot-dbh3886.png");
+  background-image: url("http://orig13.deviantart.net/15a3/f/2017/201/c/4/map_res_ff_by_toffeebot-dbh3bd5.png");
 }
 .inline-block {
   width: auto;
@@ -497,7 +497,7 @@ a.ui-btn {
   font-size: 0.6em;
   color: #4c322b;
   position: absolute;
-  text-shadow: -1px -1px 0 #ffefd1, 1px -1px 0 #ffefd1, -1px 1px 0 #ffefd1, 1px 1px 0 #ffefd1;
+  text-shadow: 0px -1px 0 #ffefd1, -1px 0px 0 #ffefd1, 1px 0px 0 #ffefd1, 0px 1px 0 #ffefd1;
 }
 .house-top-ll {
   background-image: url("http://orig09.deviantart.net/7e50/f/2017/200/6/4/house_top_ll_by_toffeebot-dbgyrf8.png");
