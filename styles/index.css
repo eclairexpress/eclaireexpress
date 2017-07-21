@@ -11,6 +11,9 @@ body {
   padding: 0;
   height: 100%;
 }
+.no-scroll {
+  overflow: hidden;
+}
 #bg {
   position: fixed;
   left: 0;
@@ -479,11 +482,15 @@ a.ui-btn {
 #map-ll {
   background-image: url("http://orig00.deviantart.net/f1cd/f/2017/200/f/3/map_res_ll_by_toffeebot-dbgyrbj.png");
 }
+#map-ff {
+  background-image: url("http://orig06.deviantart.net/065d/f/2017/201/8/7/map_res_ff_by_toffeebot-dbh3886.png");
+}
 .inline-block {
   width: auto;
   display: inline-block;
 }
 .house-button {
+  cursor: pointer;
   width: 15px;
   height: 15px;
   padding: 5px;
@@ -516,6 +523,18 @@ a.ui-btn {
 .fence-bottom-tt {
   background-image: url("http://orig10.deviantart.net/cea1/f/2017/200/c/a/fence_bottom_tt_by_toffeebot-dbgyre4.png");
 }
+.house-top-ff {
+  background-image: url("http://orig02.deviantart.net/7bee/f/2017/201/6/8/house_top_ff_by_toffeebot-dbh388b.png");
+}
+.house-bottom-ff {
+  background-image: url("http://orig14.deviantart.net/c81a/f/2017/201/7/e/house_bottom_ff_by_toffeebot-dbh388c.png");
+}
+.fence-top-ff {
+  background-image: url("http://orig05.deviantart.net/ef6b/f/2017/201/c/b/fence_top_ff_by_toffeebot-dbh3880.png");
+}
+.fence-bottom-ff {
+  background-image: url("http://orig09.deviantart.net/fc25/f/2017/201/b/8/fence_bottom_ff_by_toffeebot-dbh3882.png");
+}
 .ui-page-theme-a .ui-btn,
 html .ui-bar-a .ui-btn,
 html .ui-body-a .ui-btn,
@@ -536,6 +555,9 @@ html head + body .ui-btn.ui-btn-a:visited {
   margin: -100px 0 0 -160px;
   width: 320px;
   display: none;
+  box-shadow: 3px 2px 3px 2px rgba(0, 0, 0, 0.5);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 .overlay-bg {
   position: fixed;

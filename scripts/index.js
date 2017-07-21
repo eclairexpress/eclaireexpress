@@ -688,11 +688,13 @@ function constructBdayForSeason(season) {
 function closeDialog() {
 	$("div#dialog").hide();
 	$("div#overlay-bg").hide();
+	$( "body" ).removeClass( "no-scroll" );
 }
 
 function openDialog() {
 	$("div#dialog").show();
 	$("div#overlay-bg").show();
+	$( "body" ).addClass( "no-scroll" );
 }
 
 function populateHousing() {
@@ -719,7 +721,7 @@ function populateHousing() {
 	}
 
 	// DELETE LATER
-	allHousing = ["tt","ll"];
+	allHousing = ["tt","ll","ff"];
 
 	var houseImageClass, fenceImageClass, key, top;
 
