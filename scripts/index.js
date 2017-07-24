@@ -723,7 +723,7 @@ function populateHousing() {
 	// DELETE LATER
 	allHousing = ["ai","tt","ll","ff"];
 
-	var houseImageClass, fenceImageClass, key;
+	var houseImageClass, fenceImageClass, key, top;
 
 	for (var h=0; h<allHousing.length; h++) {
 		key = allHousing[h];
