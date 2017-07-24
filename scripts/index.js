@@ -511,7 +511,7 @@ function parseBirthday(bdayArray) {
 	return season + " " + day;
 }
 
-function parseLocation(location, characterName = null) {
+function parseLocation(location, characterName = null, residentTitle = null) {
 	var template,
 		housemates,
 		address;
@@ -520,7 +520,7 @@ function parseLocation(location, characterName = null) {
 		// not an object, would be a shop building
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
-		housemates = getHousemates(location.residents, characterName);
+		housemates = getHousemates(location.residents, characterName, residentTitle);
 		address = getAddress(location.address);
 		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
 
@@ -528,7 +528,7 @@ function parseLocation(location, characterName = null) {
 			$("div#dialogTitle").text(address);
 
 			if (housemates === "") {
-				return `<span class="add-center">This lot is unoccupied!<br><span>Make it your home today!</span></span>`;
+				return (location.isCommunal ? `<span class="add-center">This room is currently unoccupied!</span></span>` : `<span class="add-center">This lot is unoccupied!<br><span>Make it your home today!</span></span>`);
 			}
 		}
 
@@ -578,7 +578,7 @@ function getAddress(addressArray) {
 	return location + " " + number;
 }
 
-function getHousemates(housematesString, characterName = null) {
+function getHousemates(housematesString, characterName = null, residentTitle = null) {
 	var housemateArray = housematesString.split(','),
 		newHousemateList = "",
 		housemateURL,
@@ -596,7 +596,7 @@ function getHousemates(housematesString, characterName = null) {
 		}
 	});
 
-	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : "<span>Resident") + `(s): <span>${newHousemateList}</span></span>` : "";
+	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + `(s): <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
@@ -721,54 +721,124 @@ function populateHousing() {
 	}
 
 	// DELETE LATER
-	allHousing = ["tt","ll","ff"];
+	allHousing = ["ai","tt","ll","ff"];
 
-	var houseImageClass, fenceImageClass, key, top;
+	var houseImageClass, fenceImageClass, key;
 
 	for (var h=0; h<allHousing.length; h++) {
 		key = allHousing[h];
 
-		for (var i = 0; i<6; i++) {
-			if (i%2 === 0) {
-				houseImageClass = 'house-top-' + key;
-				fenceImageClass = 'fence-top-' + key;
-			} else {
-				houseImageClass = 'house-bottom-' + key;
-				fenceImageClass = 'fence-bottom-' + key;
-			}
+		if (key === "ai") {
+			var innArray = housingSplit[key],
+				leftLeft = 5,
+				innId, innNum, innData, hasResidents, occupiedImgClass, emptyImgClass,
+				rowCounter = 0,
+				colCounter = 0;
 
-			top = (25 + 50*i);
+			for (var i = 0; i<innArray.length; i++) {
+				innId = innArray[i];
+				innNum = parseInt((innId.split("/"))[1]);
+				innData = housingDB[innId];
+				hasResidents = innData.residents !== "";
 
-			for (var j = 0; j < 9; j++) {
-				var div = $('<div></div>'),
-					houseId = housingSplit[key][i*9 + j],
-					houseNum = (houseId.split("/"))[1];
-					houseData = housingDB[houseId],
-					hasResidents = houseData.residents !== "";
+				var div = $('<div></div>');
+				div.attr('data-id', innId);
+				div.text(innNum);
 
-				div.attr('data-id', houseId);
-				div.attr('class', "house-button " + (hasResidents ? houseImageClass : fenceImageClass));
-				div.text(houseNum);
-				div.css('top', top + 'px');	
+				if (innNum === 101 || innNum === 102) {
+					occupiedImgClass = "room-big-ai";
+					div.attr('class', "house-button inn-button-big " + occupiedImgClass);
 
-				if (j < 2) {
-					div.css('left', (40 + 25*j) + 'px');
-				} else if (j < 7 ) {
-					div.css('left', (40 + 25 + 25*j) + 'px');
+					if (innNum === 101) {
+						div.css('top', '251px');
+						div.css('left', leftLeft + 'px');	
+					} else {
+						div.css('top', '53px');	
+						div.css('left', leftLeft + 'px');	
+					}
+
+					createDialog(div);
+				} else if ((innNum >= 103 && innNum <= 107) || (innNum >= 206 && innNum <= 210)) {
+					colCounter = 0;
+					occupiedImgClass = "room-top-ai";
+					emptyImgClass = "empty-top-ai";
+					div.attr('class', "house-button inn-button-top " + (hasResidents ? occupiedImgClass : emptyImgClass));
+					div.css('top', '5px');
+					div.css('left', leftLeft + 1 + (51 * rowCounter) + 'px');
+					rowCounter ++;
+
+					createDialog(div, "Tenant");
 				} else {
-					div.css('left', (40 + 25 + 25 + 25*j) + 'px');
+					rowCounter = 0;
+					occupiedImgClass = "room-side-ai";
+					emptyImgClass = "empty-side-ai";
+					div.attr('class', "house-button inn-button-side " + (hasResidents ? occupiedImgClass : emptyImgClass));
+
+					if (innNum >= 201 && innNum <= 205) {
+						div.css('left', leftLeft + 'px');
+						div.css('top', 279 - (51 * colCounter) + (innNum > 203 ? -22 : 0) + 'px');
+					} else {
+						div.css('left', 236 + 'px');
+						div.css('top', 53 + (51 * colCounter) + (innNum > 212 ? 22 : 0) + 'px');
+					}
+
+					colCounter ++;
+					createDialog(div, "Tenant");
 				}
 
-				div.on( 'click', function( ev ){
-					var house = $(this).attr('data-id'),
-						template = parseLocation(housingDB[house]);
+				if (innNum < 200) {
+					$('div#map-ai-1').append(div);
+				} else {
+					$('div#map-ai-2').append(div);
+				}
+			}
+		} else {
+			for (var i = 0; i<6; i++) {
+				if (i%2 === 0) {
+					houseImageClass = 'house-top-' + key;
+					fenceImageClass = 'fence-top-' + key;
+				} else {
+					houseImageClass = 'house-bottom-' + key;
+					fenceImageClass = 'fence-bottom-' + key;
+				}
 
-					$("div#charaHousingInfo").empty().append(template);
-					openDialog();
-				});
+				top = (25 + 50*i);
 
-				$('div#map-' + key).append(div);
+				for (var j = 0; j < 9; j++) {
+					var div = $('<div></div>'),
+						houseId = housingSplit[key][i*9 + j],
+						houseNum = (houseId.split("/"))[1],
+						houseData = housingDB[houseId],
+						hasResidents = houseData.residents !== "";
+
+					div.attr('data-id', houseId);
+					div.attr('class', "house-button " + (hasResidents ? houseImageClass : fenceImageClass));
+					div.text(houseNum);
+					div.css('top', top + 'px');
+
+					if (j < 2) {
+						div.css('left', (40 + 25*j) + 'px');
+					} else if (j < 7 ) {
+						div.css('left', (40 + 25 + 25*j) + 'px');
+					} else {
+						div.css('left', (40 + 25 + 25 + 25*j) + 'px');
+					}
+
+					createDialog(div);
+
+					$('div#map-' + key).append(div);
+				}
 			}
 		}
 	}
+}
+
+function createDialog(div, residentTitle = null) {
+	div.on( 'click', function( ev ){
+		var house = $(this).attr('data-id'),
+			template = parseLocation(housingDB[house], undefined, residentTitle);
+
+		$("div#charaHousingInfo").empty().append(template);
+		openDialog();
+	});
 }
