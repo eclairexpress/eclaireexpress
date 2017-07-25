@@ -191,7 +191,17 @@ function compileData (main, housing, jobList) {
 	console.log(bdayCount);
 	console.log(housingCount);
 
-	// Show page
+	$('form#fpcalc').on('submit', function(e){
+		e.preventDefault();
+		calculateFP();
+	});
+
+	$('form#rpcalc').on('submit', function(e){
+		e.preventDefault();
+		calculateRP();
+	});
+
+  // Show page
 	$("#loader").delay(1500).slideToggle("slow");
 }
 
@@ -582,7 +592,8 @@ function getHousemates(housematesString, characterName = null, residentTitle = n
 	var housemateArray = housematesString.split(','),
 		newHousemateList = "",
 		housemateURL,
-		housemateFullLink;
+		housemateFullLink,
+		housemateCount = 0;
 	if (housemateArray[0] === "") {
 		return "";
 	}
@@ -591,12 +602,13 @@ function getHousemates(housematesString, characterName = null, residentTitle = n
 		if (!characterName || housemateName !== characterName) {
 			housemateUrl = characterDB[housemateName].app;
 			housemateFullLink = `<a href="${housemateUrl}" target="_blank">${housemateName}</a>`;
+			housemateCount ++;
 
 			newHousemateList = newHousemateList === "" ? newHousemateList.concat(housemateFullLink) : newHousemateList.concat(", " + housemateFullLink)
 		}
 	});
 
-	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + `(s): <span>${newHousemateList}</span></span>` : "";
+	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "(s)" : "") + `: <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
@@ -767,7 +779,11 @@ function populateHousing() {
 					div.css('left', leftLeft + 1 + (51 * rowCounter) + 'px');
 					rowCounter ++;
 
-					createDialog(div, "Tenant");
+					if (innNum === 104 || innNum === 105) {
+						createDialog(div);
+					} else {
+						createDialog(div, "Tenant");
+					}
 				} else {
 					rowCounter = 0;
 					occupiedImgClass = "room-side-ai";
@@ -841,4 +857,116 @@ function createDialog(div, residentTitle = null) {
 		$("div#charaHousingInfo").empty().append(template);
 		openDialog();
 	});
+}
+
+function calculateFP() {
+	// Clear displayed inputs
+	$("div#fp-total").text("");
+	$("div#fp-error-message").text("");
+
+	if ($("#fp-canon").val() === "false") {
+		$("div#fp-error-message").text("Only canon interactions can earn FP.");
+		return;
+	}
+
+	// collect int input
+	var eventBonus = $("#fp-event").val().replace(",", ""),
+		etcBonus = $("#fp-etc").val().replace(",", ""),
+		collabBonus, rpBonus, hqBonus, bdayBonus, itemBonus, total;
+
+	if (eventBonus === "") {
+		eventBonus = 0;
+	} else {
+		eventBonus = parseInt(eventBonus, 10);
+	}
+
+	if (etcBonus === "") {
+		etcBonus = 0;
+	} else {
+		etcBonus = parseInt(etcBonus, 10);
+	}
+
+	if(isNaN(eventBonus)) {
+		$("div#fp-error-message").text("Your event bonus input is incorrect. Please only use numbers, no commas or special characters!");
+		return;
+	}
+
+	if(isNaN(etcBonus)) {
+		$("div#fp-error-message").text("Your additional bonus input is incorrect. Please only use numbers, no commas or special characters!");
+		return;
+	}
+
+	// get rest of inputs
+	collabBonus = $("#fp-collab").val() === "true" ? 200 : 0;
+	rpBonus = $("#fp-rp").val() === "true" ? 200 : 0;
+	hqBonus = $("#fp-hq").val() === "true" ? 300 : 0;
+	bdayBonus = $("#fp-bday").val() === "true" ? 2 : 1;
+	itemBonus = parseInt($("#fp-item").val(), 10);
+
+	if(bdayBonus === 2 && eventBonus > 0) {
+		$("div#fp-error-message").text("You can't apply the birthday bonus and the festival/mini event bonus to the same submission, as a birthday is a special event of its own.");
+		return;
+	}
+
+	if(hqBonus === 300 && eventBonus > 0) {
+		$("div#fp-error-message").text("You can't apply the heart event bonus and the festival/mini event bonus to the same submission, as a heart event is a special event of its own.");
+		return;
+	}
+
+	if(bdayBonus === 2 && hqBonus === 300) {
+		$("div#fp-error-message").text("You can't apply the birthday bonus and the heart event bonus to the same submission, as a birthday is a special event of its own.");
+		return;
+	}
+
+	// calculate
+	total = (200 + collabBonus + rpBonus) * bdayBonus + hqBonus + itemBonus + eventBonus + etcBonus;
+
+	$("div#fp-total").text(total + " fp");
+}
+
+function calculateRP() {
+	// Clear displayed inputs
+	$("div#rp-total").text("");
+	$("div#rp-error-message").text("");
+
+	var numRpers = $("#rp-num").val().replace(",", ""),
+		wordCount = $("#rp-wc").val().replace(",", ""),
+		total;
+	
+	if (numRpers === "") {
+		numRpers = 0;
+	} else {
+		numRpers = parseInt(numRpers, 10);
+	}
+
+	if (wordCount === "") {
+		wordCount = 0;
+	} else {
+		wordCount = parseInt(wordCount, 10);
+	}
+
+	if(isNaN(numRpers)) {
+		$("div#rp-error-message").text("Your number of participants input is incorrect. Please only use numbers, no commas or special characters!");
+		return;
+	}
+
+	if(isNaN(wordCount)) {
+		$("div#rp-error-message").text("Your word count input is incorrect. Please only use numbers, no commas or special characters!");
+		return;
+	}
+
+	if (numRpers < 1) {
+		$("div#rp-error-message").text("There has to be at least one user participating in the rp!");
+		return;
+	}
+
+	if (wordCount < 1000) {
+		$("div#rp-error-message").text("A roleplay log must be at least 1000 words to be counted for gold!");
+		return;
+	}
+
+	// calculate
+	total = Math.floor(wordCount / numRpers / 10 / 25) * 25;
+
+	$("div#rp-total").text(total + "g");
 }

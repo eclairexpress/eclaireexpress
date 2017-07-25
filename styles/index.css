@@ -151,6 +151,10 @@ html head + body .ui-btn.ui-btn-a:visited {
   font-size: 1.5rem;
   float: right;
 }
+.form-result {
+  color: #2595A8;
+  font-size: 1.5rem;
+}
 .userGross {
   color: #4a8651;
 }
@@ -164,6 +168,42 @@ html head + body .ui-btn.ui-btn-a:visited {
   padding: 0;
   display: flex;
   flex-direction: row;
+}
+.submitButton {
+  margin: 1.5em 0em;
+}
+#fpcalc > .ui-select > .ui-btn > select {
+  font-size: 1em !important;
+}
+.calc-about {
+  font-size: 0.9em;
+}
+form {
+  margin-top: 2em;
+}
+.calculator-form {
+  max-width: 345px;
+}
+.small {
+  font-size: 0.75em;
+}
+select option {
+  margin: 40px;
+  background: #ad8361;
+  color: #4c322b;
+}
+.ui-input-text input,
+.ui-input-search input {
+  text-align: center;
+}
+#fpcalc > label,
+#rpcalc > label {
+  margin-top: 1em;
+}
+.form-subtext {
+  color: #2595A8;
+  font-size: 0.75em;
+  margin-bottom: 1em;
 }
 .ui-page-theme-a a:hover,
 html .ui-bar-a a:hover,
@@ -490,10 +530,10 @@ a.ui-btn {
   background-image: url("http://orig13.deviantart.net/15a3/f/2017/201/c/4/map_res_ff_by_toffeebot-dbh3bd5.png");
 }
 #map-ai-1 {
-  background-image: url("http://orig04.deviantart.net/3d72/f/2017/205/9/e/map_floor1_ai_by_toffeebot-dbhgpzx.png");
+  background-image: url("http://orig15.deviantart.net/2b59/f/2017/205/4/b/map_floor1_ai_by_toffeebot-dbhk53t.png");
 }
 #map-ai-2 {
-  background-image: url("http://orig00.deviantart.net/cc02/f/2017/205/8/a/map_floor2_ai_by_toffeebot-dbhgpzt.png");
+  background-image: url("http://orig13.deviantart.net/c634/f/2017/205/8/9/map_floor2_ai_by_toffeebot-dbhk544.png");
 }
 .inline-block {
   width: auto;
