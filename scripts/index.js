@@ -608,7 +608,7 @@ function getHousemates(housematesString, characterName = null, residentTitle = n
 		}
 	});
 
-	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "(s)" : "") + `: <span>${newHousemateList}</span></span>` : "";
+	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "s" : "") + `: <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
