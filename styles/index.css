@@ -520,6 +520,10 @@ a.ui-btn {
   width: 266px;
   height: 350px;
 }
+.map-ss {
+  width: 267px;
+  height: 275px;
+}
 #map-tt {
   background-image: url("http://orig09.deviantart.net/a778/f/2017/200/3/c/map_res_tt_by_toffeebot-dbgyrbh.png");
 }
@@ -530,10 +534,16 @@ a.ui-btn {
   background-image: url("http://orig13.deviantart.net/15a3/f/2017/201/c/4/map_res_ff_by_toffeebot-dbh3bd5.png");
 }
 #map-ai-1 {
-  background-image: url("http://orig15.deviantart.net/2b59/f/2017/205/4/b/map_floor1_ai_by_toffeebot-dbhk53t.png");
+  background-image: url("http://orig07.deviantart.net/b5f8/f/2017/208/5/e/map_floor1_ai_by_toffeebot-dbhxr83.png");
 }
 #map-ai-2 {
-  background-image: url("http://orig13.deviantart.net/c634/f/2017/205/8/9/map_floor2_ai_by_toffeebot-dbhk544.png");
+  background-image: url("http://orig04.deviantart.net/3c39/f/2017/208/0/0/map_floor2_ai_by_toffeebot-dbhxr6u.png");
+}
+#map-ss-1 {
+  background-image: url("http://orig10.deviantart.net/e357/f/2017/208/5/f/map_floor1_ss_by_toffeebot-dbhxr67.png");
+}
+#map-ss-2 {
+  background-image: url("https://orig00.deviantart.net/788a/f/2017/208/b/3/map_floor2_ss_by_toffeebot-dbhxrdg.png");
 }
 .inline-block {
   width: auto;
@@ -570,6 +580,20 @@ a.ui-btn {
   padding-left: 4px;
   padding-right: 6px;
   padding-top: 35px;
+}
+.ss-button-side {
+  width: 30px;
+  height: 21px;
+  padding: 5px;
+  padding-right: 10px;
+}
+.ss-button-big {
+  width: 35px;
+  height: 32px;
+  padding: 5px;
+  padding-left: 4px;
+  padding-right: 6px;
+  padding-top: 25px;
 }
 .house-top-ll {
   background-image: url("http://orig09.deviantart.net/7e50/f/2017/200/6/4/house_top_ll_by_toffeebot-dbgyrf8.png");
@@ -621,6 +645,15 @@ a.ui-btn {
 }
 .room-big-ai {
   background-image: url("http://orig12.deviantart.net/86e6/f/2017/205/6/f/big_room_ai_by_toffeebot-dbhgpzj.png");
+}
+.room-side-ss {
+  background-image: url("http://orig08.deviantart.net/5046/f/2017/208/e/4/room_side_ss_by_toffeebot-dbhxra7.png");
+}
+.empty-side-ss {
+  background-image: url("http://orig09.deviantart.net/3acd/f/2017/208/5/d/empty_side_ss_by_toffeebot-dbhxr9h.png");
+}
+.room-big-ss {
+  background-image: url("http://orig14.deviantart.net/6c69/f/2017/208/0/3/big_room_ss_by_toffeebot-dbhxrah.png");
 }
 .ui-page-theme-a .ui-btn,
 html .ui-bar-a .ui-btn,

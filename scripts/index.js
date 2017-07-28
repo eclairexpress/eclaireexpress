@@ -531,7 +531,7 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName, residentTitle);
-		address = getAddress(location.address);
+		address = getAddress(location.address, !characterName);
 		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
 
 		if (!characterName) {
@@ -564,9 +564,13 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 	return template;
 }
 
-function getAddress(addressArray) {
+function getAddress(addressArray, numOnly = false) {
 	var location,
 		number = addressArray[1] === "cc" ? "Captain's Quarters" : addressArray[1];
+
+	if (numOnly) {
+		return number;
+	}
 
 	switch(addressArray[0]) {
 		case "tt":
@@ -728,12 +732,7 @@ function populateHousing() {
 			allHousing.push(houseKey);
 			startIndex = i;
 		}
-
-
 	}
-
-	// DELETE LATER
-	allHousing = ["ai","tt","ll","ff"];
 
 	var houseImageClass, fenceImageClass, key, top;
 
@@ -749,8 +748,8 @@ function populateHousing() {
 
 			for (var i = 0; i<innArray.length; i++) {
 				innId = innArray[i];
-				innNum = parseInt((innId.split("/"))[1]);
 				innData = housingDB[innId];
+				innNum = parseInt(innData.address[1]);
 				hasResidents = innData.residents !== "";
 
 				var div = $('<div></div>');
@@ -808,6 +807,67 @@ function populateHousing() {
 					$('div#map-ai-2').append(div);
 				}
 			}
+		} else if (key === "ss") {
+			var ssArray = housingSplit[key],
+				ssId, ssNum, ssData, hasResidents, occupiedImgClass, emptyImgClass,
+				leftCounter = 0,
+				rightCounter = 0;
+
+			for (var i = 0; i<ssArray.length; i++) {
+				ssId = ssArray[i];
+				ssData = housingDB[ssId];
+				ssNum = ssData.address[1] === "cc" ? 0 : parseInt(ssData.address[1]);
+				hasResidents = ssData.residents !== "";
+
+				var div = $('<div></div>');
+				div.attr('data-id', ssId);
+				div.text(ssNum);
+
+				if (ssNum === 0) {
+					occupiedImgClass = "room-big-ss";
+					div.attr('class', "house-button ss-button-big " + occupiedImgClass);
+
+					div.css('top', '6px');
+					div.css('left', '217px');	
+					div.html("captain's<br>quarters");
+
+					createDialog(div);
+				} else {
+					occupiedImgClass = "room-side-ss";
+					emptyImgClass = "empty-side-ss";
+					div.attr('class', "house-button ss-button-side " + (hasResidents ? occupiedImgClass : emptyImgClass));
+
+					if ((ssNum >= 6 && ssNum <= 10) || (ssNum >= 14 && ssNum <= 16)) {
+						rightCounter = 0;
+						div.css('left', '5px');
+
+						if (ssNum >= 6 && ssNum <= 10) {
+							div.css('top', 93 + (32 * leftCounter) + 'px');
+						} else {
+							div.css('top', 157 + (32 * leftCounter) + 'px');
+						}
+						leftCounter ++;
+					} else {
+						leftCounter = 0;
+						div.css('left', '217px');
+
+						if (ssNum >= 1 && ssNum <= 5) {
+							div.css('top', 93 + (32 * rightCounter) + 'px');
+						} else {
+							div.css('top', 157 + (32 * rightCounter) + 'px');
+						}
+						rightCounter ++;
+						
+					}
+					createDialog(div, "Tenant");
+				}
+
+				if (ssNum >= 11) {
+					$('div#map-ss-1').append(div);
+				} else {
+					$('div#map-ss-2').append(div);
+				}
+			}
 		} else {
 			for (var i = 0; i<6; i++) {
 				if (i%2 === 0) {
@@ -823,8 +883,8 @@ function populateHousing() {
 				for (var j = 0; j < 9; j++) {
 					var div = $('<div></div>'),
 						houseId = housingSplit[key][i*9 + j],
-						houseNum = (houseId.split("/"))[1],
 						houseData = housingDB[houseId],
+						houseNum = houseData.address[1],
 						hasResidents = houseData.residents !== "";
 
 					div.attr('data-id', houseId);
