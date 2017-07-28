@@ -531,7 +531,7 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName, residentTitle);
-		address = getAddress(location.address, !characterName);
+		address = getAddress(location.address, location.address[1] === "cc");
 		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
 
 		if (!characterName) {
