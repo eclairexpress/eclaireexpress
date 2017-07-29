@@ -21,7 +21,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: -1000;
-  background: url("http://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
+  background: url("https://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -35,7 +35,7 @@ body {
   position: relative;
 }
 .shorter {
-  max-width: 55%;
+  max-width: 490px;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -53,7 +53,7 @@ body {
   z-index: 100;
 }
 .image {
-  background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
+  background-image: url("https://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
   background-repeat: repeat;
   background-position: -155px 0px;
   text-align: center;
@@ -69,7 +69,7 @@ body {
 .username {
   white-space: nowrap;
   position: absolute;
-  background-image: url("http://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
+  background-image: url("https://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
   background-repeat: repeat;
   padding: 3px 10px 10px 10px;
   border-top-right-radius: 5px;
@@ -129,7 +129,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   font-size: 1.5em;
 }
 .userContent {
-  background-image: url("http://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
+  background-image: url("https://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
   padding: 1rem;
   border: 1px solid #4c322b;
   margin-top: -1rem;
@@ -151,6 +151,18 @@ html head + body .ui-btn.ui-btn-a:visited {
   font-size: 1.5rem;
   float: right;
 }
+.button50 {
+  margin: 0.25em;
+  width: 45% !important;
+  display: inline;
+  color: #fff !important;
+}
+.gold-clearBtn {
+  background-color: #e66b6b !important;
+}
+.gold-addBtn {
+  background-color: #4a8651 !important;
+}
 .form-result {
   color: #2595A8;
   font-size: 1.5rem;
@@ -161,16 +173,33 @@ html head + body .ui-btn.ui-btn-a:visited {
 .userSpendings {
   color: #e66b6b;
 }
+.padding-bottom-short {
+  padding-bottom: 0.5em;
+}
+.userEnroll {
+  margin-bottom: 0.5em;
+}
 .clear {
   clear: both;
+}
+.add-memory-button {
+  float: right;
 }
 .userCharacter {
   padding: 0;
   display: flex;
   flex-direction: row;
 }
-.submitButton {
-  margin: 1.5em 0em;
+.ui-disabled,
+.ui-state-disabled,
+button[disabled],
+.ui-select .ui-btn.ui-state-disabled {
+  opacity: 0.6;
+}
+.submitBtn {
+  margin-top: 2em !important;
+  background: #4c322b !important;
+  color: #fff !important;
 }
 #fpcalc > .ui-select > .ui-btn > select {
   font-size: 1em !important;
@@ -197,7 +226,8 @@ select option {
   text-align: center;
 }
 #fpcalc > label,
-#rpcalc > label {
+#rpcalc > label,
+#submit-gold > label {
   margin-top: 1em;
 }
 .form-subtext {
@@ -216,7 +246,7 @@ html body .ui-group-theme-a a:visited {
   color: #4a8651;
 }
 .userCharaPortrait {
-  background-image: url("http://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
+  background-image: url("https://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png");
   background-repeat: repeat;
   width: 100px;
   height: 200px;
@@ -245,13 +275,11 @@ hr {
   border-top: 1px dashed #4c322b;
   color: #4c322b;
   text-align: center;
+  margin: 1em;
 }
-hr:after {
-  display: inline-block;
-  position: relative;
-  top: -0.7em;
-  font-size: 1em;
-  padding: 0 0.25em;
+.userMemories > img,
+.userMemories > a > img {
+  margin: 0.25em;
 }
 .charaHouseUpgrades {
   margin: 0rem 1rem;
@@ -263,7 +291,19 @@ hr:after {
   margin: 0;
   padding-left: 0;
 }
-span span {
+.submissionsList {
+  text-align: center;
+  font-size: 0.9em;
+  margin: 0rem 1rem;
+  margin-top: 1em;
+  max-height: 125px;
+  overflow: auto;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: rgba(173, 131, 97, 0.2);
+}
+span span,
+.brown-color {
   color: #ad8361;
 }
 .charaHousingInfo ul li {
@@ -525,22 +565,22 @@ a.ui-btn {
   height: 275px;
 }
 #map-tt {
-  background-image: url("http://orig09.deviantart.net/a778/f/2017/200/3/c/map_res_tt_by_toffeebot-dbgyrbh.png");
+  background-image: url("https://orig09.deviantart.net/a778/f/2017/200/3/c/map_res_tt_by_toffeebot-dbgyrbh.png");
 }
 #map-ll {
-  background-image: url("http://orig00.deviantart.net/f1cd/f/2017/200/f/3/map_res_ll_by_toffeebot-dbgyrbj.png");
+  background-image: url("https://orig00.deviantart.net/f1cd/f/2017/200/f/3/map_res_ll_by_toffeebot-dbgyrbj.png");
 }
 #map-ff {
-  background-image: url("http://orig13.deviantart.net/15a3/f/2017/201/c/4/map_res_ff_by_toffeebot-dbh3bd5.png");
+  background-image: url("https://orig13.deviantart.net/15a3/f/2017/201/c/4/map_res_ff_by_toffeebot-dbh3bd5.png");
 }
 #map-ai-1 {
-  background-image: url("http://orig07.deviantart.net/b5f8/f/2017/208/5/e/map_floor1_ai_by_toffeebot-dbhxr83.png");
+  background-image: url("https://orig07.deviantart.net/b5f8/f/2017/208/5/e/map_floor1_ai_by_toffeebot-dbhxr83.png");
 }
 #map-ai-2 {
-  background-image: url("http://orig04.deviantart.net/3c39/f/2017/208/0/0/map_floor2_ai_by_toffeebot-dbhxr6u.png");
+  background-image: url("https://orig04.deviantart.net/3c39/f/2017/208/0/0/map_floor2_ai_by_toffeebot-dbhxr6u.png");
 }
 #map-ss-1 {
-  background-image: url("http://orig10.deviantart.net/e357/f/2017/208/5/f/map_floor1_ss_by_toffeebot-dbhxr67.png");
+  background-image: url("https://orig10.deviantart.net/e357/f/2017/208/5/f/map_floor1_ss_by_toffeebot-dbhxr67.png");
 }
 #map-ss-2 {
   background-image: url("https://orig00.deviantart.net/788a/f/2017/208/b/3/map_floor2_ss_by_toffeebot-dbhxrdg.png");
@@ -596,64 +636,64 @@ a.ui-btn {
   padding-top: 25px;
 }
 .house-top-ll {
-  background-image: url("http://orig09.deviantart.net/7e50/f/2017/200/6/4/house_top_ll_by_toffeebot-dbgyrf8.png");
+  background-image: url("https://orig09.deviantart.net/7e50/f/2017/200/6/4/house_top_ll_by_toffeebot-dbgyrf8.png");
 }
 .house-bottom-ll {
-  background-image: url("http://orig12.deviantart.net/8cb4/f/2017/200/b/6/house_bottom_ll_by_toffeebot-dbgyrf4.png");
+  background-image: url("https://orig12.deviantart.net/8cb4/f/2017/200/b/6/house_bottom_ll_by_toffeebot-dbgyrf4.png");
 }
 .fence-top-ll {
-  background-image: url("http://orig11.deviantart.net/a16a/f/2017/200/9/e/fence_top_ll_by_toffeebot-dbgyrg1.png");
+  background-image: url("https://orig11.deviantart.net/a16a/f/2017/200/9/e/fence_top_ll_by_toffeebot-dbgyrg1.png");
 }
 .fence-bottom-ll {
-  background-image: url("http://orig12.deviantart.net/a2fd/f/2017/200/f/9/fence_bottom_ll_by_toffeebot-dbgyrg5.png");
+  background-image: url("https://orig12.deviantart.net/a2fd/f/2017/200/f/9/fence_bottom_ll_by_toffeebot-dbgyrg5.png");
 }
 .house-top-tt {
-  background-image: url("http://orig05.deviantart.net/9800/f/2017/200/7/6/house_top_tt_by_toffeebot-dbgyre1.png");
+  background-image: url("https://orig05.deviantart.net/9800/f/2017/200/7/6/house_top_tt_by_toffeebot-dbgyre1.png");
 }
 .house-bottom-tt {
-  background-image: url("http://orig11.deviantart.net/944e/f/2017/200/8/b/house_bottom_tt_by_toffeebot-dbgyre7.png");
+  background-image: url("https://orig11.deviantart.net/944e/f/2017/200/8/b/house_bottom_tt_by_toffeebot-dbgyre7.png");
 }
 .fence-top-tt {
-  background-image: url("http://orig05.deviantart.net/2a90/f/2017/200/4/9/fence_top_tt_by_toffeebot-dbgyrec.png");
+  background-image: url("https://orig05.deviantart.net/2a90/f/2017/200/4/9/fence_top_tt_by_toffeebot-dbgyrec.png");
 }
 .fence-bottom-tt {
-  background-image: url("http://orig10.deviantart.net/cea1/f/2017/200/c/a/fence_bottom_tt_by_toffeebot-dbgyre4.png");
+  background-image: url("https://orig10.deviantart.net/cea1/f/2017/200/c/a/fence_bottom_tt_by_toffeebot-dbgyre4.png");
 }
 .house-top-ff {
-  background-image: url("http://orig02.deviantart.net/7bee/f/2017/201/6/8/house_top_ff_by_toffeebot-dbh388b.png");
+  background-image: url("https://orig02.deviantart.net/7bee/f/2017/201/6/8/house_top_ff_by_toffeebot-dbh388b.png");
 }
 .house-bottom-ff {
-  background-image: url("http://orig14.deviantart.net/c81a/f/2017/201/7/e/house_bottom_ff_by_toffeebot-dbh388c.png");
+  background-image: url("https://orig14.deviantart.net/c81a/f/2017/201/7/e/house_bottom_ff_by_toffeebot-dbh388c.png");
 }
 .fence-top-ff {
-  background-image: url("http://orig05.deviantart.net/ef6b/f/2017/201/c/b/fence_top_ff_by_toffeebot-dbh3880.png");
+  background-image: url("https://orig05.deviantart.net/ef6b/f/2017/201/c/b/fence_top_ff_by_toffeebot-dbh3880.png");
 }
 .fence-bottom-ff {
-  background-image: url("http://orig09.deviantart.net/fc25/f/2017/201/b/8/fence_bottom_ff_by_toffeebot-dbh3882.png");
+  background-image: url("https://orig09.deviantart.net/fc25/f/2017/201/b/8/fence_bottom_ff_by_toffeebot-dbh3882.png");
 }
 .room-top-ai {
-  background-image: url("http://orig11.deviantart.net/7065/f/2017/205/9/2/room_top_ai_by_toffeebot-dbhgpzs.png");
+  background-image: url("https://orig11.deviantart.net/7065/f/2017/205/9/2/room_top_ai_by_toffeebot-dbhgpzs.png");
 }
 .empty-top-ai {
-  background-image: url("http://orig06.deviantart.net/5d9f/f/2017/205/c/5/empty_top_ai_by_toffeebot-dbhgpzl.png");
+  background-image: url("https://orig06.deviantart.net/5d9f/f/2017/205/c/5/empty_top_ai_by_toffeebot-dbhgpzl.png");
 }
 .room-side-ai {
-  background-image: url("http://orig05.deviantart.net/5ed6/f/2017/205/3/a/room_side_ai_by_toffeebot-dbhgpzq.png");
+  background-image: url("https://orig05.deviantart.net/5ed6/f/2017/205/3/a/room_side_ai_by_toffeebot-dbhgpzq.png");
 }
 .empty-side-ai {
-  background-image: url("http://orig07.deviantart.net/b945/f/2017/205/6/6/empty_side_ai_by_toffeebot-dbhgpzo.png");
+  background-image: url("https://orig07.deviantart.net/b945/f/2017/205/6/6/empty_side_ai_by_toffeebot-dbhgpzo.png");
 }
 .room-big-ai {
-  background-image: url("http://orig12.deviantart.net/86e6/f/2017/205/6/f/big_room_ai_by_toffeebot-dbhgpzj.png");
+  background-image: url("https://orig12.deviantart.net/86e6/f/2017/205/6/f/big_room_ai_by_toffeebot-dbhgpzj.png");
 }
 .room-side-ss {
-  background-image: url("http://orig08.deviantart.net/5046/f/2017/208/e/4/room_side_ss_by_toffeebot-dbhxra7.png");
+  background-image: url("https://orig08.deviantart.net/5046/f/2017/208/e/4/room_side_ss_by_toffeebot-dbhxra7.png");
 }
 .empty-side-ss {
-  background-image: url("http://orig09.deviantart.net/3acd/f/2017/208/5/d/empty_side_ss_by_toffeebot-dbhxr9h.png");
+  background-image: url("https://orig09.deviantart.net/3acd/f/2017/208/5/d/empty_side_ss_by_toffeebot-dbhxr9h.png");
 }
 .room-big-ss {
-  background-image: url("http://orig14.deviantart.net/6c69/f/2017/208/0/3/big_room_ss_by_toffeebot-dbhxrah.png");
+  background-image: url("https://orig14.deviantart.net/6c69/f/2017/208/0/3/big_room_ss_by_toffeebot-dbhxrah.png");
 }
 .ui-page-theme-a .ui-btn,
 html .ui-bar-a .ui-btn,
@@ -703,11 +743,6 @@ html head + body .ui-btn.ui-btn-a:visited {
     max-width: 75%;
   }
 }
-@media (max-width: 750px) {
-  .shorter {
-    max-width: 70%;
-  }
-}
 @media (max-width: 650px) {
   .calendar {
     padding: 1em;
@@ -718,8 +753,6 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 @media (max-width: 500px) {
   .shorter {
-    max-width: 95%;
-    width: 95%;
     padding-left: 0;
     padding-right: 0;
   }

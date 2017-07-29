@@ -11,7 +11,11 @@ https://codepen.io/volv/pen/bpwRLL
 // });
 
 // local database where the info from the spreadsheets are compiled
-var userDB = {},
+var userDB = {
+		"reference": {
+			"memories": {}
+		}
+	},
 	characterDB = {},
 	housingDB = {},
 	jobDB = {},
@@ -57,9 +61,17 @@ $(function() {
 		$.ajax({
 			url: 'https://spreadsheets.google.com/feeds/list/1akcljZBuQ8vzDrz3cFvEAGyma_GSBMo6YynH56uT2p4/od6/public/values?alt=json-in-script',
 			dataType: 'jsonp'
+		}),
+		$.ajax({
+			url: 'https://spreadsheets.google.com/feeds/list/12rNhHS0HsSpKjfovyb26ZQ4x4eOA_2rbLDMC7uc5R1s/o9sjc7b/public/values?alt=json-in-script',
+			dataType: 'jsonp'
+		}),
+		$.ajax({
+			url: 'https://spreadsheets.google.com/feeds/list/1MZEVM8nWfmyhxDIWvib0trVLmOFK79f2SIBAJDidMRI/od6/public/values?alt=json-in-script',
+			dataType: 'jsonp'
 		})
 	)
-	.done((main, housing, jobList) => compileData(main, housing, jobList));
+	.done((main, housing, jobList, submissions, memories) => compileData(main, housing, jobList, submissions, memories));
   });
 
 // Resize the background
@@ -77,37 +89,42 @@ function createBdayDB() {
 }
 
 // Process the gold calculation based on the spreadsheets.
-function compileData (main, housing, jobList) {
+function compileData (main, housing, jobList, submissions, memories) {
 	console.log(main);
   	console.log(housing);
 	console.log(jobList);
+	console.log(submissions);
+	console.log(memories);
 
 	// If something messed up here, stop processing.
-	if (!main[0] || !housing[0] || !jobList[0]) {
+	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0]) {
 		return;
 	}
 
 	createBdayDB();
-	console.log(bdayDB);
 
 	var mainFeed = main[0].feed,
 		housingFeed = housing[0].feed,
 		jobFeed = jobList[0].feed,
+		submissionsFeed = submissions[0].feed,
+		memoriesFeed = memories[0].feed,
 		mainRows = mainFeed.entry || [],
 		housingRows = housingFeed.entry || [],
-		jobRows = jobFeed.entry || [];
+		jobRows = jobFeed.entry || [],
+		submissionsRows = submissionsFeed.entry || [],
+		memoriesRows = memoriesFeed.entry || [];
 
 	createJobDB(jobRows);
-	console.log(jobDB);
 
-	// set up housing DB
+	// Populate housing DB
 	housingRows.forEach(function(row) {
 		var rowAddress = row['gsx$address'].$t,
 			rowAddressArray = rowAddress.split('/'),
 			rowHasPaint = row['gsx$haspaint'].$t,
 			rowHasBathroom = row['gsx$hasbathroom'].$t,
 			rowHasKitchen = row['gsx$haskitchen'].$t,
-			rowHasRoomA = row['gsx$hasrooma'].$t;
+			rowHasRoomA = row['gsx$hasrooma'].$t,
+			rowImg = row['gsx$img'].$t;
 
 		housingDB[rowAddress] = {
 			address: rowAddressArray,
@@ -116,7 +133,8 @@ function compileData (main, housing, jobList) {
 			hasPaint: rowHasPaint,
 			hasBathroom: rowHasBathroom,
 			hasKitchen: rowHasKitchen,
-			hasRoomA: rowHasRoomA
+			hasRoomA: rowHasRoomA,
+			img: rowImg
 		}
 	});
 
@@ -140,7 +158,9 @@ function compileData (main, housing, jobList) {
 			bonus: rowBonus,
 			spending: rowSpending,
 			total: rowTotal,
-			characters: rowCharacters
+			characters: rowCharacters,
+			memories: {},
+			submissions: []
 		}
 
 		div.className = 'cell-outer';
@@ -160,11 +180,46 @@ function compileData (main, housing, jobList) {
 		$('div#member-container').append(div);
 	}, this);
 
+	// Populate memories
+	memoriesRows.forEach(function(row) {
+		var rowKeys = Object.keys(row).filter(function(name) { return name.startsWith("gsx$") && name !== "gsx$user" }),
+			user = row['gsx$user'].$t,
+			key;
+
+		for (var i = 0; i< rowKeys.length; i++) {
+			key = rowKeys[i].substring(4);
+			userDB[user]["memories"][key] = (row[rowKeys[i]].$t).split(',');
+		}
+	});
+
+	// Populate submissions
+	submissionsRows.forEach(function(row) {
+		var users = (row['gsx$usernames'].$t).split(','),
+			date = row['gsx$date'].$t,
+			title = row['gsx$title'].$t,
+			gold = row ['gsx$gold'].$t,
+			link = row['gsx$submission'].$t,
+			linkApproved = false;
+
+		if (title !== "") {
+			linkApproved = true;
+		} else {
+			title = "pending approval";
+		}
+
+		for (var i = 0; i < users.length; i++) {
+			userDB[users[i]].submissions.push([linkApproved,title,gold,link,date]);
+		}
+	});
+
 	// Construct the calendar
 	createInitialCalendar();
 
 	// Populate housing
 	populateHousing();
+
+	// Populate list for add gold
+	populateUserList();
 
 	$("span#charaCount").text(characterCount);
 
@@ -185,24 +240,33 @@ function compileData (main, housing, jobList) {
 	console.log(userDB);
 	console.log(characterDB);
 	console.log(housingDB);
+	console.log(jobDB);
+	console.log(bdayDB);
 
 	console.log(characterCount);
 	console.log(hybridCount);
 	console.log(bdayCount);
 	console.log(housingCount);
 
-	$('form#fpcalc').on('submit', function(e){
-		e.preventDefault();
-		calculateFP();
+	$('form > button').on('click', function(e){
+-		e.preventDefault();
 	});
 
-	$('form#rpcalc').on('submit', function(e){
-		e.preventDefault();
-		calculateRP();
-	});
-
-  // Show page
+	// Show page
 	$("#loader").delay(1500).slideToggle("slow");
+}
+
+function populateUserList() {
+	var userList = Object.keys(userDB).filter(function(user){
+			return user !== "reference"
+		}),
+		optionsString = "";
+
+	userList.forEach(function(user) {
+		optionsString += `<option value="${user}">${user}</option>`;
+	});
+
+	$("select#submit-userList").append(optionsString);
 }
 
 function getPercentage(number) {
@@ -364,7 +428,8 @@ function getCharacterArray(row) {
 				isNPC: characterArray[4],
 				housing: getHousing(characterArray[5], characterName),
 				job: getJob(characterArray[6].split('/')),
-				image: characterArray[7] ? characterArray[7] : ""
+				image: characterArray[7],
+				wikia: characterArray[8] ? characterArray[8] : ""
 			};
 
 			if (characterArray[3] === "true") {
@@ -422,7 +487,9 @@ function appendUserInfo (user) {
 		userSpent = userData.spending,
 		userTotal = userData.total,
 		memberSince = userData.enroll,
+		memoriesData = appendMemoryInfo(userData.memories),
 		userCharacterData = appendCharacterInfo(userData.characters),
+		submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions),
 	  	div = document.createElement('div');
 
 		div.className = 'cell-outer';
@@ -431,9 +498,13 @@ function appendUserInfo (user) {
 			<div class="userContentHeader">
 				stats
 			</div>
-			<div class="userContent userStats" id="userStats">
+			<div class="userContent userStats padding-bottom-short" id="userStats">
 				<span class="userCells usersName">Username: <a href="${userLink}" target="_blank">${username}</a></span>
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
+				${memoriesData}
+				<div class="clear"></div>
+				<div class="add-memory-button"><img src="http://orig10.deviantart.net/9523/f/2017/210/4/c/addbtn_by_toffeebot-dbi3uyk.png"></div>
+				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="userInfoItem">
@@ -444,6 +515,7 @@ function appendUserInfo (user) {
 				<span class="userCells userGross">Earned: ${userGross}</span>
 				<span class="userCells userBonus">Bonuses: ${userBonus}</span>
 				<span class="userCells userSpendings">Spent: ${userSpent}</span>
+				${submissionsList}
 				<hr/>
 				<span class="userGoldTotal">Total: ${userTotal}</span>
 				<div class="clear"></div>
@@ -454,12 +526,55 @@ function appendUserInfo (user) {
 	return div;
 }
 
+function appendMemoryInfo (memoriesList) {
+	var memoryKeys = Object.keys(memoriesList),
+		collectedMemoriesList = "",
+		key,
+		memory;
+
+	for (var i = 0; i < memoryKeys.length; i++) {
+		key = memoryKeys[i];
+		memory = memoriesList[key];
+
+		// Not populated, skip.
+		if (memory[0] === "") {
+			continue;
+		}
+
+		if (memory[0] === "valid") {
+			collectedMemoriesList += `<a href="${memory[1]}" target="_blank"><img src="${userDB["reference"]["memories"][key][1]}"></a>`;
+		} else {
+			collectedMemoriesList += `<img src="${userDB["reference"]["memories"][key][1]}">`;
+		}
+	}
+
+	return (collectedMemoriesList === "" ? "" : `<hr/><span class="userCells userMemories">${collectedMemoriesList}</span>`);
+}
+
+function appendSubmissions(submissionsList) {
+	var submissionLink,
+		submissionsString = "",
+		submissionDate = "",
+		submissionLastDate = new Date(submissionsList[submissionsList.length-1][4]).toLocaleString();
+
+	submissionsList.forEach(function(submission) {
+		submissionDate = new Date(submission[4]).toLocaleString();
+		submissionLink = submission[0] ? `<a href="${submission[3]}" target="_blank">${submission[1]}</a>` : `${submission[1]}`;
+		submissionsString += `<li class=""><span class="brown-color">${submission[2]}g</span><br>${submissionLink}<br>Submitted: <span class="spring-color">${submissionDate}</span></li>`;
+	});
+
+
+//<span class="userCells userSpendings">Spent: ${userSpent}</span>
+	return `<span class="userCells userSubmissionDate">Last submission: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
+}
+
 function appendCharacterInfo (characterObj) {
 	var template,
 		compiledTemplate = "",
 		character,
 		birthday,
 		location,
+		hasWikia,
 		isHybrid,
 		isNPC,
 		image;
@@ -468,9 +583,10 @@ function appendCharacterInfo (characterObj) {
 		character = characterObj[characterName];
 		isHybrid = character.isHybrid === "true" ? `<img src="http://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
 		isNPC = character.isNPC === "true" ? `<img src="http://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
+		hasWikia = character.wikia !== "" ? `<a href="${character.wikia}" target="_blank"><img src="https://orig10.deviantart.net/3021/f/2017/210/7/6/wikiabtn_by_toffeebot-dbi3upx.png"></a>` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
-		image = character.image === "" ? "" : ` style="background-image: url('${character.image}');"`;
+		image = ` style="background-image: url('${character.image}');"`;
 
 		template = `<div class="userInfoItem">
 				<div class="userContentHeader">
@@ -483,6 +599,7 @@ function appendCharacterInfo (characterObj) {
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
 							<a href="${character.app}" target="_blank"><img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
+							${hasWikia}
 							${isHybrid}
 							${isNPC}
 						</div>
@@ -624,16 +741,95 @@ function parseUpgrades (locationObj) {
 	return hasPaint.concat(hasKitchen, hasBathroom, hasRoomA);
 }
 
-function SendScore() {
+function submitGold() {
+	$("div#submit-gold-error").text("");
+	$("div#submit-gold-result").text("");
+
+	var usernames = $("input#gold-users").val(),
+		gold = parseInt($("input#gold-gold").val().replace(",", "")),
+		link = $("input#gold-link").val().toLowerCase();
+
+	// handle error
+	if (usernames === "") {
+		$("div#submit-gold-error").text("Please select at least one user!");
+		return;
+	}
+
+	if (isNaN(gold)) {
+		$("div#submit-gold-error").text("Your gold input is incorrect. Please only use numbers, no text or special characters!");
+		return;
+	}
+
+	if (gold%25 !== 0) {
+		var fixed = Math.floor(gold / 25) * 25;
+		$("div#submit-gold-error").html(`Your gold calculation is incorrect. The gold total should be a factor of 25.<br><span class="winter-color">Did you mean ${fixed}?</span>`);
+		$("input#gold-gold").val(fixed);
+		return;
+	}
+
+	if (!isAcceptedLink(link)) {
+		$("div#submit-gold-error").text("You did not enter a proper url or your submission is not from a site we accept. Please try again or contact the admin.");
+		return;
+	}
+
+	// disable submit button while waiting
+	enableButton(false);
+
     $.get("https://script.google.com/macros/s/AKfycbwakI6-PGan8xiH9Z7wt3LQriogpIwjr2rzk93GsScClg5_4zs/exec", {
-            "name": document.getElementById("nameInput").value,
-            "number": document.getElementById("phoneInput").value,
-            "score": document.getElementById("textInput").value
+            "usernames": usernames,
+            "gold": gold,
+            "submission": link 
         },
         function(data) {
-            console.log(data);
-        }
+			enableButton(true);
+			$("input#gold-users").val("");
+			$("input#gold-gold").val("");
+			$("input#gold-link").val("");
+
+			var users = usernames.split(",");
+			users.forEach(function(user) {
+				userDB[user].submissions.push([false,"pending approval",gold,link,new Date().toISOString()]);
+			});
+			
+			$("div#submit-gold-result").text("your submission was received!");
+		}) 
+		.fail(function (error) {
+			enableButton(true);
+			$("div#submit-gold-error").text("something went wrong. please check your internet connection and try again later.");
+		}
     );
+}
+
+function isAcceptedLink(string) {
+	var acceptedMedia = ["://pbs.twimg.com/",
+						"://twitter.com/",
+						".tumblr.com/",
+						"://fav.me/",
+						".deviantart.com/art/",
+						"://docs.google.com/document/d/",
+						"://drive.google.com/open?id=",
+						"://sta.sh/"];
+
+	if (!string.startsWith("http")) {
+		return false;
+	}
+
+	for (var i = 0; i < acceptedMedia.length; i++) {
+		if (string.indexOf(acceptedMedia[i]) > -1) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function enableButton(enable) {
+	if (enable) {
+		$("button#submitGoldBtn").text("submit");
+		$("button#submitGoldBtn").prop("disabled", false);
+	} else {
+		$("button#submitGoldBtn").text("please wait");
+		$("button#submitGoldBtn").prop("disabled", true);
+	}
 }
 
 function toggleSeasonPrev() {
@@ -914,7 +1110,13 @@ function createDialog(div, residentTitle = null) {
 		var house = $(this).attr('data-id'),
 			template = parseLocation(housingDB[house], undefined, residentTitle);
 
-		$("div#charaHousingInfo").empty().append(template);
+		if (housingDB[house].img !== "") {
+			$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
+		} else {
+			$("div#dialog-portrait").css('background-image', `url("https://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png")`);
+		}
+
+		$("div#housingInfo").empty().append(template);
 		openDialog();
 	});
 }
@@ -947,12 +1149,12 @@ function calculateFP() {
 	}
 
 	if(isNaN(eventBonus)) {
-		$("div#fp-error-message").text("Your event bonus input is incorrect. Please only use numbers, no commas or special characters!");
+		$("div#fp-error-message").text("Your event bonus input is incorrect. Please only use numbers, no text or special characters!");
 		return;
 	}
 
 	if(isNaN(etcBonus)) {
-		$("div#fp-error-message").text("Your additional bonus input is incorrect. Please only use numbers, no commas or special characters!");
+		$("div#fp-error-message").text("Your additional bonus input is incorrect. Please only use numbers, no text or special characters!");
 		return;
 	}
 
@@ -1006,12 +1208,12 @@ function calculateRP() {
 	}
 
 	if(isNaN(numRpers)) {
-		$("div#rp-error-message").text("Your number of participants input is incorrect. Please only use numbers, no commas or special characters!");
+		$("div#rp-error-message").text("Your number of participants input is incorrect. Please only use numbers, no text or special characters!");
 		return;
 	}
 
 	if(isNaN(wordCount)) {
-		$("div#rp-error-message").text("Your word count input is incorrect. Please only use numbers, no commas or special characters!");
+		$("div#rp-error-message").text("Your word count input is incorrect. Please only use numbers, no text or special characters!");
 		return;
 	}
 
@@ -1029,4 +1231,28 @@ function calculateRP() {
 	total = Math.floor(wordCount / numRpers / 10 / 25) * 25;
 
 	$("div#rp-total").text(total + "g");
+}
+
+function clearUsernames() {
+	$("div#submit-gold-error").text("");
+	$("div#submit-gold-result").text("");
+	$("input#gold-users").val("");
+}
+
+function addUsername() {
+	$("div#submit-gold-error").text("");
+	$("div#submit-gold-result").text("");
+
+	var user = $("select#submit-userList").val(),
+		currentUsers = $("input#gold-users").val();
+
+	if (user === "") {
+		return; // no user, we're done
+	}
+
+	if (currentUsers.indexOf(user) > -1) {
+		$("div#submit-gold-error").text("You've already added that user!");
+		return;
+	}
+	$("input#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
 }

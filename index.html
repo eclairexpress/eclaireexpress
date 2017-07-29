@@ -22,13 +22,13 @@
             </div>
             <div class="userContent userCharacter">
                 <div class="userCharaLeft">
-                    <div class="userCharaPortrait"></div>
+                    <div class="userCharaPortrait" id="dialog-portrait"></div>
                 </div>
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
 							<a href="#" onclick="closeDialog()" id="closeDialog"><img src="http://orig08.deviantart.net/c7e3/f/2017/200/3/d/closebtn_by_toffeebot-dbgzhhr.png"></a>
 						</div>
-						<div class="charaHousingInfo" id="charaHousingInfo">
+						<div class="charaHousingInfo" id="housingInfo">
 						</div>
 					</div>
 				</div>
@@ -271,6 +271,70 @@
         </div><!-- /page -->
 
 
+        <!-- add gold page -->
+        <div data-role="page" id="addgold">
+            <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">
+                <h1>ECLAIR EXPRESS</h1>
+                <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button">Back</a>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content">
+                <div class="userInfo add-center">
+                    <div class="userInfoItem inline-block">
+                        <div class="userContentHeader">
+                            submit for gold
+                        </div>
+                        <div class="userContent calculator-form">
+                            <span class="calc-about">to collect gold on submissions, simply complete this form below. Please check your user page afterwards to make sure it was added. <span class="fall-color">An internet connection is required for this action.</span>
+                            <span><br>The submission will appear as 'pending approval' on your user page until the admin clears it, but the gold will be available to spend.</span></span>
+
+                            <form id="submit-gold">
+                                <label for="gold-users">
+                                    <span>usernames</span>
+                                </label>
+                                <input type="text" id="gold-users" name="gold-users" placeholder="Add users..." disabled>
+                                <select id="submit-userList" name="submit-userList">
+                                    <option value="" selected></option>
+                                </select>
+                                <button class="gold-clearBtn button50" onclick="clearUsernames()">clear</button><button class="gold-addBtn button50" onclick="addUsername()">add</button>
+                                <span class="form-subtext">The names of the users who contributed to the submission.
+                                    <br><span class="fall-color">To clear the list, click clear.</span> <span class="spring-color">To add to the list, select the user from the dropdown list and click add.</span></span>
+
+                                <label for="gold-gold">
+                                    <span>gold</span>
+                                </label>
+                                <input type="text" id="gold-gold" name="gold-gold">
+                                <span class="form-subtext">The amount of gold to be collected for the submission. If certain users are collecting different amounts of gold (ie. due to bonuses), they should be added separately.</span>
+
+                                 <label for="gold-link">
+                                    <span>link</span>
+                                </label>
+                                <input type="text" id="gold-link" name="gold-link">
+                                <span class="form-subtext">The link to your submission. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
+
+                                <button id="submitGoldBtn" class="submitBtn" onclick="submitGold()">submit</button>
+                            </form>
+                            <hr/>
+                            <div id="submit-gold-error" class="fall-color"></div>
+                            <div id="submit-gold-result" class="form-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- ui-content -->
+
+            <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#main" data-icon="info" data-transition="none">home</a></li>
+                        <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                        <li><a href="#birthday" data-icon="calendar" data-transition="none">Birthdays</a></li>
+                        <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+
         <!-- rp calculator page -->
         <div data-role="page" id="rpcalculator">
             <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">
@@ -302,7 +366,7 @@
                                 <input type="text" id="rp-wc" name="rp-wc">
                                 <span class="form-subtext">The total word count of the roleplay log. It should be 1000 words or more.</span>
 
-                                <button type="submit" class="submitButton">calculate</button>
+                                <button class="submitBtn" onclick="calculateRP()">calculate</button>
                             </form>
                             <hr/>
                             <div id="rp-error-message" class="fall-color"></div>
@@ -420,7 +484,7 @@
                                 <input type="text" id="fp-etc" name="fp-etc">
                                 <span class="form-subtext"><span class="fall-color">Input a number only!! Leave blank if none.</span> This is for special conditions (ie. fp boosting item).</span>
 
-                                <button type="submit" class="submitButton">calculate</button>
+                                <button class="submitBtn" onclick="calculateFP()">calculate</button>
                             </form>
                             <hr/>
                             <div id="fp-error-message" class="fall-color"></div>
