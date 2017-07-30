@@ -745,7 +745,7 @@ function submitGold() {
 	$("div#submit-gold-error").text("");
 	$("div#submit-gold-result").text("");
 
-	var usernames = $("input#gold-users").val(),
+	var usernames = $("textarea#gold-users").val(),
 		gold = parseInt($("input#gold-gold").val().replace(",", "")),
 		link = $("input#gold-link").val().toLowerCase();
 
@@ -782,7 +782,7 @@ function submitGold() {
         },
         function(data) {
 			enableButton(true);
-			$("input#gold-users").val("");
+			$("textarea#gold-users").val("");
 			$("input#gold-gold").val("");
 			$("input#gold-link").val("");
 
@@ -791,7 +791,7 @@ function submitGold() {
 				userDB[user].submissions.push([false,"pending approval",gold,link,new Date().toISOString()]);
 			});
 			
-			$("div#submit-gold-result").text("your submission was received!");
+			$("div#submit-gold-result").text("your submission was received! Please check your user page to make sure it was added.");
 		}) 
 		.fail(function (error) {
 			enableButton(true);
@@ -1236,7 +1236,7 @@ function calculateRP() {
 function clearUsernames() {
 	$("div#submit-gold-error").text("");
 	$("div#submit-gold-result").text("");
-	$("input#gold-users").val("");
+	$("textarea#gold-users").val("");
 }
 
 function addUsername() {
@@ -1244,7 +1244,7 @@ function addUsername() {
 	$("div#submit-gold-result").text("");
 
 	var user = $("select#submit-userList").val(),
-		currentUsers = $("input#gold-users").val();
+		currentUsers = $("textarea#gold-users").val();
 
 	if (user === "") {
 		return; // no user, we're done
@@ -1254,5 +1254,5 @@ function addUsername() {
 		$("div#submit-gold-error").text("You've already added that user!");
 		return;
 	}
-	$("input#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
+	$("textarea#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
 }

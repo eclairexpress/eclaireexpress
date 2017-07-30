@@ -285,14 +285,14 @@
                             submit for gold
                         </div>
                         <div class="userContent calculator-form">
-                            <span class="calc-about">to collect gold on submissions, simply complete this form below. Please check your user page afterwards to make sure it was added. <span class="fall-color">An internet connection is required for this action.</span>
-                            <span><br>The submission will appear as 'pending approval' on your user page until the admin clears it, but the gold will be available to spend.</span></span>
+                            <span class="calc-about">complete the following to collect gold on submissions. <span class="fall-color">An internet connection is required for this action.</span>
+                            <span>The submission will appear as 'pending approval' on your user page until the admin clears it, but the gold will be added.</span></span>
 
                             <form id="submit-gold">
                                 <label for="gold-users">
                                     <span>usernames</span>
                                 </label>
-                                <input type="text" id="gold-users" name="gold-users" placeholder="Add users..." disabled>
+                                <textarea id="gold-users" name="gold-users" placeholder="Add users..." readonly></textarea>
                                 <select id="submit-userList" name="submit-userList">
                                     <option value="" selected></option>
                                 </select>
@@ -304,7 +304,7 @@
                                     <span>gold</span>
                                 </label>
                                 <input type="text" id="gold-gold" name="gold-gold">
-                                <span class="form-subtext">The amount of gold to be collected for the submission. If certain users are collecting different amounts of gold (ie. due to bonuses), they should be added separately.</span>
+                                <span class="form-subtext"><span class="fall-color">input numbers only!</span> The amount of gold to be collected. If certain users are collecting different amounts of gold (ie. due to bonuses), they should be submitted separately.</span>
 
                                  <label for="gold-link">
                                     <span>link</span>
@@ -351,7 +351,7 @@
                         <div class="userContent calculator-form">
                             <span class="calc-about">this calculates the gold your rp log will earn.
                             <br><span>The current rate is 100 gold per 1000 words, divided by the number of participants. The returned gold will be a factor of 25, rounded down.</span>
-                            <span class="fall-color">Input a number only!!</span></span>
+                            <span class="fall-color">input numbers only!</span></span>
 
                             <form id="rpcalc">
                                 <label for="rp-num">
@@ -475,14 +475,14 @@
                                     <span>Event Bonus</span>
                                 </label>
                                 <input type="text" id="fp-event" name="fp-event">
-                                <span class="form-subtext"><span class="fall-color">Input a number only!! Leave blank if none.</span> Event bonuses are given out during group events (mini-events, festival events, dream events). Specified by the event journal.</span>
+                                <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> Event bonuses are given out during group events (mini-events, festival events, dream events). Specified by the event journal.</span>
 
                                 <!--additional bonus? -> random fp items n shet-->
                                 <label for="fp-etc">
                                     <span>Additional bonus</span>
                                 </label>
                                 <input type="text" id="fp-etc" name="fp-etc">
-                                <span class="form-subtext"><span class="fall-color">Input a number only!! Leave blank if none.</span> This is for special conditions (ie. fp boosting item).</span>
+                                <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> This is for special conditions (ie. fp boosting item).</span>
 
                                 <button class="submitBtn" onclick="calculateFP()">calculate</button>
                             </form>
