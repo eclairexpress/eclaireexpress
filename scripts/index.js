@@ -540,7 +540,7 @@ function appendUserInfo (user) {
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
 				${memoriesData}
 				<div class="clear"></div>
-				<div class="add-memory-button" data-id="${username}" id="add-memory-button"><img src="http://orig10.deviantart.net/9523/f/2017/210/4/c/addbtn_by_toffeebot-dbi3uyk.png"></div>
+				<div class="add-memory-button" data-id="${username}" id="add-memory-button"><img src="https://orig14.deviantart.net/9dc9/f/2017/210/c/b/addbtn_by_toffeebot-dbi6nn6.png"></div>
 				<div class="clear"></div>
 			</div>
 		</div>
