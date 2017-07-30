@@ -204,10 +204,15 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .add-memory-button {
   float:right;
+  cursor: pointer;
 }
 
 textarea#gold-users {
   overflow-y:auto;
+}
+
+#memory-form {
+  display:none;
 }
 
 .userCharacter {
@@ -252,7 +257,7 @@ select option {
   text-align: center;
 }
 
-#fpcalc > label, #rpcalc > label, #submit-gold > label {
+#fpcalc > label, #rpcalc > label, #submit-gold > label, #submit-memory > label {
   margin-top: 1em;
 }
 
@@ -377,6 +382,9 @@ span span, .brown-color {
     display: none !important;
 }
 
+#submit-memory .ui-input-text:first-child {
+  display: none;
+}
 .loader {
   position: fixed;
   z-index: 99999;

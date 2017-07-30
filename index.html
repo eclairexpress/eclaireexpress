@@ -335,6 +335,64 @@
         </div><!-- /page -->
 
 
+        <!-- add memory page -->
+        <div data-role="page" id="addmemory">
+            <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">
+                <h1>ECLAIR EXPRESS</h1>
+                <a href="#" data-rel="back" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all"  data-role="button" role="button">Back</a>
+            </div><!-- /header -->
+
+            <div role="main" class="ui-content" id="memory-form">
+                <div class="userInfo add-center">
+                    <div class="userInfoItem inline-block">
+                        <div class="userContentHeader" id="memory-title">
+                            unlock memory badges
+                        </div>
+                        <div class="userContent calculator-form">
+                            <span class="calc-about">complete the following to collect memory badges. <span class="fall-color">An internet connection is required for this action.</span>
+                            <span>The badge will be added right away, but will link to the submission once approved.</span></span>
+
+                            <form id="submit-memory">
+                                <input type="text" id="memory-user" name="gold-users">
+
+                                <label for="memory-memory">
+                                    <span>memory badge</span>
+                                </label>
+                                <div id="memory-image"></div>
+                                <select id="memory-memory" name="memory-memory">
+                                    <option value="" selected></option>
+                                </select>
+                                <span class="form-subtext">The memory badge to be obtained. the list only contains memory badges you have yet to collect.</span>
+
+                                 <label for="memory-link">
+                                    <span>link</span>
+                                </label>
+                                <input type="text" id="memory-link" name="memory-link">
+                                <span class="form-subtext">The link to your proof of completion. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
+
+                                <button id="submitMemoryBtn" class="submitBtn" onclick="submitMemory()">submit</button>
+                            </form>
+                            <hr/>
+                            <div id="submit-memory-error" class="fall-color"></div>
+                            <div id="submit-memory-result" class="form-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- ui-content -->
+
+            <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#main" data-icon="info" data-transition="none">home</a></li>
+                        <li><a href="#list" data-icon="bullets" data-transition="none">Members</a></li>
+                        <li><a href="#birthday" data-icon="calendar" data-transition="none">Birthdays</a></li>
+                        <li><a href="#house" data-icon="home" data-transition="none">Housing</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+
         <!-- rp calculator page -->
         <div data-role="page" id="rpcalculator">
             <div data-role="header" data-theme="f" data-position="fixed" data-tap-toggle="false" data-id="foo" class="ui-header ui-bar-f ui-header-fixed slidedown" role="banner">

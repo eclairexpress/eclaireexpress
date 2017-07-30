@@ -90,12 +90,6 @@ function createBdayDB() {
 
 // Process the gold calculation based on the spreadsheets.
 function compileData (main, housing, jobList, submissions, memories) {
-	console.log(main);
-  	console.log(housing);
-	console.log(jobList);
-	console.log(submissions);
-	console.log(memories);
-
 	// If something messed up here, stop processing.
 	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0]) {
 		return;
@@ -174,12 +168,31 @@ function compileData (main, housing, jobList, submissions, memories) {
 				pageContent = appendUserInfo(user);
 			
 			$('div#userInfo').empty().append(pageContent);
+
+			$("div#add-memory-button").on( 'click', function( ev ){
+				var user = $(this).attr('data-id');
+
+				if (!user || user === "") {
+					// uh oh
+					return;
+				}
+
+				$("div#memory-title").text("unlock memory badges for " + user);
+				$("input#memory-user").val(user);
+				populateMemoriesRemaining(userDB[user].memories);
+				$("input#memory-link").val("");
+				$("div#submit-memory-error").empty();
+				$("div#submit-memory-result").empty();
+				$("div#memory-form").css("display", "block");
+
+				$.mobile.changePage('#addmemory', {transition:'none'});
+			});
 			$.mobile.changePage('#view', {transition:'none'});
 		});
 
 		$('div#member-container').append(div);
 	}, this);
-
+	
 	// Populate memories
 	memoriesRows.forEach(function(row) {
 		var rowKeys = Object.keys(row).filter(function(name) { return name.startsWith("gsx$") && name !== "gsx$user" }),
@@ -237,23 +250,47 @@ function compileData (main, housing, jobList, submissions, memories) {
 	$("span#home-res").text("stayed in shop residence or provided lodging: " + getPercentage(housingCount["cm"]) + "%");
 
 	// REMOVE LATER
-	console.log(userDB);
-	console.log(characterDB);
-	console.log(housingDB);
-	console.log(jobDB);
-	console.log(bdayDB);
-
-	console.log(characterCount);
-	console.log(hybridCount);
-	console.log(bdayCount);
-	console.log(housingCount);
-
 	$('form > button').on('click', function(e){
 -		e.preventDefault();
 	});
 
+	$("select#memory-memory").on("change", function(e){
+		var selectedKey = e.currentTarget.value;
+		if (selectedKey === "") {
+			$("div#memory-image").empty();
+			return;
+		}
+		$("div#memory-image").html(`<img src="${userDB["reference"]["memories"][selectedKey][1]}">`);
+	});
+
+	$(document).on("pagehide","#addmemory",function(){
+		$("div#memory-form").css("display", "none");
+	});
+
 	// Show page
 	$("#loader").delay(1500).slideToggle("slow");
+}
+
+function populateMemoriesRemaining(memoriesList) {
+	var memoryKeys = Object.keys(memoriesList),
+		memoryArray,
+		key,
+		memoryOptionsString = `<option value="" selected></option>`;
+
+	for (var i = 0; i< memoryKeys.length; i++) {
+		key = memoryKeys[i],
+		memoryArray = memoriesList[key];
+
+		if (memoryArray[0] !== "") {
+			continue;
+		}
+
+		memoryOptionsString += `<option value="${key}">${userDB["reference"]["memories"][key][0]}</option>`;
+	}
+
+	$("div#memory-image").empty();
+	$("select#memory-memory").empty().append(memoryOptionsString);
+	$('select#memory-memory').trigger('change');
 }
 
 function populateUserList() {
@@ -503,7 +540,7 @@ function appendUserInfo (user) {
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
 				${memoriesData}
 				<div class="clear"></div>
-				<div class="add-memory-button"><img src="http://orig10.deviantart.net/9523/f/2017/210/4/c/addbtn_by_toffeebot-dbi3uyk.png"></div>
+				<div class="add-memory-button" data-id="${username}" id="add-memory-button"><img src="http://orig10.deviantart.net/9523/f/2017/210/4/c/addbtn_by_toffeebot-dbi3uyk.png"></div>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -742,8 +779,8 @@ function parseUpgrades (locationObj) {
 }
 
 function submitGold() {
-	$("div#submit-gold-error").text("");
-	$("div#submit-gold-result").text("");
+	$("div#submit-gold-error").empty();
+	$("div#submit-gold-result").empty();
 
 	var usernames = $("textarea#gold-users").val(),
 		gold = parseInt($("input#gold-gold").val().replace(",", "")),
@@ -773,15 +810,13 @@ function submitGold() {
 	}
 
 	// disable submit button while waiting
-	enableButton(false);
-
+	enableButtonGold(false);
     $.get("https://script.google.com/macros/s/AKfycbwakI6-PGan8xiH9Z7wt3LQriogpIwjr2rzk93GsScClg5_4zs/exec", {
             "usernames": usernames,
             "gold": gold,
             "submission": link 
         },
         function(data) {
-			enableButton(true);
 			$("textarea#gold-users").val("");
 			$("input#gold-gold").val("");
 			$("input#gold-link").val("");
@@ -790,12 +825,56 @@ function submitGold() {
 			users.forEach(function(user) {
 				userDB[user].submissions.push([false,"pending approval",gold,link,new Date().toISOString()]);
 			});
-			
+
+			enableButtonGold(true);
 			$("div#submit-gold-result").text("your submission was received! Please check your user page to make sure it was added.");
 		}) 
 		.fail(function (error) {
-			enableButton(true);
+			enableButtonGold(true);
 			$("div#submit-gold-error").text("something went wrong. please check your internet connection and try again later.");
+		}
+    );
+}
+
+function submitMemory() {
+	$("div#submit-memory-error").empty();
+	$("div#submit-memory-result").empty();
+
+	var user = $("input#memory-user").val(),
+		key = $("select#memory-memory").val(),
+		link = $("input#memory-link").val().toLowerCase(),
+		value;
+
+	// handle error
+	if (key === "") {
+		$("div#submit-memory-error").text("Please select a memory badge to be claimed.");
+		return;
+	}
+
+	if (!isAcceptedLink(link)) {
+		$("div#submit-memory-error").text("You did not enter a proper url or your submission is not from a site we accept. Please try again or contact the admin.");
+		return;
+	}
+	value = "true," + link;
+
+	// disable submit button while waiting
+	enableButtonMemory(false);
+    $.get("https://script.google.com/macros/s/AKfycby7s6yUPlZ5Rt7h4Auyrg7sl4H_AAOuLw6UN7X0fzZIsNoXevpy/exec", {
+			"key": key,
+			"user": user,
+			"value": value
+        },
+        function(data) {
+			$("input#memory-link").val("");
+			userDB[user]["memories"][key] = ["true", link];
+			populateMemoriesRemaining(userDB[user].memories);
+
+			enableButtonMemory(true);
+			$("div#submit-memory-result").text("your proof was received! Please check your user page to make sure it was added.");
+		}) 
+		.fail(function (error) {
+			enableButtonMemory(true);
+			$("div#submit-memory-error").text("something went wrong. please check your internet connection and try again later.");
 		}
     );
 }
@@ -822,13 +901,23 @@ function isAcceptedLink(string) {
 	return false;
 }
 
-function enableButton(enable) {
+function enableButtonGold(enable) {
 	if (enable) {
 		$("button#submitGoldBtn").text("submit");
 		$("button#submitGoldBtn").prop("disabled", false);
 	} else {
 		$("button#submitGoldBtn").text("please wait");
 		$("button#submitGoldBtn").prop("disabled", true);
+	}
+}
+
+function enableButtonMemory(enable) {
+	if (enable) {
+		$("button#submitMemoryBtn").text("submit");
+		$("button#submitMemoryBtn").prop("disabled", false);
+	} else {
+		$("button#submitMemoryBtn").text("please wait");
+		$("button#submitMemoryBtn").prop("disabled", true);
 	}
 }
 
@@ -1123,8 +1212,8 @@ function createDialog(div, residentTitle = null) {
 
 function calculateFP() {
 	// Clear displayed inputs
-	$("div#fp-total").text("");
-	$("div#fp-error-message").text("");
+	$("div#fp-total").empty();
+	$("div#fp-error-message").empty();
 
 	if ($("#fp-canon").val() === "false") {
 		$("div#fp-error-message").text("Only canon interactions can earn FP.");
@@ -1188,8 +1277,8 @@ function calculateFP() {
 
 function calculateRP() {
 	// Clear displayed inputs
-	$("div#rp-total").text("");
-	$("div#rp-error-message").text("");
+	$("div#rp-total").empty();
+	$("div#rp-error-message").empty();
 
 	var numRpers = $("#rp-num").val().replace(",", ""),
 		wordCount = $("#rp-wc").val().replace(",", ""),
@@ -1234,14 +1323,14 @@ function calculateRP() {
 }
 
 function clearUsernames() {
-	$("div#submit-gold-error").text("");
-	$("div#submit-gold-result").text("");
+	$("div#submit-gold-error").empty();
+	$("div#submit-gold-result").empty();
 	$("textarea#gold-users").val("");
 }
 
 function addUsername() {
-	$("div#submit-gold-error").text("");
-	$("div#submit-gold-result").text("");
+	$("div#submit-gold-error").empty();
+	$("div#submit-gold-result").empty();
 
 	var user = $("select#submit-userList").val(),
 		currentUsers = $("textarea#gold-users").val();
