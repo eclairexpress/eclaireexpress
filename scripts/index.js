@@ -489,6 +489,10 @@ function getCharacterArray(row) {
 }
 
 function getJob(jobArray) {
+	if (jobArray.length === 1) {
+		return jobArray[0];
+	}
+
 	return jobDB[jobArray[0]]["job" + jobArray[1]];
 }
 
@@ -684,7 +688,7 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 		// not an object, would be a shop building
 		template = `<br><span>Home Address: <span>${location}</span></span>`;
 	} else {
-		housemates = getHousemates(location.residents, characterName, residentTitle);
+		housemates = getHousemates(location.residents, characterName, residentTitle, location.isCommunal);
 		address = getAddress(location.address, location.address[1] === "cc");
 		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
 
@@ -746,7 +750,7 @@ function getAddress(addressArray, numOnly = false) {
 	return location + " " + number;
 }
 
-function getHousemates(housematesString, characterName = null, residentTitle = null) {
+function getHousemates(housematesString, characterName = null, residentTitle = null, isCommunal = false) {
 	var housemateArray = housematesString.split(','),
 		newHousemateList = "",
 		housemateURL,
@@ -766,7 +770,7 @@ function getHousemates(housematesString, characterName = null, residentTitle = n
 		}
 	});
 
-	return newHousemateList !== "" ? (characterName ? "<br><span>Housemate" : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "s" : "") + `: <span>${newHousemateList}</span></span>` : "";
+	return newHousemateList !== "" ? (characterName ? (isCommunal ? "<br><span>Roommate" : "<br><span>Housemate") : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "s" : "") + `: <span>${newHousemateList}</span></span>` : "";
 }
 
 function parseUpgrades (locationObj) {
@@ -989,13 +993,11 @@ function constructBdayForSeason(season) {
 function closeDialog() {
 	$("div#dialog").hide();
 	$("div#overlay-bg").hide();
-	$( "body" ).removeClass( "no-scroll" );
 }
 
 function openDialog() {
 	$("div#dialog").show();
 	$("div#overlay-bg").show();
-	$( "body" ).addClass( "no-scroll" );
 }
 
 function populateHousing() {
