@@ -236,6 +236,7 @@ function compileData (main, housing, jobList, submissions, memories) {
 
 	$("span#charaCount").text(characterCount);
 
+	$("span#humanRatio").text("are human: " + getPercentage(characterCount - hybridCount) + "%");
 	$("span#hybridRatio").text("are hybrid: " + getPercentage(hybridCount) + "%");
 	$("span#npcRatio").text("are npcs: " + getPercentage(npcCount) + "%");
 
