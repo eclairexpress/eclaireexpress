@@ -622,8 +622,8 @@ function appendCharacterInfo (characterObj) {
 
 	Object.keys(characterObj).forEach(function (characterName) {
 		character = characterObj[characterName];
-		isHybrid = character.isHybrid === "true" ? `<img src="http://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
-		isNPC = character.isNPC === "true" ? `<img src="http://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
+		isHybrid = character.isHybrid === "true" ? `<img src="https://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
+		isNPC = character.isNPC === "true" ? `<img src="https://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
 		hasWikia = character.wikia !== "" ? `<a href="${character.wikia}" target="_blank"><img src="https://orig10.deviantart.net/3021/f/2017/210/7/6/wikiabtn_by_toffeebot-dbi3upx.png"></a>` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
@@ -639,7 +639,7 @@ function appendCharacterInfo (characterObj) {
 					</div>
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
-							<a href="${character.app}" target="_blank"><img src="http://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
+							<a href="${character.app}" target="_blank"><img src="https://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
 							${hasWikia}
 							${isHybrid}
 							${isNPC}
