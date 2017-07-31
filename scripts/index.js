@@ -490,7 +490,7 @@ function getCharacterArray(row) {
 
 function getJob(jobArray) {
 	if (jobArray.length === 1) {
-		return jobArray[0];
+		return jobArray[0] !== "" ? jobArray[0] : "n/a (civilian)";
 	}
 
 	return jobDB[jobArray[0]]["job" + jobArray[1]];
@@ -553,9 +553,9 @@ function appendUserInfo (user) {
 				gold
 			</div>
 			<div class="userContent userGold" id="userGold">
-				<span class="userCells userGross">Earned: ${userGross}</span>
-				<span class="userCells userBonus">Bonuses: ${userBonus}</span>
-				<span class="userCells userSpendings">Spent: ${userSpent}</span>
+				<span class="userCells userGross">Earned: +${userGross}</span>
+				<span class="userCells userBonus">Bonuses: +${userBonus}</span>
+				<span class="userCells userSpendings">Spent: -${userSpent}</span>
 				${submissionsList}
 				<hr/>
 				<span class="userGoldTotal">Total: ${userTotal}</span>
