@@ -801,17 +801,17 @@ function submitGold() {
 		return;
 	}
 
+	if (gold <= 0) {
+		$("div#submit-gold-error").html("You can't earn 0 or less gold!");
+		return;
+	}
+
 	if (gold%25 !== 0) {
 		var fixed = Math.floor(gold / 25) * 25;
 		$("div#submit-gold-error").html(`Your gold calculation is incorrect. The gold total should be a factor of 25.<br><span class="winter-color">Did you mean ${fixed}?</span>`);
 		$("input#gold-gold").val(fixed);
 		return;
-	}
-
-	if (gold <= 0) {
-		$("div#submit-gold-error").html("You can't earn 0 or less gold!");
-		return;
-	}
+	}	
 
 	if (!isAcceptedLink(link)) {
 		$("div#submit-gold-error").text("You did not enter a proper url or your submission is not from a site we accept. Please try again or contact the admin.");
