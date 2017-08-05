@@ -137,9 +137,8 @@ function compileData (main, housing, jobList, submissions, memories) {
 			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
 			rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t),
 			rowGold = parseInt(row['gsx$gross'].$t),
-			rowBonus = parseInt(row['gsx$bonus'].$t),
 			rowSpending = parseInt(row['gsx$spending'].$t),
-			rowTotal = rowGold + rowBonus - rowSpending,
+			rowTotal = rowGold + rowSpending,
 			rowCharacters = getCharacterArray(row);
 
 			div = document.createElement('div');
@@ -149,7 +148,6 @@ function compileData (main, housing, jobList, submissions, memories) {
 			img: rowImg,
 			enroll: rowEnroll,
 			gold: rowGold,
-			bonus: rowBonus,
 			spending: rowSpending,
 			total: rowTotal,
 			characters: rowCharacters,
@@ -525,7 +523,6 @@ function appendUserInfo (user) {
 	  	username = userData.username,
 	  	userLink = `https://${username}.deviantart.com`,
 	  	userGross = userData.gold,
-		userBonus = userData.bonus,
 		userSpent = userData.spending,
 		userTotal = userData.total,
 		memberSince = userData.enroll,
@@ -555,8 +552,7 @@ function appendUserInfo (user) {
 			</div>
 			<div class="userContent userGold" id="userGold">
 				<span class="userCells userGross">Earned: +${userGross}</span>
-				<span class="userCells userBonus">Bonuses: +${userBonus}</span>
-				<span class="userCells userSpendings">Spent: -${userSpent}</span>
+				<span class="userCells userSpendings">Spent: ${userSpent}</span>
 				${submissionsList}
 				<hr/>
 				<span class="userGoldTotal">Total: ${userTotal}</span>
@@ -602,12 +598,12 @@ function appendSubmissions(submissionsList) {
 	submissionsList.forEach(function(submission) {
 		submissionDate = new Date(submission[4]).toLocaleString();
 		submissionLink = submission[0] ? `<a href="${submission[3]}" target="_blank">${submission[1]}</a>` : `${submission[1]}`;
-		submissionsString += `<li class=""><span class="brown-color">${submission[2]}g</span><br>${submissionLink}<br>Submitted: <span class="spring-color">${submissionDate}</span></li>`;
+		submissionsString += `<li class=""><span class="brown-color">${submission[2]}g</span><br>${submissionLink}<br>Recorded: <span class="spring-color">${submissionDate}</span></li>`;
 	});
 
 
 //<span class="userCells userSpendings">Spent: ${userSpent}</span>
-	return `<span class="userCells userSubmissionDate">Last submission: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
+	return `<span class="userCells userSubmissionDate">Last entry: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
 }
 
 function appendCharacterInfo (characterObj) {
