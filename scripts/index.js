@@ -808,6 +808,11 @@ function submitGold() {
 		return;
 	}
 
+	if (gold <= 0) {
+		$("div#submit-gold-error").html("You can't earn 0 or less gold!");
+		return;
+	}
+
 	if (!isAcceptedLink(link)) {
 		$("div#submit-gold-error").text("You did not enter a proper url or your submission is not from a site we accept. Please try again or contact the admin.");
 		return;
