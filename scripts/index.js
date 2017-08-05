@@ -896,7 +896,9 @@ function isAcceptedLink(string) {
 						".deviantart.com/art/",
 						"://docs.google.com/document/d/",
 						"://drive.google.com/open?id=",
-						"://sta.sh/"];
+						"://sta.sh/",
+						"://sta.sh/comments/",
+						"://comments.deviantart.com/"];
 
 	if (!string.startsWith("http")) {
 		return false;
