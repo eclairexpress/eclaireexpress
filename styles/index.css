@@ -291,7 +291,8 @@ hr {
   padding-left: 0;
 }
 .submissionsList {
-  text-align: center;
+  padding: 0em 1em;
+  text-align: left;
   font-size: 0.9em;
   margin: 0rem 1rem;
   margin-top: 1em;
