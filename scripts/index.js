@@ -208,7 +208,7 @@ function compileData (main, housing, jobList, submissions, memories) {
 		var users = (row['gsx$usernames'].$t).split(','),
 			date = row['gsx$date'].$t,
 			title = row['gsx$title'].$t,
-			gold = row ['gsx$gold'].$t,
+			gold = parseInt(row['gsx$gold'].$t),
 			link = row['gsx$submission'].$t,
 			linkApproved = false;
 
@@ -542,7 +542,7 @@ function appendUserInfo (user) {
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
 				${memoriesData}
 				<div class="clear"></div>
-				<div class="add-memory-button" data-id="${username}" id="add-memory-button"><img src="https://orig13.deviantart.net/b737/f/2017/210/c/8/addbtn_by_toffeebot-dbi6ojd.png"></div>
+				<div class="add-memory-button" data-id="${username}" id="add-memory-button" style="display:none"><img src="https://orig13.deviantart.net/b737/f/2017/210/c/8/addbtn_by_toffeebot-dbi6ojd.png"></div>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -593,12 +593,15 @@ function appendSubmissions(submissionsList) {
 	var submissionLink,
 		submissionsString = "",
 		submissionDate = "",
-		submissionLastDate = new Date(submissionsList[submissionsList.length-1][4]).toLocaleString();
+		submissionLastDate = new Date(submissionsList[submissionsList.length-1][4]).toLocaleString(),
+		isSpending, gold;
 
 	submissionsList.forEach(function(submission) {
 		submissionDate = new Date(submission[4]).toLocaleString();
+		isSpending = submission[2] < 0 ? " id='spending'" : "";
+		gold = submission[2] < 0 ? submission[2] * -1 : submission[2];
 		submissionLink = submission[0] ? `<a href="${submission[3]}" target="_blank">${submission[1]}</a>` : `${submission[1]}`;
-		submissionsString += `<li class=""><span class="brown-color">${submission[2]}g</span><br>${submissionLink}<br>Recorded: <span class="spring-color">${submissionDate}</span></li>`;
+		submissionsString += `<li${isSpending}><span${isSpending} class="spring-color">${gold}g</span><br>${submissionLink}<br>Recorded: <span class="brown-color">${submissionDate}</span></li>`;
 	});
 
 

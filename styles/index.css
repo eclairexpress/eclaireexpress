@@ -322,6 +322,13 @@ span span,
   content: "+";
   padding-right: 5px;
 }
+span#spending {
+  color: #e66b6b;
+}
+.ui-content li#spending:before {
+  content: "-";
+  padding-right: 5px;
+}
 .ui-content ::-webkit-scrollbar,
 .dialog ::-webkit-scrollbar {
   width: 12px;
