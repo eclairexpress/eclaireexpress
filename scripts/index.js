@@ -268,9 +268,14 @@ function compileData (main, housing, jobList, submissions, memories) {
 		var selectedKey = e.currentTarget.value;
 		if (selectedKey === "") {
 			$("div#memory-image").empty();
+			$("div#memory-obtain").empty();
+			$("label#memory-selected-title").empty();
 			return;
 		}
+
+		$("label#memory-selected-title").html(`<span>${userDB["reference"]["memories"][selectedKey][0]}</span>`);
 		$("div#memory-image").html(`<img src="${userDB["reference"]["memories"][selectedKey][1]}">`);
+		$("div#memory-obtain").html(`<span class="spring-color">How to obtain:</span> ${userDB["reference"]["memories"][selectedKey][2]}`);
 	});
 
 	$(document).on("pagehide","#addmemory",function(){
@@ -591,7 +596,7 @@ function appendMemoryInfo (memoriesList) {
 		}
 
 		if (memory[0] === "valid") {
-			collectedMemoriesList += `<a href="${memory[1]}" target="_blank"><img src="${userDB["reference"]["memories"][key][1]}"></a>`;
+			collectedMemoriesList += `<a href="${memory[1]}" target="_blank"><img class="image-shadow" src="${userDB["reference"]["memories"][key][1]}"></a>`;
 		} else {
 			collectedMemoriesList += `<img src="${userDB["reference"]["memories"][key][1]}">`;
 		}
@@ -635,7 +640,7 @@ function appendCharacterInfo (characterObj) {
 		character = characterObj[characterName];
 		isHybrid = character.isHybrid === "true" ? `<img src="https://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
 		isNPC = character.isNPC === "true" ? `<img src="https://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
-		hasTracker = character.tracker !== "" ? `<a href="${character.tracker}" target="_blank"><img class="image-shadow" src="https://orig07.deviantart.net/1328/f/2017/224/d/e/trackingbtn_by_toffeebot-dbjsi85.png"></a>` : "";
+		hasTracker = character.tracker !== "" ? `<a href="${character.tracker}" target="_blank"><img class="image-shadow" src="http://orig13.deviantart.net/a57a/f/2017/224/1/2/trackingbtn_by_toffeebot-dbjt7q0.png"></a>` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
 		image = ` style="background-image: url('${character.image}');"`;
@@ -650,7 +655,7 @@ function appendCharacterInfo (characterObj) {
 					</div>
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
-							<a href="${character.app}" target="_blank"><img class="image-shadow" src="https://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
+							<a href="${character.app}" target="_blank"><img class="image-shadow" src="http://orig14.deviantart.net/e128/f/2017/224/2/b/appbtn_by_toffeebot-dbjt7q1.png"></a>
 							${hasTracker}
 							${isHybrid}
 							${isNPC}

@@ -283,13 +283,15 @@ hr {
 }
 .charaHouseUpgrades {
   margin: 0rem 1rem;
-  max-height: 75px;
-  overflow: auto;
 }
-.ui-content ul {
+.ui-content ul,
+.dialog ul {
   list-style: none;
   margin: 0;
   padding-left: 0;
+}
+#memory-obtain {
+  font-size: 0.8em;
 }
 .submissionsList {
   padding: 0em 1em;
@@ -316,11 +318,13 @@ span span,
 .charaHousingInfo ul li ul li {
   color: #4a8651;
 }
-.ui-content li {
+.ui-content li,
+.dialog li {
   padding-left: 1em;
   text-indent: -1em;
 }
-.ui-content li:before {
+.ui-content li:before,
+.dialog li:before {
   content: "+";
   padding-right: 5px;
 }
@@ -735,7 +739,8 @@ html head + body .ui-btn.ui-btn-a:visited {
   border-top-left-radius: 5px;
 }
 .image-shadow {
-  box-shadow: 0px 3px 2px 0px rgba(76, 50, 43, 0.75);
+  -webkit-filter: drop-shadow(0px 2px 0px rgba(76, 50, 43, 0.7));
+  filter: drop-shadow(0px 2px 0px rgba(76, 50, 43, 0.7));
 }
 .overlay-bg {
   position: fixed;
