@@ -392,7 +392,9 @@ function createInitialCalendar() {
 }
 
 function getBdayDiv(season, day) {
-	var bdayArray = bdayDB[season][day];
+	var bdayArray = bdayDB[season][day],
+		birthdate = parseBirthday([parseInt(season)+1+"", parseInt(day)+1]) + " birthdays";
+	console.log(parseInt(season)+1)
 	if (bdayArray.length === 0) {
 		return "";
 	} else {
@@ -406,7 +408,7 @@ function getBdayDiv(season, day) {
 		var template = `
 			<div class="userInfoItem">
 				<div class="userContentHeader">
-					birthdays
+					${birthdate}
 				</div>
 				<div class="userContent userStats" id="userStats">
 					${bdayString}
