@@ -765,7 +765,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 @media (max-width: 650px) {
   .calendar {
-    padding: 1em;
+    padding: 1.5em;
   }
   .calendar td {
     padding: .5em;
@@ -781,9 +781,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   .ui-content {
     width: 100%;
     padding: 0;
-  }
-  .calendar {
-    padding: 0.5em;
   }
   .calendar td {
     padding: .25em;
