@@ -1158,7 +1158,7 @@ function populateHousing() {
 
 					div.css('top', '6px');
 					div.css('left', '217px');	
-					div.html("captain's<br>quarters");
+					div.html("cc");
 
 					createDialog(div);
 				} else {
