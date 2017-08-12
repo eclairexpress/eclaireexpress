@@ -1034,7 +1034,8 @@ function roundCssTransformMatrix(element){
 		 mx.getPropertyValue("-o-transform") ||
 		 mx.getPropertyValue("transform") || false;
 	var values = mx.replace(/ |\(|\)|matrix/g,"").split(",");
-	for(var v in values) { values[v]=v>4?Math.ceil(values[v]):values[v]; }
+	for(var v in values) {
+		values[v]=v > 3 ? Math.ceil(parseInt(values[v])):values[v]; }
 
 	$("#"+element).css({transform:"matrix("+values.join()+")"});
 }

@@ -730,7 +730,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 100%;
+  width: 95%;
   max-width: 490px;
   transform: translate(-50%, -50%);
   display: none;
