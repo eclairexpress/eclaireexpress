@@ -17,6 +17,16 @@
         <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
     </head>
     <body>
+        <!-- loader -->
+        <div class="loader" id="loader">
+            <div class="auto-center"></div>
+            <div class="bounce-conteneur">
+                <div class="bounce bounce-left"></div>
+                <div class="bounce bounce-center"></div>
+                <div class="bounce bounce-right"></div>
+            </div>
+        </div>
+
         <div class="userInfoItem inline-block dialog" id="dialog">
             <div class="userContentHeader" id="dialogTitle">
             </div>
@@ -24,15 +34,16 @@
                 <div class="userCharaLeft">
                     <div class="userCharaPortrait" id="dialog-portrait"></div>
                 </div>
-					<div class="userCharaRight">
-						<div class="userCharaInfo">
-							<a href="#" onclick="closeDialog()" id="closeDialog"><img src="https://orig08.deviantart.net/c7e3/f/2017/200/3/d/closebtn_by_toffeebot-dbgzhhr.png"></a>
-						</div>
-						<div class="charaHousingInfo" id="housingInfo">
-						</div>
-					</div>
-				</div>
-			</div></div>
+                    <div class="userCharaRight">
+                        <div class="userCharaInfo">
+                            <a href="#" onclick="closeDialog()" id="closeDialog"><img src="https://orig08.deviantart.net/c7e3/f/2017/200/3/d/closebtn_by_toffeebot-dbgzhhr.png"></a>
+                        </div>
+                        <div class="charaHousingInfo" id="housingInfo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="overlay-bg" id="overlay-bg"></div>
 
         <!-- home/info page -->
@@ -565,17 +576,6 @@
                 </div><!-- /navbar -->
             </div><!-- /footer -->
         </div><!-- /page -->
-
-
-        <!-- loader -->
-        <div class="loader" id="loader">
-            <div class="auto-center"></div>
-            <div class="bounce-conteneur">
-                <div class="bounce bounce-left"></div>
-                <div class="bounce bounce-center"></div>
-                <div class="bounce bounce-right"></div>
-            </div>
-        </div>
 
 
         <!-- fixed background -->

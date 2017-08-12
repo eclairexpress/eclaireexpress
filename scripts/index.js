@@ -76,7 +76,8 @@ $(function() {
 
 // Resize the background
 function resizeBackground() {
-    $("#bg").height($(window).height());
+	$("#bg").height($(window).height());
+	roundCssTransformMatrix("dialog");
 }
 
 function createBdayDB() {
@@ -234,19 +235,29 @@ function compileData (main, housing, jobList, submissions, memories) {
 
 	$("span#charaCount").text(characterCount);
 
-	$("span#humanRatio").text("are human: " + getPercentage(characterCount - hybridCount) + "%");
-	$("span#hybridRatio").text("are hybrid: " + getPercentage(hybridCount) + "%");
+	var hybrid = getPercentage(hybridCount);
+
+	$("span#humanRatio").text("are human: " + (100 - hybrid).toFixed(1) + "%");
+	$("span#hybridRatio").text("are hybrid: " + hybrid + "%");
 	$("span#npcRatio").text("are npcs: " + getPercentage(npcCount) + "%");
 
-	$("span#bday-spring").text("were born in spring: " + getPercentage(bdayCount[0]) + "%");
-	$("span#bday-summer").text("were born in summer: " + getPercentage(bdayCount[1]) + "%");
-	$("span#bday-fall").text("were born in fall: " + getPercentage(bdayCount[2]) + "%");
-	$("span#bday-winter").text("were born in winter: " + getPercentage(bdayCount[3]) + "%");
+	var spring = getPercentage(bdayCount[0]),
+		summer = getPercentage(bdayCount[1]),
+		fall = getPercentage(bdayCount[2]);
 
-	$("span#home-tt").text("moved to toffee town's residential area: " + getPercentage(housingCount["tt"]) + "%");
-	$("span#home-ll").text("moved to lemon lake's residential area: " + getPercentage(housingCount["ll"]) + "%");
-	$("span#home-ff").text("moved to flan forest's residential area: " + getPercentage(housingCount["ff"]) + "%");
-	$("span#home-res").text("stayed in shop residence or provided lodging: " + getPercentage(housingCount["cm"]) + "%");
+	$("span#bday-spring").text("were born in spring: " + spring + "%");
+	$("span#bday-summer").text("were born in summer: " + summer + "%");
+	$("span#bday-fall").text("were born in fall: " + fall + "%");
+	$("span#bday-winter").text("were born in winter: " + (100 - spring - summer - fall).toFixed(1) + "%");
+
+	var tt = getPercentage(housingCount["tt"]),
+		ll = getPercentage(housingCount["ll"]),
+		ff = getPercentage(housingCount["ff"]);
+
+	$("span#home-tt").text("moved to toffee town's residential area: " + tt + "%");
+	$("span#home-ll").text("moved to lemon lake's residential area: " + ll + "%");
+	$("span#home-ff").text("moved to flan forest's residential area: " + ff + "%");
+	$("span#home-res").text("stayed in shop residence or provided lodging: " + (100 - tt - ll - ff).toFixed(1) + "%");
 
 	// REMOVE LATER
 	$('form > button').on('click', function(e){
@@ -465,7 +476,7 @@ function getCharacterArray(row) {
 				housing: getHousing(characterArray[5], characterName),
 				job: getJob(characterArray[6].split('/')),
 				image: characterArray[7],
-				wikia: characterArray[8] ? characterArray[8] : ""
+				tracker: characterArray[8] ? characterArray[8] : ""
 			};
 
 			if (characterArray[3] === "true") {
@@ -542,7 +553,7 @@ function appendUserInfo (user) {
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
 				${memoriesData}
 				<div class="clear"></div>
-				<div class="add-memory-button" data-id="${username}" id="add-memory-button" style="display:none"><img src="https://orig13.deviantart.net/b737/f/2017/210/c/8/addbtn_by_toffeebot-dbi6ojd.png"></div>
+				<div class="add-memory-button" data-id="${username}" id="add-memory-button" style="display:none"><img class="image-shadow" src="https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png"></div>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -615,7 +626,7 @@ function appendCharacterInfo (characterObj) {
 		character,
 		birthday,
 		location,
-		hasWikia,
+		hasTracker,
 		isHybrid,
 		isNPC,
 		image;
@@ -624,7 +635,7 @@ function appendCharacterInfo (characterObj) {
 		character = characterObj[characterName];
 		isHybrid = character.isHybrid === "true" ? `<img src="https://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
 		isNPC = character.isNPC === "true" ? `<img src="https://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
-		hasWikia = character.wikia !== "" ? `<a href="${character.wikia}" target="_blank"><img src="https://orig10.deviantart.net/3021/f/2017/210/7/6/wikiabtn_by_toffeebot-dbi3upx.png"></a>` : "";
+		hasTracker = character.tracker !== "" ? `<a href="${character.tracker}" target="_blank"><img class="image-shadow" src="https://orig07.deviantart.net/1328/f/2017/224/d/e/trackingbtn_by_toffeebot-dbjsi85.png"></a>` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
 		image = ` style="background-image: url('${character.image}');"`;
@@ -639,8 +650,8 @@ function appendCharacterInfo (characterObj) {
 					</div>
 					<div class="userCharaRight">
 						<div class="userCharaInfo">
-							<a href="${character.app}" target="_blank"><img src="https://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
-							${hasWikia}
+							<a href="${character.app}" target="_blank"><img class="image-shadow" src="https://orig01.deviantart.net/ee76/f/2017/192/a/3/app_icon_by_toffeebot-dbfzcxy.png"></a>
+							${hasTracker}
 							${isHybrid}
 							${isNPC}
 						</div>
@@ -1004,7 +1015,23 @@ function closeDialog() {
 
 function openDialog() {
 	$("div#dialog").show();
+	roundCssTransformMatrix("dialog");
 	$("div#overlay-bg").show();
+}
+
+function roundCssTransformMatrix(element){
+	var el = document.getElementById(element);
+	el.style.transform=""; //resets the redifined matrix to allow recalculation, the original style should be defined in the class not inline.
+	var mx = window.getComputedStyle(el, null); //gets the current computed style
+	mx = mx.getPropertyValue("-webkit-transform") ||
+		 mx.getPropertyValue("-moz-transform") ||
+		 mx.getPropertyValue("-ms-transform") ||
+		 mx.getPropertyValue("-o-transform") ||
+		 mx.getPropertyValue("transform") || false;
+	var values = mx.replace(/ |\(|\)|matrix/g,"").split(",");
+	for(var v in values) { values[v]=v>4?Math.ceil(values[v]):values[v]; }
+
+	$("#"+element).css({transform:"matrix("+values.join()+")"});
 }
 
 function populateHousing() {
