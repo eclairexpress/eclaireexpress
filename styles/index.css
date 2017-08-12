@@ -474,9 +474,6 @@ span#spending {
 .add-center {
   text-align: center;
 }
-#closeDialog {
-  padding-right: 0.5em;
-}
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -628,7 +625,7 @@ a.ui-btn {
   height: 23px;
   padding-bottom: 5px;
   padding-left: 3px;
-  padding-right: 7px;
+  padding-right: 8px;
   padding-top: 22px;
 }
 .inn-button-big {
