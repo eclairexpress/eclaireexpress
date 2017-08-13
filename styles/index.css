@@ -33,8 +33,6 @@ body {
 }
 .shorter {
   max-width: 490px;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 #member-container {
   margin: 2rem 1rem 1rem 1rem;
