@@ -762,6 +762,11 @@ html head + body .ui-btn.ui-btn-a:visited {
     max-width: 75%;
   }
 }
+@media (max-width: 800px) {
+  #member-container {
+    margin: 2rem 0rem 1rem 0rem;
+  }
+}
 @media (max-width: 650px) {
   .calendar {
     padding: 1.5em;
