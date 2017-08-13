@@ -79,9 +79,6 @@ body {
 a:hover#userCell {
   color: #e66b6b;
 }
-.userInfo {
-  padding-top: 2rem;
-}
 .userInfoItem {
   margin: 0 auto;
   margin-bottom: 1rem;
@@ -755,8 +752,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .ee-logo {
   max-width: 100%;
-  margin-top: 2em;
-  margin-bottom: -1em;
+  margin-bottom: 1em;
 }
 @media (min-width: 1260px) {
   .shrink {
