@@ -184,9 +184,9 @@ function compileData (main, housing, jobList, submissions, memories) {
 				$("div#submit-memory-result").empty();
 				$("div#memory-form").css("display", "block");
 
-				$.mobile.changePage('#addmemory', {transition:'slide'});
+				$.mobile.changePage('#addmemory', {transition:'slide', allowSamePageTransition: true});
 			});
-			$.mobile.changePage('#view', {transition:'slide'});
+			$.mobile.changePage('#view', {transition:'slide', allowSamePageTransition: true});
 		});
 
 		$('div#member-container').append(div);
