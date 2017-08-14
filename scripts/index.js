@@ -71,7 +71,7 @@ $(function() {
 			dataType: 'jsonp'
 		})
 	)
-	.done((main, housing, jobList, submissions, memories) => compileData(main, housing, jobList, submissions, memories));
+	.done(function(main, housing, jobList, submissions, memories) {compileData(main, housing, jobList, submissions, memories);});
   });
 
 // Resize the background
