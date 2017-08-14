@@ -3,6 +3,14 @@
   text-transform: lowercase !important;
   font-weight: 400 !important;
 }
+html {
+  overflow: scroll !important;
+  margin: 0;
+  padding: 0;
+}
+.ui-page {
+  min-height: auto !important;
+}
 body {
   background: #fff;
   color: #fff;
@@ -25,11 +33,8 @@ body {
   background-size: cover;
 }
 .ui-content {
-  max-height: 100%;
   margin: 0 auto;
   margin-top: 2rem;
-  overflow: auto;
-  position: relative;
 }
 .shorter {
   max-width: 490px;
@@ -751,6 +756,11 @@ html head + body .ui-btn.ui-btn-a:visited {
 .ee-logo {
   max-width: 100%;
   margin-bottom: 1em;
+}
+.ui-page-theme-a .ui-btn:active,
+.ui-page-theme-a .ui-btn:hover {
+  color: #4c322b;
+  text-shadow: none !important;
 }
 @media (min-width: 1260px) {
   .shrink {

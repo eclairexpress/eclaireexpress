@@ -184,9 +184,9 @@ function compileData (main, housing, jobList, submissions, memories) {
 				$("div#submit-memory-result").empty();
 				$("div#memory-form").css("display", "block");
 
-				$.mobile.changePage('#addmemory', {transition:'none'});
+				$.mobile.changePage('#addmemory', {transition:'slide'});
 			});
-			$.mobile.changePage('#view', {transition:'none'});
+			$.mobile.changePage('#view', {transition:'slide'});
 		});
 
 		$('div#member-container').append(div);
@@ -205,6 +205,7 @@ function compileData (main, housing, jobList, submissions, memories) {
 	});
 
 	// Populate submissions
+	submissionsRows.reverse();
 	submissionsRows.forEach(function(row) {
 		var users = (row['gsx$usernames'].$t).split(','),
 			date = row['gsx$date'].$t,
@@ -850,7 +851,9 @@ function submitGold() {
 
 			var users = usernames.split(",");
 			users.forEach(function(user) {
-				userDB[user].submissions.push([false,"pending approval",gold,link,new Date().toISOString()]);
+				userDB[user].submissions.unshift([false,"pending approval",gold,link,new Date().toISOString()]);
+				userDB[user].gold += gold;
+				userDB[user].total += gold;
 			});
 
 			enableButtonGold(true);
