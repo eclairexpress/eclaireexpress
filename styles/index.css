@@ -762,16 +762,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #4c322b;
   text-shadow: none !important;
 }
-@media (min-width: 1260px) {
-  .shrink {
-    max-width: 50%;
-  }
-}
-@media (min-width: 900px) {
-  .shrink {
-    max-width: 75%;
-  }
-}
 @media (max-width: 800px) {
   #member-container {
     margin: 2rem 1rem 1rem 0rem;
