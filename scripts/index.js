@@ -283,6 +283,10 @@ function compileData (main, housing, jobList, submissions, memories) {
 		$("div#memory-form").css("display", "none");
 	});
 
+	$(document).on("pagebeforechange", function (e) {
+		window.scrollTo(0, $.mobile.defaultHomeScroll);
+	});
+
 	// Show page
 	$("#loader").delay(1500).slideToggle("slow");
 }
@@ -623,8 +627,6 @@ function appendSubmissions(submissionsList) {
 		submissionsString += `<li${isSpending}><span${isSpending} class="spring-color">${gold}g</span><br>${submissionLink}<br>Recorded: <span class="brown-color">${submissionDate}</span></li>`;
 	});
 
-
-//<span class="userCells userSpendings">Spent: ${userSpent}</span>
 	return `<span class="userCells userSubmissionDate">Last entry: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
 }
 
