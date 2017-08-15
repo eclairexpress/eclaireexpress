@@ -45,6 +45,7 @@ body {
 }
 .userInfo {
   margin-bottom: 3rem;
+  margin-left: 0.5rem;
 }
 #member-container {
   margin: 2rem 2rem 3rem 2rem;
