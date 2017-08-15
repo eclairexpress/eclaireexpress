@@ -27,6 +27,7 @@
             </div>
         </div>
 
+        
         <div class="userInfoItem inline-block dialog" id="dialog">
             <div class="userContentHeader" id="dialogTitle">
             </div>
@@ -46,66 +47,69 @@
         </div>
         <div class="overlay-bg" id="overlay-bg"></div>
 
+
         <!-- home/info page -->
         <div data-role="page" id="main">
             <div role="main" class="ui-content shorter add-center">
-                <img class="ee-logo" src="https://orig08.deviantart.net/9d0d/f/2017/225/f/5/ee_logo_25_by_toffeebot-dbjviwi.png">
-                <div class="userInfo">
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            about
+                <div class="container-inner">
+                    <img class="ee-logo" src="https://orig08.deviantart.net/9d0d/f/2017/225/f/5/ee_logo_25_by_toffeebot-dbjviwi.png">
+                    <div class="userInfo">
+                        <div class="userInfoItem">
+                            <div class="userContentHeader">
+                                about
+                            </div>
+                            <div class="userContent">
+                                <span class="fall-color">welcome!</span>
+                                <br>this is a simple page made to collectively gather all the information from the spreadsheets/journals we had into one place for easy viewing.
+                                <br><span><span style="font-size:0.8em;">if you find any bugs, please report to <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a></span></span>
+                                <hr/>
+                                <span>current version: <span>1.0 (beta)</span></span>
+                            </div>
                         </div>
-                        <div class="userContent">
-                            <span class="fall-color">welcome!</span>
-                            <br>this is a simple page made to collectively gather all the information from the spreadsheets/journals we had into one place for easy viewing.
-                            <br><span><span style="font-size:0.8em;">if you find any bugs, please report to <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a></span></span>
-                            <hr/>
-                            <span>current version: <span>1.0 (beta)</span></span>
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            tools
+                        <div class="userInfoItem">
+                            <div class="userContentHeader">
+                                tools
+                            </div>
+                            <div class="userContent">
+                                <a href="#fpcalculator" data-transition="slide"><span class="winter-color">fp calculator</span></a>
+                                <br><a href="#rpcalculator" data-transition="slide"><span class="summer-color">rp log gold calculator</span></a>
+                            </div>
                         </div>
-                        <div class="userContent">
-                            <a href="#fpcalculator" data-transition="slide"><span class="winter-color">fp calculator</span></a>
-                            <br><a href="#rpcalculator" data-transition="slide"><span class="summer-color">rp log gold calculator</span></a>
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            just-for-fun statistics
+                        <div class="userInfoItem">
+                            <div class="userContentHeader">
+                                just-for-fun statistics
+                            </div>
+                            <div class="userContent" id="charaStats">
+                                <span><span>out of all the <span id="charaCount"></span> characters in the group...</span></span>
+                                <br><br><span id="humanRatio" class="spring-color"></span>
+                                <br><span id="hybridRatio" class="fall-color"></span>
+                                <hr/>
+                                <span id="npcRatio" class="winter-color"></span>
+                                <hr/>
+                                <span id="bday-spring" class="spring-color"></span>
+                                <Br><span id="bday-summer" class="summer-color"></span>
+                                <br><span id="bday-fall" class="fall-color"></span>
+                                <br><span id="bday-winter" class="winter-color"></span>
+                                <hr/>
+                                <span id="home-tt" class="summer-color"></span>
+                                <Br><span id="home-ll" class="winter-color"></span>
+                                <br><span id="home-ff" class="spring-color"></span>
+                                <br><span id="home-res" class="fall-color"></span>
+                            </div>
                         </div>
-                        <div class="userContent" id="charaStats">
-                            <span><span>out of all the <span id="charaCount"></span> characters in the group...</span></span>
-                            <br><br><span id="humanRatio" class="spring-color"></span>
-                            <br><span id="hybridRatio" class="fall-color"></span>
-                            <hr/>
-                            <span id="npcRatio" class="winter-color"></span>
-                            <hr/>
-                            <span id="bday-spring" class="spring-color"></span>
-                            <Br><span id="bday-summer" class="summer-color"></span>
-                            <br><span id="bday-fall" class="fall-color"></span>
-                            <br><span id="bday-winter" class="winter-color"></span>
-                            <hr/>
-                            <span id="home-tt" class="summer-color"></span>
-                            <Br><span id="home-ll" class="winter-color"></span>
-                            <br><span id="home-ff" class="spring-color"></span>
-                            <br><span id="home-res" class="fall-color"></span>
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem">
-                        <div class="userContentHeader">
-                            credits
-                        </div>
-                        <div class="userContent">
-                            code: <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a>
-                            <br>background: <a href="https://onedayfour.deviantart.com/" target="_blank">onedayfour</a>
-                            <hr/>
-                            <span><span>content made for and to be used by eclairexpress only</span></span>
+                        <div class="userInfoItem">
+                            <div class="userContentHeader">
+                                credits
+                            </div>
+                            <div class="userContent">
+                                code: <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a>
+                                <br>background: <a href="https://onedayfour.deviantart.com/" target="_blank">onedayfour</a>
+                                <hr/>
+                                <span><span>content made for and to be used by eclairexpress only</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -127,7 +131,9 @@
         <!-- character list page -->
         <div data-role="page" id="list" data-theme="a">
             <div role="main" class="ui-content">
-                <div id="member-container"></div>
+                <div class="container-inner">
+                    <div id="member-container"></div>
+                </div>
             </div><!-- /content -->
 
             <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
@@ -146,14 +152,16 @@
         <!-- Birthdays page -->
         <div data-role="page" id="birthday" data-theme="a">
             <div role="main" class="ui-content add-center">
-                <div class="calendar-container">
-                    <div class="calendar-header spring-background">
-                        <a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext" onclick="toggleSeasonPrev()">left</a>
-                        <span class="seasonTitle" id="seasonTitle">spring</span>
-                        <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext" onclick="toggleSeasonNext()">right</a>
+                <div class="container-inner">
+                    <div class="calendar-container">
+                        <div class="calendar-header spring-background">
+                            <a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext" onclick="toggleSeasonPrev()">left</a>
+                            <span class="seasonTitle" id="seasonTitle">spring</span>
+                            <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext" onclick="toggleSeasonNext()">right</a>
+                        </div>
+                        <div id="calendar"></div>
+                        <div id="bdayList"></div>
                     </div>
-                    <div id="calendar"></div>
-                    <div id="bdayList"></div>
                 </div>
             </div><!-- /content -->
 
@@ -173,60 +181,62 @@
         <!-- housing page -->
         <div data-role="page" id="house">
             <div role="main" class="ui-content">
-                <div class="userInfo add-center">
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            almond inn (floor 1)
+                <div class="container-inner">
+                    <div class="userInfo add-center">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                almond inn (floor 1)
+                            </div>
+                            <div class="userContent map map-ai" id="map-ai-1">
+                            </div>
                         </div>
-                        <div class="userContent map map-ai" id="map-ai-1">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            almond inn (floor 2)
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                almond inn (floor 2)
+                            </div>
+                            <div class="userContent map map-ai" id="map-ai-2">
+                            </div>
                         </div>
-                        <div class="userContent map map-ai" id="map-ai-2">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            sherbet seasonal house (floor 1)
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                sherbet seasonal house (floor 1)
+                            </div>
+                            <div class="userContent map map-ss" id="map-ss-1">
+                            </div>
                         </div>
-                        <div class="userContent map map-ss" id="map-ss-1">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            sherbet seasonal house (floor 2)
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                sherbet seasonal house (floor 2)
+                            </div>
+                            <div class="userContent map map-ss" id="map-ss-2">
+                            </div>
                         </div>
-                        <div class="userContent map map-ss" id="map-ss-2">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            toffee town residential area
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                toffee town residential area
+                            </div>
+                            <div class="userContent map" id="map-tt">
+                            </div>
                         </div>
-                        <div class="userContent map" id="map-tt">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            lemon lake residential area
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                lemon lake residential area
+                            </div>
+                            <div class="userContent map" id="map-ll">
+                            </div>
                         </div>
-                        <div class="userContent map" id="map-ll">
-                        </div>
-                    </div>
 
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader calc-about">
-                            flan forest residential area
-                        </div>
-                        <div class="userContent map" id="map-ff">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader calc-about">
+                                flan forest residential area
+                            </div>
+                            <div class="userContent map" id="map-ff">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -248,7 +258,9 @@
         <!--view character page -->
         <div data-role="page" id="view" data-theme="a">
             <div role="main" class="ui-content shorter">
-                <div class="userInfo" id="userInfo"></div>
+                <div class="container-inner">
+                    <div class="userInfo" id="userInfo"></div>
+                </div>
             </div><!-- /content -->
 
             <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
@@ -267,44 +279,46 @@
         <!-- add gold page -->
         <div data-role="page" id="addgold">
             <div role="main" class="ui-content">
-                <div class="userInfo add-center">
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader">
-                            submit for gold
-                        </div>
-                        <div class="userContent calculator-form">
-                            <span class="calc-about">complete the following to collect gold on submissions. <span class="fall-color">An internet connection is required for this action.</span>
-                            <span>The submission will appear as 'pending approval' on your user page until the admin clears it, but the gold will be added.</span></span>
+                <div class="container-inner">
+                    <div class="userInfo add-center">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader">
+                                submit for gold
+                            </div>
+                            <div class="userContent calculator-form">
+                                <span class="calc-about">complete the following to collect gold on submissions. <span class="fall-color">An internet connection is required for this action.</span>
+                                <span>The submission will appear as 'pending approval' on your user page until the admin clears it, but the gold will be added.</span></span>
 
-                            <form id="submit-gold">
-                                <label for="gold-users">
-                                    <span>usernames</span>
-                                </label>
-                                <textarea id="gold-users" name="gold-users" placeholder="Add users..." readonly></textarea>
-                                <select id="submit-userList" name="submit-userList">
-                                    <option value="" selected></option>
-                                </select>
-                                <button class="gold-clearBtn button50" onclick="clearUsernames()">clear</button><button class="gold-addBtn button50" onclick="addUsername()">add</button>
-                                <span class="form-subtext">The names of the users who contributed to the submission.
-                                    <br><span class="fall-color">To clear the list, click clear.</span> <span class="spring-color">To add to the list, select the user from the dropdown list and click add.</span></span>
+                                <form id="submit-gold">
+                                    <label for="gold-users">
+                                        <span>usernames</span>
+                                    </label>
+                                    <textarea id="gold-users" name="gold-users" placeholder="Add users..." readonly></textarea>
+                                    <select id="submit-userList" name="submit-userList">
+                                        <option value="" selected></option>
+                                    </select>
+                                    <button class="gold-clearBtn button50" onclick="clearUsernames()">clear</button><button class="gold-addBtn button50" onclick="addUsername()">add</button>
+                                    <span class="form-subtext">The names of the users who contributed to the submission.
+                                        <br><span class="fall-color">To clear the list, click clear.</span> <span class="spring-color">To add to the list, select the user from the dropdown list and click add.</span></span>
 
-                                <label for="gold-gold">
-                                    <span>gold</span>
-                                </label>
-                                <input type="text" id="gold-gold" name="gold-gold">
-                                <span class="form-subtext"><span class="fall-color">input numbers only!</span> The amount of gold to be collected. If certain users are collecting different amounts of gold (ie. due to bonuses), they should be submitted separately.</span>
+                                    <label for="gold-gold">
+                                        <span>gold</span>
+                                    </label>
+                                    <input type="text" id="gold-gold" name="gold-gold">
+                                    <span class="form-subtext"><span class="fall-color">input numbers only!</span> The amount of gold to be collected. If certain users are collecting different amounts of gold (ie. due to bonuses), they should be submitted separately.</span>
 
-                                 <label for="gold-link">
-                                    <span>link</span>
-                                </label>
-                                <input type="text" id="gold-link" name="gold-link">
-                                <span class="form-subtext">The link to your submission. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
+                                    <label for="gold-link">
+                                        <span>link</span>
+                                    </label>
+                                    <input type="text" id="gold-link" name="gold-link">
+                                    <span class="form-subtext">The link to your submission. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
 
-                                <button id="submitGoldBtn" class="submitBtn" onclick="submitGold()">submit</button>
-                            </form>
-                            <hr/>
-                            <div id="submit-gold-error" class="fall-color"></div>
-                            <div id="submit-gold-result" class="form-result"></div>
+                                    <button id="submitGoldBtn" class="submitBtn" onclick="submitGold()">submit</button>
+                                </form>
+                                <hr/>
+                                <div id="submit-gold-error" class="fall-color"></div>
+                                <div id="submit-gold-result" class="form-result"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -326,39 +340,41 @@
         <!-- add memory page -->
         <div data-role="page" id="addmemory">
             <div role="main" class="ui-content" id="memory-form">
-                <div class="userInfo add-center">
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader" id="memory-title">
-                            unlock memory badges
-                        </div>
-                        <div class="userContent calculator-form">
-                            <span class="calc-about">complete the following to collect memory badges. <span class="fall-color">An internet connection is required for this action.</span>
-                            <span>The badge will be added right away, but will link to the submission once approved.</span></span>
+                <div class="container-inner">
+                    <div class="userInfo add-center">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader" id="memory-title">
+                                unlock memory badges
+                            </div>
+                            <div class="userContent calculator-form">
+                                <span class="calc-about">complete the following to collect memory badges. <span class="fall-color">An internet connection is required for this action.</span>
+                                <span>The badge will be added right away, but will link to the submission once approved.</span></span>
 
-                            <form id="submit-memory">
-                                <input type="text" id="memory-user" name="gold-users">
+                                <form id="submit-memory">
+                                    <input type="text" id="memory-user" name="gold-users">
 
-                                <label for="memory-memory" id="memory-selected-title">
-                                    <span>memory badge</span>
-                                </label>
-                                <div id="memory-image"></div>
-                                <div id="memory-obtain"></div>
-                                <select id="memory-memory" name="memory-memory">
-                                    <option value="" selected></option>
-                                </select>
-                                <span class="form-subtext">The memory badge to be obtained. the list only contains memory badges you have yet to collect.</span>
+                                    <label for="memory-memory" id="memory-selected-title">
+                                        <span>memory badge</span>
+                                    </label>
+                                    <div id="memory-image"></div>
+                                    <div id="memory-obtain"></div>
+                                    <select id="memory-memory" name="memory-memory">
+                                        <option value="" selected></option>
+                                    </select>
+                                    <span class="form-subtext">The memory badge to be obtained. the list only contains memory badges you have yet to collect.</span>
 
-                                 <label for="memory-link">
-                                    <span>link</span>
-                                </label>
-                                <input type="text" id="memory-link" name="memory-link">
-                                <span class="form-subtext">The link to your proof of completion. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
+                                    <label for="memory-link">
+                                        <span>link</span>
+                                    </label>
+                                    <input type="text" id="memory-link" name="memory-link">
+                                    <span class="form-subtext">The link to your proof of completion. You can submit rp logs and images (DA, twitter, tumblr, stash, and gdocs).</span>
 
-                                <button id="submitMemoryBtn" class="submitBtn" onclick="submitMemory()">submit</button>
-                            </form>
-                            <hr/>
-                            <div id="submit-memory-error" class="fall-color"></div>
-                            <div id="submit-memory-result" class="form-result"></div>
+                                    <button id="submitMemoryBtn" class="submitBtn" onclick="submitMemory()">submit</button>
+                                </form>
+                                <hr/>
+                                <div id="submit-memory-error" class="fall-color"></div>
+                                <div id="submit-memory-result" class="form-result"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -380,34 +396,36 @@
         <!-- rp calculator page -->
         <div data-role="page" id="rpcalculator">
             <div role="main" class="ui-content">
-                <div class="userInfo add-center">
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader">
-                            rp calculator
-                        </div>
-                        <div class="userContent calculator-form">
-                            <span class="calc-about">this calculates the gold your rp log will earn.
-                            <br><span>The current rate is 100 gold per 1000 words, divided by the number of participants. The returned gold will be a factor of 25, rounded down.</span>
-                            <span class="fall-color">input numbers only!</span></span>
+                <div class="container-inner">
+                    <div class="userInfo add-center">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader">
+                                rp calculator
+                            </div>
+                            <div class="userContent calculator-form">
+                                <span class="calc-about">this calculates the gold your rp log will earn.
+                                <br><span>The current rate is 100 gold per 1000 words, divided by the number of participants. The returned gold will be a factor of 25, rounded down.</span>
+                                <span class="fall-color">input numbers only!</span></span>
 
-                            <form id="rpcalc">
-                                <label for="rp-num">
-                                    <span>number of participants</span>
-                                </label>
-                                <input type="text" id="rp-num" name="rp-num">
-                                <span class="form-subtext">The number of people in the roleplay. Each should have contributed equally.</span>
+                                <form id="rpcalc">
+                                    <label for="rp-num">
+                                        <span>number of participants</span>
+                                    </label>
+                                    <input type="text" id="rp-num" name="rp-num">
+                                    <span class="form-subtext">The number of people in the roleplay. Each should have contributed equally.</span>
 
-                                <label for="rp-wc">
-                                    <span>word count</span>
-                                </label>
-                                <input type="text" id="rp-wc" name="rp-wc">
-                                <span class="form-subtext">The total word count of the roleplay log. It should be 1000 words or more.</span>
+                                    <label for="rp-wc">
+                                        <span>word count</span>
+                                    </label>
+                                    <input type="text" id="rp-wc" name="rp-wc">
+                                    <span class="form-subtext">The total word count of the roleplay log. It should be 1000 words or more.</span>
 
-                                <button class="submitBtn" onclick="calculateRP()">calculate</button>
-                            </form>
-                            <hr/>
-                            <div id="rp-error-message" class="fall-color"></div>
-                            <div id="rp-total" class="form-result"></div>
+                                    <button class="submitBtn" onclick="calculateRP()">calculate</button>
+                                </form>
+                                <hr/>
+                                <div id="rp-error-message" class="fall-color"></div>
+                                <div id="rp-total" class="form-result"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -429,98 +447,100 @@
         <!--fp calculator page -->
         <div data-role="page" id="fpcalculator" data-theme="a">
             <div role="main" class="ui-content shorter">
-                <div class="userInfo add-center">
-                    <div class="userInfoItem inline-block">
-                        <div class="userContentHeader">
-                            fp calculator
-                        </div>
-                        <div class="userContent calculator-form">
-                            <span class="calc-about">this calculates how much FP your submission will earn. <span>The total calculated is for a single relationship.</span>
-                            <br><span class="fall-color small">hint: you can't stack multiple bonuses for FP.</span></span>
-                            <form id="fpcalc">
-                                <!--canon (or dream event) interaction ? -> dropdown yes/no (default yes)-->
-                                <label for="fp-canon">
-                                    <span>Canon interaction</span>
-                                </label>
-                                <select id="fp-canon" name="fp-canon">
-                                    <option value="true" selected>Yes</option>
-                                    <option value="false">No</option>
-                                </select>
-                                <span class="form-subtext">Interactions in the group setting and group official AUs (dream events) are considered 'canon'.</span>
+                <div class="container-inner">
+                    <div class="userInfo add-center">
+                        <div class="userInfoItem inline-block">
+                            <div class="userContentHeader">
+                                fp calculator
+                            </div>
+                            <div class="userContent calculator-form">
+                                <span class="calc-about">this calculates how much FP your submission will earn. <span>The total calculated is for a single relationship.</span>
+                                <br><span class="fall-color small">hint: you can't stack multiple bonuses for FP.</span></span>
+                                <form id="fpcalc">
+                                    <!--canon (or dream event) interaction ? -> dropdown yes/no (default yes)-->
+                                    <label for="fp-canon">
+                                        <span>Canon interaction</span>
+                                    </label>
+                                    <select id="fp-canon" name="fp-canon">
+                                        <option value="true" selected>Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
+                                    <span class="form-subtext">Interactions in the group setting and group official AUs (dream events) are considered 'canon'.</span>
 
-                                <!--collab ? -> dropdown yes/no (default no)-->
-                                <label for="fp-collab">
-                                    <span>Collaboration</span>
-                                </label>
-                                <select id="fp-collab" name="fp-collab">
-                                    <option value="true">Yes</option>
-                                    <option value="false" selected>No</option>
-                                </select>
-                                <span class="form-subtext">Collaborative interactions are when users have contributed equal work to an image submission.</span>
+                                    <!--collab ? -> dropdown yes/no (default no)-->
+                                    <label for="fp-collab">
+                                        <span>Collaboration</span>
+                                    </label>
+                                    <select id="fp-collab" name="fp-collab">
+                                        <option value="true">Yes</option>
+                                        <option value="false" selected>No</option>
+                                    </select>
+                                    <span class="form-subtext">Collaborative interactions are when users have contributed equal work to an image submission.</span>
 
-                                <!--rp log >1000 words? -> dropdown yes/no (default no)-->
-                                <label for="fp-rp">
-                                    <span>rp log</span>
-                                </label>
-                                <select id="fp-rp" name="fp-rp">
-                                    <option value="true">Yes</option>
-                                    <option value="false" selected>No</option>
-                                </select>
-                                <span class="form-subtext">You can count a roleplay log for FP if it's logged and the word count is 1000 or more <span>(total between users)</span>.</span>
+                                    <!--rp log >1000 words? -> dropdown yes/no (default no)-->
+                                    <label for="fp-rp">
+                                        <span>rp log</span>
+                                    </label>
+                                    <select id="fp-rp" name="fp-rp">
+                                        <option value="true">Yes</option>
+                                        <option value="false" selected>No</option>
+                                    </select>
+                                    <span class="form-subtext">You can count a roleplay log for FP if it's logged and the word count is 1000 or more <span>(total between users)</span>.</span>
 
-                                <!--heart event? -> dropdown yes/no (default no)-->
-                                <label for="fp-hq">
-                                    <span>Heart Event bonus</span>
-                                </label>
-                                <select id="fp-hq" name="fp-hq">
-                                    <option value="true">Yes</option>
-                                    <option value="false" selected>No</option>
-                                </select>
-                                <span class="form-subtext">Heart events are special events that can be done once the FP between two characters has reached a certain amount.</span>
+                                    <!--heart event? -> dropdown yes/no (default no)-->
+                                    <label for="fp-hq">
+                                        <span>Heart Event bonus</span>
+                                    </label>
+                                    <select id="fp-hq" name="fp-hq">
+                                        <option value="true">Yes</option>
+                                        <option value="false" selected>No</option>
+                                    </select>
+                                    <span class="form-subtext">Heart events are special events that can be done once the FP between two characters has reached a certain amount.</span>
 
-                                <!--birthday bonus? -> dropdown yes/no (default no)-->
-                                <label for="fp-bday">
-                                    <span>birthday bonus</span>
-                                </label>
-                                <select id="fp-bday" name="fp-bday">
-                                    <option value="true">Yes</option>
-                                    <option value="false" selected>No</option>
-                                </select>
-                                <span class="form-subtext">Birthday bonuses are for celebrating a character's birthday! They can be submitted any time during the season of the character's birthday.</span>
+                                    <!--birthday bonus? -> dropdown yes/no (default no)-->
+                                    <label for="fp-bday">
+                                        <span>birthday bonus</span>
+                                    </label>
+                                    <select id="fp-bday" name="fp-bday">
+                                        <option value="true">Yes</option>
+                                        <option value="false" selected>No</option>
+                                    </select>
+                                    <span class="form-subtext">Birthday bonuses are for celebrating a character's birthday! They can be submitted any time during the season of the character's birthday.</span>
 
-                                <!--item used? -> (5 amounts? i think, dropdown) (default none)-->
-                                <label for="fp-item">
-                                    <span>Items bonus</span>
-                                </label>
-                                <select id="fp-item" name="fp-item">
-                                    <option value="0" selected>none</option>
-                                    <option value="200">loved gift</option>
-                                    <option value="100">liked gift</option>
-                                    <option value="50">normal gift</option>
-                                    <option value="-100">disliked gift</option>
-                                    <option value="-200">hated gift</option>
-                                </select>
-                                <span class="form-subtext">To get FP for items, you must give the item to the other character during a roleplay (min 1000 words).</span>
+                                    <!--item used? -> (5 amounts? i think, dropdown) (default none)-->
+                                    <label for="fp-item">
+                                        <span>Items bonus</span>
+                                    </label>
+                                    <select id="fp-item" name="fp-item">
+                                        <option value="0" selected>none</option>
+                                        <option value="200">loved gift</option>
+                                        <option value="100">liked gift</option>
+                                        <option value="50">normal gift</option>
+                                        <option value="-100">disliked gift</option>
+                                        <option value="-200">hated gift</option>
+                                    </select>
+                                    <span class="form-subtext">To get FP for items, you must give the item to the other character during a roleplay (min 1000 words).</span>
 
-                                <!--event bonus? -> dropdown (default none)-->
-                                <label for="fp-event">
-                                    <span>Event Bonus</span>
-                                </label>
-                                <input type="text" id="fp-event" name="fp-event">
-                                <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> Event bonuses are given out during group events (mini-events, festival events, dream events). Specified by the event journal.</span>
+                                    <!--event bonus? -> dropdown (default none)-->
+                                    <label for="fp-event">
+                                        <span>Event Bonus</span>
+                                    </label>
+                                    <input type="text" id="fp-event" name="fp-event">
+                                    <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> Event bonuses are given out during group events (mini-events, festival events, dream events). Specified by the event journal.</span>
 
-                                <!--additional bonus? -> random fp items n shet-->
-                                <label for="fp-etc">
-                                    <span>Additional bonus</span>
-                                </label>
-                                <input type="text" id="fp-etc" name="fp-etc">
-                                <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> This is for special conditions (ie. fp boosting item).</span>
+                                    <!--additional bonus? -> random fp items n shet-->
+                                    <label for="fp-etc">
+                                        <span>Additional bonus</span>
+                                    </label>
+                                    <input type="text" id="fp-etc" name="fp-etc">
+                                    <span class="form-subtext"><span class="fall-color">input numbers only! Leave blank if none.</span> This is for special conditions (ie. fp boosting item).</span>
 
-                                <button class="submitBtn" onclick="calculateFP()">calculate</button>
-                            </form>
-                            <hr/>
-                            <div id="fp-error-message" class="fall-color"></div>
-                            <div id="fp-total" class="form-result"></div>
+                                    <button class="submitBtn" onclick="calculateFP()">calculate</button>
+                                </form>
+                                <hr/>
+                                <div id="fp-error-message" class="fall-color"></div>
+                                <div id="fp-total" class="form-result"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

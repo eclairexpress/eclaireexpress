@@ -77,6 +77,7 @@ $(function() {
 // Resize the background
 function resizeBackground() {
 	$("#bg").height($(window).height());
+	$( ".ui-content" ).each(function() { $( this ).height(window.innerHeight-76); });
 	roundCssTransformMatrix("dialog");
 }
 
@@ -281,10 +282,6 @@ function compileData (main, housing, jobList, submissions, memories) {
 
 	$(document).on("pagehide","#addmemory",function(){
 		$("div#memory-form").css("display", "none");
-	});
-
-	$(document).on("pagebeforechange", function (e) {
-		window.scrollTo(0, $.mobile.defaultHomeScroll);
 	});
 
 	// Show page
