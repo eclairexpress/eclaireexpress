@@ -63,12 +63,18 @@ position: fixed;
   max-width: 490px;
 }
 
+.anchor {
+  margin-top: -3.5em;
+  padding-top: 3.5em;
+  visibility: hidden;
+}
+
 .userInfo {
   margin-bottom: 3rem;
   margin-left: 0.5rem;
 }
 #member-container {
-  margin: 2rem 2rem 3rem 2rem;
+  margin: 5rem 2rem 3rem 2rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -117,11 +123,26 @@ a:hover#userCell {
   width: 95%;
 }
 
-.ui-header-fixed {
+#skipToBar {
   background: @dkBrown;
-  color: @cream;
-  border: none;
+
+  position: fixed;
+  padding: 0.5em 1em;
+  top:0;
+  left: 0;
+  right:0;
+  z-index:300;
+  margin-left:1em;
+  margin-right: 1em;
+  text-align: center;
+  border-radius: 1em;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+#skipToBar a {
+  text-decoration: none;
+  color: @cream;
+  font-size: 1.1em;
 }
 .ui-header .ui-title,
 .ui-footer .ui-title {
@@ -860,7 +881,7 @@ a.ui-btn {
 
 @media (max-width: 800px) {
   #member-container {
-    margin: 2rem 1rem 3rem 1rem;
+    margin: 5rem 1rem 3rem 1rem;
   }
 }
 

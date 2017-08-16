@@ -136,6 +136,8 @@ function compileData (main, housing, jobList, submissions, memories) {
 		}
 	});
 
+	var skipLinks = "<a data-ajax='false' href='#top'>#</a>",
+		charCode = 96; // `, one before a 
 	mainRows.forEach(function(row) {
 		var rowUsername = row['gsx$username'].$t,
 			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
@@ -143,9 +145,17 @@ function compileData (main, housing, jobList, submissions, memories) {
 			rowGold = parseInt(row['gsx$gross'].$t),
 			rowSpending = parseInt(row['gsx$spending'].$t),
 			rowTotal = rowGold + rowSpending,
-			rowCharacters = getCharacterArray(row);
+			rowCharacters = getCharacterArray(row),
+			div = document.createElement('div'),
+			anchor;
 
-			div = document.createElement('div');
+		if (rowUsername.charCodeAt(0) > charCode) {
+			skipLinks += `   <a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
+			anchor = document.createElement('a');
+			anchor.className = "anchor";
+			anchor.id = rowUsername;
+			charCode = rowUsername.charCodeAt(0);
+		}
 
 		userDB[rowUsername] = {
 			username: rowUsername,
@@ -191,9 +201,13 @@ function compileData (main, housing, jobList, submissions, memories) {
 			});
 			$.mobile.changePage('#view', {transition:'slide'});
 		});
-
+		if (anchor) {
+			$('div#member-container').append(anchor);
+		}
 		$('div#member-container').append(div);
 	}, this);
+
+	$('div#skipToBar').html(skipLinks);
 	
 	// Populate memories
 	memoriesRows.forEach(function(row) {
