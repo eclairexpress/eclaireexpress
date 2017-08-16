@@ -78,7 +78,7 @@ $(function() {
 function resizeBackground() {
 	var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream; 
 
-	$("#bg").height(isIOS ? screen.height : $(window).height());
+	$("#bg").height((isIOS ? screen.height : $(window).height()) + 100);
 	$( ".ui-content" ).each(function() { $( this ).height((isIOS ? screen.height : window.innerHeight)-50); });
 	roundCssTransformMatrix("dialog");
 }
