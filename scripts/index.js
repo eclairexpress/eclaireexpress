@@ -77,9 +77,6 @@ $(function() {
 // Resize the background
 function resizeBackground() {
 	var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-	if(window.innerWidth > window.innerHeight){
-		alert("Please use Landscape!");
-	}
 
 	$("#bg").height($(window).height());
 	$( ".ui-content" ).each(function() { $( this ).height(window.innerHeight - 76 + (isIOS && window.innerWidth > window.innerHeight ? 60 : 0)); });
