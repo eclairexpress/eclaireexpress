@@ -934,7 +934,8 @@ function isAcceptedLink(string) {
 						"://drive.google.com/open?id=",
 						"://sta.sh/",
 						"://sta.sh/comments/",
-						"://comments.deviantart.com/"];
+						"://comments.deviantart.com/",
+						"://eclairexpress.wikia.com/wiki/"];
 
 	if (!string.startsWith("http")) {
 		return false;
