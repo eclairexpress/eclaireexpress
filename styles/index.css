@@ -17,7 +17,7 @@ body {
 .container-inner {
   height: 100%;
   width: 100%;
-  overflow: auto;
+  overflow: scroll;
   padding-right: 15px;
   position: relative;
   padding-top: 2rem;
@@ -49,8 +49,9 @@ body {
   visibility: hidden;
 }
 .userInfo {
+  padding-left: 0.5em;
+  margin: 0 auto;
   margin-bottom: 3rem;
-  margin-left: 0.5rem;
 }
 #member-container {
   margin: 5rem 2rem 3rem 2rem;
@@ -533,6 +534,7 @@ td {
 }
 .calendar-container {
   display: inline-block;
+  padding-left: 0.35em;
   margin-bottom: 3rem;
 }
 .calendar-header {
@@ -548,6 +550,7 @@ a.ui-btn {
   font-size: 1em;
 }
 .calendar td {
+  cursor: pointer;
   padding: .5em 1em;
   text-align: center;
 }
@@ -802,17 +805,7 @@ html head + body .ui-btn.ui-btn-a:visited {
     padding: .5em;
   }
 }
-@media (max-width: 500px) {
-  .shorter {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
 @media (max-width: 450px) {
-  .ui-content {
-    width: 100%;
-    padding: 0;
-  }
   .calendar td {
     padding: .25em;
   }
