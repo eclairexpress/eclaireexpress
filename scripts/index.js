@@ -1265,7 +1265,7 @@ function createDialog(div, residentTitle = null) {
 		if (housingDB[house].img !== "") {
 			$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
 		} else {
-			$("div#dialog-portrait").css('background-image', `url("https://orig13.deviantart.net/7c0f/f/2017/191/1/c/bg_by_toffeebot-dbfv43o.png")`);
+			$("div#dialog-portrait").css('background-image', `url("https://orig13.deviantart.net/4214/f/2017/228/9/2/bg_straightpanel_by_toffeebot-dbkc9nw.png")`);
 		}
 
 		$("div#housingInfo").empty().append(template);
