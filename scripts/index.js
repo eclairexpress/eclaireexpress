@@ -629,7 +629,7 @@ function appendSubmissions(submissionsList) {
 	var submissionLink,
 		submissionsString = "",
 		submissionDate = "",
-		submissionLastDate = new Date(submissionsList[submissionsList.length-1][4]).toLocaleString(),
+		submissionLastDate = new Date(submissionsList[0][4]).toLocaleString(),
 		isSpending, gold;
 
 	submissionsList.forEach(function(submission) {
