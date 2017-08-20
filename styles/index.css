@@ -80,6 +80,9 @@ body {
   border-top-left-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
 }
+.image img {
+  filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
+}
 .username {
   white-space: nowrap;
   position: absolute;
