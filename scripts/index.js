@@ -929,6 +929,7 @@ function isAcceptedLink(string) {
 						"://twitter.com/",
 						".tumblr.com/",
 						"://fav.me/",
+						".deviantart.com/",
 						".deviantart.com/art/",
 						"://docs.google.com/document/d/",
 						"://drive.google.com/open?id=",
