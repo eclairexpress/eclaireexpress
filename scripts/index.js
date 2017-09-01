@@ -822,7 +822,7 @@ function submitGold() {
 
 	var usernames = $("textarea#gold-users").val(),
 		gold = parseInt($("input#gold-gold").val().replace(",", "")),
-		link = $("input#gold-link").val().toLowerCase();
+		link = $("input#gold-link").val();
 
 	// handle error
 	if (usernames === "") {
@@ -887,7 +887,7 @@ function submitMemory() {
 
 	var user = $("input#memory-user").val(),
 		key = $("select#memory-memory").val(),
-		link = $("input#memory-link").val().toLowerCase(),
+		link = $("input#memory-link").val(),
 		value;
 
 	// handle error
