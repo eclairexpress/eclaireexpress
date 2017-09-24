@@ -480,7 +480,7 @@ function getCharacterArray(row) {
 		characterName,
 		characterBirthday;
 
-	for (var i = 1; i <= 9; i++) {
+	for (var i = 1; i <= 10; i++) {
 		characterNum = "gsx$character" + i;
 
 		if (row[characterNum].$t !== "") {
