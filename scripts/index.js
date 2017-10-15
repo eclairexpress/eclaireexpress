@@ -936,7 +936,8 @@ function isAcceptedLink(string) {
 						"://sta.sh/",
 						"://sta.sh/comments/",
 						"://comments.deviantart.com/",
-						"://eclairexpress.wikia.com/wiki/"];
+						"://eclairexpress.wikia.com/wiki/",
+						"://eclairexpress.proboards.com/"];
 
 	if (!string.startsWith("http")) {
 		return false;
