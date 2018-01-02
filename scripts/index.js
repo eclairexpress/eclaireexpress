@@ -722,7 +722,7 @@ function appendShopInfo (key) {
 
 	if (buildingImage) {
 		templateCode += `<span class="artist-credit"><a href="https://${buildingImageArtist}.deviantart.com" target="_blank">${buildingImageArtist}</a></span>
-		<a href="${buildingImage}" target="_blank"><div class="shopImage" style="background-image: url('${buildingImage}'); ${key === "fcf" ? 'background-position:top;': needBottom.indexOf(key) > -1 ? 'background-position:bottom;' : ''}">
+		<a id ="shop-image-link" href="${buildingImage}" target="_blank"><div class="shopImage" style="background-image: url('${buildingImage}'); ${key === "fcf" ? 'background-position:top;': needBottom.indexOf(key) > -1 ? 'background-position:bottom;' : ''}">
 
 		</div></a>`;
 	}
