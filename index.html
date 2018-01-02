@@ -15,6 +15,7 @@
 
         <link rel="stylesheet" href="styles/index.css" />
         <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
     </head>
     <body>
         <!-- loader -->
@@ -123,7 +124,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -136,7 +137,7 @@
                 <div class="container-inner">
                     <div id="skipToBar">
                     </div>
-                    <div id="member-container">
+                    <div id="member-list" class="member-container">
                         <a id="top" class="anchor"></a>
                     </div>
                 </div>
@@ -149,7 +150,7 @@
                         <li><a href="#list" class="ui-btn-active ui-state-persist" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -178,8 +179,8 @@
                         <li><a href="#main" data-icon="info" data-transition="slide">main</a></li>
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" class="ui-btn-active ui-state-persist" data-icon="calendar" data-transition="slide">Birthdays</a></li>
-                        <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li
-                            >
+                        <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -257,7 +258,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" class="ui-btn-active ui-state-persist" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -279,7 +280,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -341,7 +342,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -400,7 +401,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -452,7 +453,7 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
@@ -568,12 +569,78 @@
                         <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
                         <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
                         <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
-                        
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
                     </ul>
                 </div><!-- /navbar -->
             </div><!-- /footer -->
         </div><!-- /page -->
 
+        <!-- job list page -->
+        <div data-role="page" id="job" data-theme="a">
+            <div role="main" class="ui-content">
+                <div class="container-inner">
+                    <div id="market-button">
+                        <a href="#market" data-role="button" data-transition="slide" data-icon="shop" data-iconpos="notext">market</a>
+                    </div>
+                    <div id="job-list" class="member-container">
+                    </div>
+                </div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#main" data-icon="info" data-transition="slide">main</a></li>
+                        <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
+                        <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
+                        <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
+                        <li><a href="#job" class="ui-btn-active ui-state-persist" data-icon="location" data-transition="slide">town</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+        <!--view jobs page -->
+        <div data-role="page" id="view-job" data-theme="a">
+            <div role="main" class="ui-content">
+                <div class="container-inner">
+                    <div class="userInfo shorter" id="jobInfo"></div>
+                </div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#main" data-icon="info" data-transition="slide">main</a></li>
+                        <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
+                        <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
+                        <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+        <!--browse shops page -->
+        <div data-role="page" id="market" data-theme="a">
+            <div role="main" class="ui-content">
+                <div class="container-inner">
+                    <div class="userInfo shorter" id="userInfo"></div>
+                </div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-id="foo1" data-position="fixed" data-tap-toggle="false" class="ui-footer ui-bar-a ui-footer-fixed slideup" role="contentinfo">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#main" data-icon="info" data-transition="slide">main</a></li>
+                        <li><a href="#list" data-icon="user" data-transition="slide">users</a></li>
+                        <li><a href="#birthday" data-icon="calendar" data-transition="slide">Birthdays</a></li>
+                        <li><a href="#house" data-icon="home" data-transition="slide">homes</a></li>
+                        <li><a href="#job" data-icon="location" data-transition="slide">town</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div><!-- /page -->
 
         <!-- fixed background -->
         <div id = "bg"></div>

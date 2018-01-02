@@ -53,7 +53,7 @@ body {
   margin: 0 auto;
   margin-bottom: 3rem;
 }
-#member-container {
+.member-container {
   margin: 5rem 2rem 3rem 2rem;
   display: flex;
   flex-direction: row;
@@ -62,9 +62,15 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
 }
+#job-list {
+  margin-top: 2.5rem;
+}
 .cell-outer {
   position: relative;
   z-index: 100;
+}
+.cell-outer a {
+  text-decoration: none;
 }
 .image {
   background-image: url("https://orig13.deviantart.net/4214/f/2017/228/9/2/bg_straightpanel_by_toffeebot-dbkc9nw.png");
@@ -76,9 +82,29 @@ body {
   height: 55px;
   margin: 0rem 0rem 1rem 1rem;
   padding: 1rem 1rem 2rem 1rem;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
+}
+.shop-buttons {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  font-family: 'Bungee', cursive !important;
+  font-size: 1.25em;
+  width: 250px;
+  height: 58px;
+  padding: 0.5em;
+  color: white;
+  background-position: -100px 95px;
+  text-shadow: 0px -1px 0 #4c322b, -1px 0px 0 #4c322b, 1px 0px 0 #4c322b, 0px 1px 0 #4c322b;
+}
+.buildingName {
+  font-weight: bold !important;
+  font-size: 1.5em;
+}
+.buildingDesc {
+  color: #2595A8;
 }
 .image img {
   filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
@@ -102,7 +128,6 @@ a:hover#userCell {
 .userInfoItem {
   margin: 0 auto;
   margin-bottom: 1rem;
-  width: 95%;
 }
 #skipToBar {
   background: #4c322b;
@@ -763,7 +788,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 95%;
   max-width: 490px;
   transform: translate(-50%, -50%);
   display: none;
@@ -798,8 +822,39 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #4c322b;
   text-shadow: none !important;
 }
+#market-button {
+  position: absolute;
+  right: 3em;
+  top: 1em;
+  display: none;
+}
+#market-button a {
+  height: 2em;
+  width: 2em;
+  box-shadow: 0px 3px 1px #4c322b;
+}
+.shopImage {
+  margin-top: -1rem;
+  border: 1px solid #4c322b;
+  border-top: none;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 1rem;
+}
+.artist-credit {
+  display: block;
+  position: absolute;
+  right: 1em;
+  margin-top: -0.2em;
+}
+.artist-credit a {
+  color: #4c322b !important;
+  font-family: 'Bungee', cursive !important;
+  text-shadow: 0px -1px 0 #ffefd1, -1px 0px 0 #ffefd1, 1px 0px 0 #ffefd1, 0px 1px 0 #ffefd1;
+}
 @media (max-width: 800px) {
-  #member-container {
+  .member-container {
     margin: 5rem 1rem 3rem 1rem;
   }
 }

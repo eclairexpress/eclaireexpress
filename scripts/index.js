@@ -113,102 +113,10 @@ function compileData (main, housing, jobList, submissions, memories) {
 		memoriesRows = memoriesFeed.entry || [];
 
 	createJobDB(jobRows);
+	createHouseDB(housingRows);
+	buildUserPages(mainRows);
+	buildShopPages();
 
-	// Populate housing DB
-	housingRows.forEach(function(row) {
-		var rowAddress = row['gsx$address'].$t,
-			rowAddressArray = rowAddress.split('/'),
-			rowHasPaint = row['gsx$haspaint'].$t,
-			rowHasBathroom = row['gsx$hasbathroom'].$t,
-			rowHasKitchen = row['gsx$haskitchen'].$t,
-			rowHasRoomA = row['gsx$hasrooma'].$t,
-			rowImg = row['gsx$img'].$t;
-
-		housingDB[rowAddress] = {
-			address: rowAddressArray,
-			isCommunal: (rowAddressArray[0] === "ai" || rowAddressArray[0] === "ss"),
-			residents: "",
-			hasPaint: rowHasPaint,
-			hasBathroom: rowHasBathroom,
-			hasKitchen: rowHasKitchen,
-			hasRoomA: rowHasRoomA,
-			img: rowImg
-		}
-	});
-
-	var skipLinks = "<a data-ajax='false' href='#top'>#</a>",
-		charCode = 96; // `, one before a 
-	mainRows.forEach(function(row) {
-		var rowUsername = row['gsx$username'].$t,
-			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
-			rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t),
-			rowGold = parseInt(row['gsx$gross'].$t),
-			rowSpending = parseInt(row['gsx$spending'].$t),
-			rowTotal = rowGold + rowSpending,
-			rowCharacters = getCharacterArray(row),
-			div = document.createElement('div'),
-			anchor;
-
-		if (rowUsername.charCodeAt(0) > charCode) {
-			skipLinks += `   <a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
-			anchor = document.createElement('a');
-			anchor.className = "anchor";
-			anchor.id = rowUsername;
-			charCode = rowUsername.charCodeAt(0);
-		}
-
-		userDB[rowUsername] = {
-			username: rowUsername,
-			img: rowImg,
-			enroll: rowEnroll,
-			gold: rowGold,
-			spending: rowSpending,
-			total: rowTotal,
-			characters: rowCharacters,
-			memories: {},
-			submissions: []
-		}
-
-		div.className = 'cell-outer';
-		div.innerHTML = `<a href="#" id="userCell" data-id="${rowUsername}">
-							<div class="username" role="userName">${rowUsername}</div>
-							<div class="image" role="image"><img src="${rowImg}"></div>
-						</a>`;
-
-		$('a#userCell', div ).on( 'click', function( ev ){
-			var user = ev.currentTarget.dataset['id'],
-				pageContent = appendUserInfo(user);
-			
-			$('div#userInfo').empty().append(pageContent);
-
-			$("div#add-memory-button").on( 'click', function( ev ){
-				var user = $(this).attr('data-id');
-
-				if (!user || user === "") {
-					// uh oh
-					return;
-				}
-
-				$("div#memory-title").text("unlock memory badges for " + user);
-				$("input#memory-user").val(user);
-				populateMemoriesRemaining(userDB[user].memories);
-				$("input#memory-link").val("");
-				$("div#submit-memory-error").empty();
-				$("div#submit-memory-result").empty();
-				$("div#memory-form").css("display", "block");
-
-				$.mobile.changePage('#addmemory', {transition:'slide'});
-			});
-			$.mobile.changePage('#view', {transition:'slide'});
-		});
-		if (anchor) {
-			$('div#member-container').append(anchor);
-		}
-		$('div#member-container').append(div);
-	}, this);
-
-	$('div#skipToBar').html(skipLinks);
-	
 	// Populate memories
 	memoriesRows.forEach(function(row) {
 		var rowKeys = Object.keys(row).filter(function(name) { return name.startsWith("gsx$") && name !== "gsx$user" }),
@@ -304,6 +212,104 @@ function compileData (main, housing, jobList, submissions, memories) {
 	$("#loader").delay(1500).slideToggle("slow");
 }
 
+function buildUserPages(mainRows) {
+	var skipLinks = "<a data-ajax='false' href='#top'>#</a>",
+		charCode = 96; // `, one before a
+
+	mainRows.forEach(function(row) {
+		var rowUsername = row['gsx$username'].$t,
+			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
+			rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t),
+			rowGold = parseInt(row['gsx$gross'].$t),
+			rowSpending = parseInt(row['gsx$spending'].$t),
+			rowTotal = rowGold + rowSpending,
+			rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)),
+			div = document.createElement('div'),
+			anchor;
+
+		if (rowUsername.charCodeAt(0) > charCode) {
+			skipLinks += `   <a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
+			anchor = document.createElement('a');
+			anchor.className = "anchor";
+			anchor.id = rowUsername;
+			charCode = rowUsername.charCodeAt(0);
+		}
+
+		userDB[rowUsername] = {
+			username: rowUsername,
+			img: rowImg,
+			enroll: rowEnroll,
+			gold: rowGold,
+			spending: rowSpending,
+			total: rowTotal,
+			characters: rowCharacters,
+			memories: {},
+			submissions: []
+		}
+
+		div.className = 'cell-outer';
+		div.innerHTML = `<a href="#" id="userCell" data-id="${rowUsername}">
+							<div class="username" role="userName">${rowUsername}</div>
+							<div class="image" role="image"><img src="${rowImg}"></div>
+						</a>`;
+
+		$('a#userCell', div ).on( 'click', function( ev ){
+			var user = ev.currentTarget.dataset['id'],
+				pageContent = appendUserInfo(user);
+			
+			$('div#userInfo').empty().append(pageContent);
+
+			$("div#add-memory-button").on( 'click', function( ev ){
+				var user = $(this).attr('data-id');
+
+				if (!user || user === "") {
+					// uh oh
+					return;
+				}
+
+				$("div#memory-title").text("unlock memory badges for " + user);
+				$("input#memory-user").val(user);
+				populateMemoriesRemaining(userDB[user].memories);
+				$("input#memory-link").val("");
+				$("div#submit-memory-error").empty();
+				$("div#submit-memory-result").empty();
+				$("div#memory-form").css("display", "block");
+
+				$.mobile.changePage('#addmemory', {transition:'slide'});
+			});
+			$.mobile.changePage('#view', {transition:'slide'});
+		});
+		if (anchor) {
+			$('div#member-list').append(anchor);
+		}
+		$('div#member-list').append(div);
+	}, this);
+
+	$('div#skipToBar').html(skipLinks);
+}
+
+function buildShopPages() {
+	Object.keys(jobDB).forEach(function(rowKey) {
+		var row = jobDB[rowKey],
+			div = document.createElement('div');
+
+		div.className = 'cell-outer';
+		div.innerHTML = `<a href="#" id="userCell" data-id="${rowKey}">
+							<div class="image shop-buttons" role="image">${row.building}</div>
+						</a>`;
+
+		$('a#userCell', div ).on( 'click', function( ev ){
+			var shopkey = ev.currentTarget.dataset['id'],
+				pageContent = appendShopInfo(shopkey);
+			
+			$('div#jobInfo').empty().append(pageContent);
+			$.mobile.changePage('#view-job', {transition:'slide'});
+		});
+
+		$('div#job-list').append(div);
+	}, this);
+}
+
 function populateMemoriesRemaining(memoriesList) {
 	var memoryKeys = Object.keys(memoriesList),
 		memoryArray,
@@ -345,11 +351,51 @@ function getPercentage(number) {
 
 function createJobDB(jobRows) {
 	jobRows.forEach(function(row) {
-		jobDB[row['gsx$key'].$t] = {
-			building: row['gsx$building'].$t,
-			job1: row['gsx$job1'].$t,
-			job2: row['gsx$job2'].$t,
-			job3: row['gsx$job3'].$t
+		let key = row['gsx$key'].$t;
+
+		if (key === "o" || key === "c") {
+			// independents / civilians
+			jobDB[key] = {
+				building: row['gsx$building'].$t,
+				desc: row['gsx$desc'].$t,
+				characters: []
+			}
+		} else {
+			jobDB[key] = {
+				building: row['gsx$building'].$t,
+				job1: { name: row['gsx$job1'].$t, characters: []},
+				job2: { name: row['gsx$job2'].$t, characters: []},
+				job3: { name: row['gsx$job3'].$t, characters: []},
+				area: row['gsx$area'].$t,
+				hours: row['gsx$hours'].$t,
+				desc: row['gsx$desc'].$t,
+				img: row['gsx$image'].$t,
+				artist: row['gsx$artist'].$t
+			}
+		}
+	});
+}
+
+function createHouseDB(houseRows) {
+	// Populate housing DB
+	houseRows.forEach(function(row) {
+		var rowAddress = row['gsx$address'].$t,
+			rowAddressArray = rowAddress.split('/'),
+			rowHasPaint = row['gsx$haspaint'].$t,
+			rowHasBathroom = row['gsx$hasbathroom'].$t,
+			rowHasKitchen = row['gsx$haskitchen'].$t,
+			rowHasRoomA = row['gsx$hasrooma'].$t,
+			rowImg = row['gsx$img'].$t;
+
+		housingDB[rowAddress] = {
+			address: rowAddressArray,
+			isCommunal: (rowAddressArray[0] === "ai" || rowAddressArray[0] === "ss"),
+			residents: "",
+			hasPaint: rowHasPaint,
+			hasBathroom: rowHasBathroom,
+			hasKitchen: rowHasKitchen,
+			hasRoomA: rowHasRoomA,
+			img: rowImg
 		}
 	});
 }
@@ -412,7 +458,7 @@ function createInitialCalendar() {
 function getBdayDiv(season, day) {
 	var bdayArray = bdayDB[season][day],
 		birthdate = parseBirthday([parseInt(season)+1+"", parseInt(day)+1]) + " birthdays";
-	console.log(parseInt(season)+1)
+
 	if (bdayArray.length === 0) {
 		return "";
 	} else {
@@ -472,7 +518,7 @@ function addToBdayDB(bdayArray, characterName) {
 	bdayCount[bdayArray[0]-1]++;
 }
 
-function getCharacterArray(row) {
+function getCharacterArray(row, enrollNum) {
 	var characters = {},
 		characterNum,
 		characterString,
@@ -499,9 +545,10 @@ function getCharacterArray(row) {
 				isHybrid: characterArray[3],
 				isNPC: characterArray[4],
 				housing: getHousing(characterArray[5], characterName),
-				job: getJob(characterArray[6].split('/')),
+				job: getJob(characterArray[6].split('/'), characterName),
 				image: characterArray[7],
-				tracker: characterArray[8] ? characterArray[8] : ""
+				tracker: characterArray[8] ? characterArray[8] : "",
+				enroll: enrollNum
 			};
 
 			if (characterArray[3] === "true") {
@@ -523,12 +570,22 @@ function getCharacterArray(row) {
 	return characters;
 }
 
-function getJob(jobArray) {
+function getJob(jobArray, name) {
 	if (jobArray.length === 1) {
-		return jobArray[0] !== "" ? jobArray[0] : "n/a (civilian)";
+		let isIndependent = jobArray[0] !== "";
+
+		if (isIndependent) {
+			jobDB["o"].characters.push(name);
+		} else {
+			jobDB["c"].characters.push(name);
+		}
+		return isIndependent ? jobArray[0] : "n/a (civilian)";
 	}
 
-	return jobDB[jobArray[0]]["job" + jobArray[1]];
+	let job = jobDB[jobArray[0]]["job" + jobArray[1]];
+	job.characters.push(name);
+
+	return job["name"];
 }
 
 function getHousing(housingObj, characterName) {
@@ -567,8 +624,8 @@ function appendUserInfo (user) {
 		submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions),
 	  	div = document.createElement('div');
 
-		div.className = 'cell-outer';
-		div.innerHTML = `
+	div.className = 'cell-outer';
+	div.innerHTML = `
 		<div class="userInfoItem">
 			<div class="userContentHeader">
 				stats
@@ -598,6 +655,83 @@ function appendUserInfo (user) {
 		${userCharacterData}`;
 
 	return div;
+}
+
+function appendShopInfo (key) {
+	var	jobData = jobDB[key],
+		buildingName = jobData.building,
+		buildingDesc = jobData.desc,
+		buildingImage = jobData.img,
+		buildingImageArtist = jobData.artist,
+		buildingHours = jobData.hours,
+		buildingArea = jobData.area,
+		characterData = "",
+		characterObj = {},
+		job,
+		needBottom = ["tth", "bmbh", "tmth", "cc"],
+		div = document.createElement('div');
+
+	// loop through and get all the characters for display (in job order)
+	if (key === "c" || key === "o") {
+		// indepedent / civvy
+		if (jobData.characters.length > 0) {
+			jobData.characters.forEach(function(name) {
+				characterObj[name] = characterDB[name];
+			});
+
+			characterData = appendCharacterInfo(characterObj, true);
+		}
+	} else {
+		// standard job
+		for (var i = 1; i <= 3; i++) {
+			job = jobData["job" + i];
+			characterObj = {};
+
+			if (job.characters.length > 0) {
+				job.characters.forEach(function(name) {
+					characterObj[name] = characterDB[name];
+				});
+
+				characterData += appendCharacterInfo(characterObj, true);
+			}
+		}
+	}
+
+	div.className = 'cell-outer';
+	let templateCode = `
+	<div class="userInfoItem shop-description">
+		<div class="userContentHeader">
+			information
+		</div>
+		<div class="userContent userStats padding-bottom-short" id="userStats">
+			<span class="userCells buildingName">${buildingName}</span>`;
+
+	if (buildingArea) {
+		templateCode += `<span class="userCells"><span>${buildingArea}</span></span>`;
+	}
+
+	if (buildingHours) {
+		templateCode += `<span class="userCells userEnroll"><span>${buildingHours}</span></span>`;
+	}
+
+	if (buildingDesc) {
+		templateCode += `<span class="buildingDesc">${buildingDesc}</span><div class="clear"></div>`;
+	}
+
+	templateCode += `</div></div>`;
+
+	if (buildingImage) {
+		templateCode += `<span class="artist-credit"><a href="https://${buildingImageArtist}.deviantart.com" target="_blank">${buildingImageArtist}</a></span>
+		<a href="${buildingImage}" target="_blank"><div class="shopImage" style="background-image: url('${buildingImage}'); ${key === "fcf" ? 'background-position:top;': needBottom.indexOf(key) > -1 ? 'background-position:bottom;' : ''}">
+
+		</div></a>`;
+	}
+
+	templateCode += `${characterData}`;
+
+	div.innerHTML = templateCode;
+
+  return div;
 }
 
 function appendMemoryInfo (memoriesList) {
@@ -643,8 +777,9 @@ function appendSubmissions(submissionsList) {
 	return `<span class="userCells userSubmissionDate">Last entry: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
 }
 
-function appendCharacterInfo (characterObj) {
+function appendCharacterInfo (characterObj, sortEnroll=false) {
 	var template,
+		templateArray = [],
 		compiledTemplate = "",
 		character,
 		birthday,
@@ -687,8 +822,19 @@ function appendCharacterInfo (characterObj) {
 				</div>
 			</div>`;
 
-		compiledTemplate = compiledTemplate.concat(template);
+		templateArray.push({ enroll: character.enroll, template: template });
 	});
+
+	if (sortEnroll) {
+		templateArray = templateArray.sort(function(a,b) {
+			return a.enroll > b.enroll ? 1 : - 1;
+		});
+	}
+
+	templateArray.forEach(function(pageHtml) {
+		compiledTemplate += pageHtml.template;
+	});
+
 	return compiledTemplate;
 }
 
@@ -1266,8 +1412,9 @@ function createDialog(div, residentTitle = null) {
 
 		if (housingDB[house].img !== "") {
 			$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
+			$("div#dialog-portrait").css("display", "block");
 		} else {
-			$("div#dialog-portrait").css('background-image', `url("https://orig13.deviantart.net/4214/f/2017/228/9/2/bg_straightpanel_by_toffeebot-dbkc9nw.png")`);
+			$("div#dialog-portrait").css("display", "none");
 		}
 
 		$("div#housingInfo").empty().append(template);
