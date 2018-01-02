@@ -132,7 +132,6 @@ a:hover#userCell {
 }
 #skipToBar {
   background: #4c322b;
-  width: 95%;
   position: fixed;
   padding: 0.5em 1em;
   top: 0;
@@ -790,6 +789,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 95%;
   max-width: 490px;
   transform: translate(-50%, -50%);
   display: none;
