@@ -1517,7 +1517,9 @@ function createDialog(div, residentTitle = null, isItem = false) {
 		// reset click event
 		$("div#dialog-portrait").prop('onclick',null).off('click');
 		$("div#priceInfo").attr('display', 'none');
+		$("div#priceInfo").attr('padding-top', '0');
 		$("div#priceInfo").height('0px');
+		$("div#priceInfo").empty();
 		$("div#housingInfo").height('150px');
 
 		if (isItem) {
@@ -1545,6 +1547,7 @@ function parseItemData(itemName, item) {
 
 	$("div#priceInfo").attr('display', 'block');
 	$("div#priceInfo").height('23px');
+	$("div#priceInfo").attr('padding-top', '7px');
 	$("div#housingInfo").height('120px');
 
 	$("div#priceInfo").html(`
