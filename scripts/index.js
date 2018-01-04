@@ -19,6 +19,7 @@ var userDB = {
 	characterDB = {},
 	housingDB = {},
 	jobDB = {},
+	itemDB = {},
 	bdayDB = [],
 
 	// for stats
@@ -69,16 +70,19 @@ $(function() {
 		$.ajax({
 			url: 'https://spreadsheets.google.com/feeds/list/1MZEVM8nWfmyhxDIWvib0trVLmOFK79f2SIBAJDidMRI/od6/public/values?alt=json-in-script',
 			dataType: 'jsonp'
+		}),
+		$.ajax({
+			url: 'https://spreadsheets.google.com/feeds/list/1QtrZ8TdV9NayyXquBMhp-3ywwIjjMhQoJwmMBynZTjU/od6/public/values?alt=json-in-script',
+			dataType: 'jsonp'
 		})
 	)
-	.done(function(main, housing, jobList, submissions, memories) {compileData(main, housing, jobList, submissions, memories);});
+	.done(function(main, housing, jobList, submissions, memories, items) {compileData(main, housing, jobList, submissions, memories, items);});
   });
 
 // Resize the background
 function resizeBackground() {
 	var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-	$("#bg").height($(window).height());
 	$( ".ui-content" ).each(function() { $( this ).height(window.innerHeight - 76 + (isIOS && window.innerWidth > window.innerHeight ? 78 : 0)); });
 	roundCssTransformMatrix("dialog");
 }
@@ -93,9 +97,9 @@ function createBdayDB() {
 }
 
 // Process the gold calculation based on the spreadsheets.
-function compileData (main, housing, jobList, submissions, memories) {
+function compileData (main, housing, jobList, submissions, memories, items) {
 	// If something messed up here, stop processing.
-	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0]) {
+	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0] || !items[0]) {
 		return;
 	}
 
@@ -106,13 +110,16 @@ function compileData (main, housing, jobList, submissions, memories) {
 		jobFeed = jobList[0].feed,
 		submissionsFeed = submissions[0].feed,
 		memoriesFeed = memories[0].feed,
+		itemsFeed = items[0].feed,
 		mainRows = mainFeed.entry || [],
 		housingRows = housingFeed.entry || [],
 		jobRows = jobFeed.entry || [],
 		submissionsRows = submissionsFeed.entry || [],
-		memoriesRows = memoriesFeed.entry || [];
+		memoriesRows = memoriesFeed.entry || [],
+		itemsRows = itemsFeed.entry || [];
 
 	createJobDB(jobRows);
+	createItemDB(itemsRows);
 	createHouseDB(housingRows);
 	buildUserPages(mainRows);
 	buildShopPages();
@@ -152,6 +159,9 @@ function compileData (main, housing, jobList, submissions, memories) {
 
 	// Construct the calendar
 	createInitialCalendar();
+
+	// Construct the shops page
+	createShopsPage();
 
 	// Populate housing
 	populateHousing();
@@ -212,9 +222,32 @@ function compileData (main, housing, jobList, submissions, memories) {
 	$("#loader").delay(1500).slideToggle("slow");
 }
 
+function createItemDB(rawData) {
+	var key,
+		shop;
+
+	rawData.forEach(function(row) {
+		key = row['gsx$key'].$t,
+		shop = itemDB[key];		
+		if (!shop) {
+			shop = {};
+		}
+
+		shop[(row['gsx$name'].$t).toLowerCase()] = {
+			image: row['gsx$image'].$t,
+			artist: row['gsx$artist'].$t,
+			price: row['gsx$price'].$t,
+			currency: row['gsx$currency'].$t || "G",
+			desc: row['gsx$desc'].$t
+		};
+
+		itemDB[key] = shop;
+	});
+}
+
 function buildUserPages(mainRows) {
-	var skipLinks = "<a data-ajax='false' href='#top'>#</a>",
-		charCode = 96; // `, one before a
+	var skipLinks = "<a data-ajax='false' href='#userTop'>a</a>",
+		charCode = 97; // a
 
 	mainRows.forEach(function(row) {
 		var rowUsername = row['gsx$username'].$t,
@@ -228,7 +261,7 @@ function buildUserPages(mainRows) {
 			anchor;
 
 		if (rowUsername.charCodeAt(0) > charCode) {
-			skipLinks += `   <a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
+			skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
 			anchor = document.createElement('a');
 			anchor.className = "anchor";
 			anchor.id = rowUsername;
@@ -267,7 +300,7 @@ function buildUserPages(mainRows) {
 					return;
 				}
 
-				$("div#memory-title").text("unlock memory badges for " + user);
+				$("div#memory-title").text(user);
 				$("input#memory-user").val(user);
 				populateMemoriesRemaining(userDB[user].memories);
 				$("input#memory-link").val("");
@@ -279,13 +312,13 @@ function buildUserPages(mainRows) {
 			});
 			$.mobile.changePage('#view', {transition:'slide'});
 		});
+		$('div#member-list').append(div);
 		if (anchor) {
 			$('div#member-list').append(anchor);
 		}
-		$('div#member-list').append(div);
 	}, this);
 
-	$('div#skipToBar').html(skipLinks);
+	$('div#skipToUser').html(skipLinks);
 }
 
 function buildShopPages() {
@@ -398,6 +431,77 @@ function createHouseDB(houseRows) {
 			img: rowImg
 		}
 	});
+}
+
+function createShopsPage() {
+	var skipLinks = "<a data-ajax='false' href='#itemTop'>a</a>",
+		charCode = 97;
+
+	Object.keys(itemDB).forEach (function(key) {
+		var titleDiv = $('<div></div>'),
+			itemsDiv = $('<div></div>'),
+			buildingName = jobDB[key] ? jobDB[key].building : key,
+			items = itemDB[key],
+			anchor,
+			additionalInfo;
+
+		if (buildingName.charCodeAt(0) > charCode) {
+			skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
+			anchor = document.createElement('a');
+			anchor.className = "anchor";
+			anchor.id = buildingName;
+			charCode = buildingName.charCodeAt(0);
+			$('div#itemsContainer').append(anchor);
+		}
+
+		titleDiv.attr('class', "marketShopName");
+		titleDiv.html(buildingName);
+		$('div#itemsContainer').append(titleDiv);
+
+		if (buildingName === "eclair station") {
+			additionalInfo = `Train tickets are to be purchased if you'd like canon events to occur in other places outside of the Toffee Town region, and also if you'd like to shop at Fortune Fair.
+			The train ticket home and train ticket to Toffee Town will also allow you to submit images depicting non-official npcs for gold (when they are out of town or when someone is visiting).`;
+		}
+
+		if (buildingName === "fortune fair") {
+			additionalInfo = `A fortune fair train ticket is required to visit the fair and purchase these items.`;
+		}
+
+		if (buildingName === "puff-puff pet mart") {
+			additionalInfo = `To decide dog size, see the following links: <a href="http://dogtime.com/dog-breeds/characteristics/small/" target="_blank">small</a>, <a href="http://dogtime.com/dog-breeds/characteristics/medium/" target="_blank">medium</a>, <a href="http://dogtime.com/dog-breeds/characteristics/size/" target="_blank">large</a>. If the breed is not there, decide based on its size vs other dogs.
+			<br>Birds must be domestic <a href="http://www.allpetbirds.com/types-of-pet-birds/" target="_blank">(see list)</a>. One exception is the falcon (counts as large bird). Chickens may be purchased at the ranch.`;
+		}
+
+		if (additionalInfo) {
+			var additionalDiv = $('<div></div>');
+
+			additionalDiv.attr('class', "marketShopInfo");
+			additionalDiv.html(additionalInfo);
+			$('div#itemsContainer').append(additionalDiv);
+		}
+
+		itemsDiv.attr('class', "marketItemsContainer");
+		Object.keys(items).forEach(function(itemName) {
+			var item = items[itemName],
+				itemDiv = $('<div></div>');
+
+			itemDiv.attr('class', "itemDiv");
+			itemDiv.attr('data-id', itemName);
+			itemDiv.attr('data-key', key);
+			itemDiv.html(`
+				<div class="itemPic"><img src="${item.image}"></div>
+				<div class="itemName">${itemName}</div>
+				<div class="itemPrice">${parseInt(item.price).toLocaleString()} ${item.currency}</div>
+			`);
+
+			createDialog(itemDiv, null, true)
+			itemsDiv.append(itemDiv);
+		});
+
+		$('div#itemsContainer').append(itemsDiv);
+	});
+
+	$('div#skipToItem').html(skipLinks);
 }
 
 function createInitialCalendar() {
@@ -614,7 +718,7 @@ function getHousing(housingObj, characterName) {
 function appendUserInfo (user) {
   	var	userData = userDB[user],
 	  	username = userData.username,
-	  	userLink = `https://${username}.deviantart.com`,
+	  	userLink = `https://${username}.deviantart.com/`,
 	  	userGross = userData.gold,
 		userSpent = userData.spending,
 		userTotal = userData.total,
@@ -668,7 +772,7 @@ function appendShopInfo (key) {
 		characterData = "",
 		characterObj = {},
 		job,
-		needBottom = ["tth", "bmbh", "tmth", "cc"],
+		needBottom = ["lbl", "tth", "bmbh", "tmth", "cc"],
 		div = document.createElement('div');
 
 	// loop through and get all the characters for display (in job order)
@@ -721,8 +825,8 @@ function appendShopInfo (key) {
 	templateCode += `</div></div>`;
 
 	if (buildingImage) {
-		templateCode += `<span class="artist-credit"><a href="https://${buildingImageArtist}.deviantart.com" target="_blank">${buildingImageArtist}</a></span>
-		<a id ="shop-image-link" href="${buildingImage}" target="_blank"><div class="shopImage" style="background-image: url('${buildingImage}'); ${key === "fcf" ? 'background-position:top;': needBottom.indexOf(key) > -1 ? 'background-position:bottom;' : ''}">
+		templateCode += `<span class="artist-credit"><a href="https://${buildingImageArtist}.deviantart.com/" target="_blank">art by ${buildingImageArtist}</a></span>
+		<a id ="shop-image-link" href="${buildingImage}" target="_blank"><div class="shopImage" style="background-image: url('${buildingImage}'); ${key === "fcf" || key === "sos" ? 'background-position:top;': needBottom.indexOf(key) > -1 ? 'background-position:bottom;' : ''}">
 
 		</div></a>`;
 	}
@@ -1083,7 +1187,8 @@ function isAcceptedLink(string) {
 						"://sta.sh/comments/",
 						"://comments.deviantart.com/",
 						"://eclairexpress.wikia.com/wiki/",
-						"://eclairexpress.proboards.com/"];
+						"://eclairexpress.proboards.com/",
+						"://media.discordapp.net/attachments/"];
 
 	if (!string.startsWith("http")) {
 		return false;
@@ -1405,21 +1510,73 @@ function populateHousing() {
 	}
 }
 
-function createDialog(div, residentTitle = null) {
+function createDialog(div, residentTitle = null, isItem = false) {
 	div.on( 'click', function( ev ){
-		var house = $(this).attr('data-id'),
-			template = parseLocation(housingDB[house], undefined, residentTitle);
+		var clickedItem = $(this);
 
-		if (housingDB[house].img !== "") {
-			$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
-			$("div#dialog-portrait").css("display", "block");
+		// reset click event
+		$("div#dialog-portrait").prop('onclick',null).off('click');
+		$("div#priceInfo").attr('display', 'none');
+		$("div#priceInfo").height('0px');
+		$("div#housingInfo").height('150px');
+
+		if (isItem) {
+			getItemDialog(clickedItem);
 		} else {
-			$("div#dialog-portrait").css("display", "none");
+			getHouseDialog(clickedItem, residentTitle);
 		}
-
-		$("div#housingInfo").empty().append(template);
-		openDialog();
 	});
+}
+//25px
+//5px padding-top
+function getItemDialog(itemObj) {
+	var itemName = itemObj.attr('data-id'),
+		itemKey = itemObj.attr('data-key'),
+		template = parseItemData(itemName, itemDB[itemKey][itemName]);
+
+	$("div#housingInfo").empty().append(template);
+	openDialog();
+}
+
+function parseItemData(itemName, item) {
+	$("div#dialogTitle").text(itemName);
+	$("div#dialog-portrait").css('background-image', `url('${item.image}')`);
+	$("div#dialog-portrait").css("display", "block");
+
+	$("div#priceInfo").attr('display', 'block');
+	$("div#priceInfo").height('23px');
+	$("div#housingInfo").height('120px');
+
+	$("div#priceInfo").html(`
+		<div class="itemCredit"><a href="https://${item.artist}.deviantart.com/" target="_blank">art by ${item.artist}</a></div>
+		<div class="itemCost">${item.price} ${item.currency}</div>
+	`);
+	$("div#dialog-portrait").click(function() {
+		window.open(item.image, "blank");
+	});
+
+	let template = `
+		<div class="item-dialog-outer-container">
+			<div class="itemDesc">${item.desc}</div>
+		</div>
+	`;
+
+	return template;
+}
+
+function getHouseDialog(houseObj, residentTitle) {
+	var house = houseObj.attr('data-id'),
+		template = parseLocation(housingDB[house], undefined, residentTitle);
+
+	if (housingDB[house].img !== "") {
+		$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
+		$("div#dialog-portrait").css("display", "block");
+	} else {
+		$("div#dialog-portrait").css("display", "none");
+	}
+
+	$("div#housingInfo").empty().append(template);
+	openDialog();
 }
 
 function calculateFP() {

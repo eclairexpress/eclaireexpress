@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="icon" href="https://orig13.deviantart.net/8606/f/2017/191/6/9/px_cow_by_toffeebot-dbfv73d.png" type="image/gif" sizes="16x16">
-        <title>Eclair Express (v1.0)</title>
+        <title>Eclair Express (v1.1)</title>
         <link rel="stylesheet" href="styles/jquery.mobile-1.4.5.min.css" />
 
         <!-- using themeroller -->
@@ -14,8 +14,7 @@
 
 
         <link rel="stylesheet" href="styles/index.css" />
-        <link href="https://fonts.googleapis.com/css?family=Itim" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee|Baloo+Thambi" rel="stylesheet">
     </head>
     <body>
         <!-- loader -->
@@ -42,6 +41,8 @@
                         </div>
                         <div class="charaHousingInfo" id="housingInfo">
                         </div>
+                        <div class="charaPriceInfo" id="priceInfo">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,13 @@
                                 <br>this is a simple page made to collectively gather all the information from the spreadsheets/journals we had into one place for easy viewing.
                                 <br><span><span style="font-size:0.8em;">if you find any bugs, please report to <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a></span></span>
                                 <hr/>
-                                <span>current version: <span>1.0</span></span>
+                                <span>current version: <span>1.1</span>
+                                    <span class="updates">
+                                            Now has two new pages (both accessible from the same tab: town) - the jobs list and the marketplace (items).
+                                            Everything is view only, unfortunately!
+                                            You can click on the shop and item images to expand them.
+                                    </span>
+                                </span>
                             </div>
                         </div>
 
@@ -104,13 +111,10 @@
 
                         <div class="userInfoItem">
                             <div class="userContentHeader">
-                                credits
+                                important
                             </div>
                             <div class="userContent">
-                                code: <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a>
-                                <br>background: <a href="https://onedayfour.deviantart.com/" target="_blank">onedayfour</a>
-                                <hr/>
-                                <span><span>content made for and to be used by eclairexpress only</span></span>
+                                <span><span class="psa">content made for and to be used by <a href="https://eclairexpress.deviantart.com/">eclairexpress</a> only</span></span>
                             </div>
                         </div>
                     </div>
@@ -135,10 +139,9 @@
         <div data-role="page" id="list" data-theme="a">
             <div role="main" class="ui-content">
                 <div class="container-inner">
-                    <div id="skipToBar">
-                    </div>
+                    <div class= "skipToBar" id="skipToUser"></div>
+                    <a data-ajax="false" id="userTop" class="anchor"></a>
                     <div id="member-list" class="member-container">
-                        <a id="top" class="anchor"></a>
                     </div>
                 </div>
             </div><!-- /content -->
@@ -210,7 +213,7 @@
 
                         <div class="userInfoItem inline-block">
                             <div class="userContentHeader calc-about">
-                                sherbet seasonal house (floor 1)
+                                sherbet s. house (floor 1)
                             </div>
                             <div class="userContent map map-ss" id="map-ss-1">
                             </div>
@@ -218,7 +221,7 @@
 
                         <div class="userInfoItem inline-block">
                             <div class="userContentHeader calc-about">
-                                sherbet seasonal house (floor 2)
+                                sherbet s. house (floor 2)
                             </div>
                             <div class="userContent map map-ss" id="map-ss-2">
                             </div>
@@ -322,7 +325,7 @@
                                         <span>link</span>
                                     </label>
                                     <input type="text" id="gold-link" name="gold-link">
-                                    <span class="form-subtext">The link to your submission. You can submit rp logs and images (DA, twitter, tumblr, stash, the forum, and gdocs).</span>
+                                    <span class="form-subtext">The link to your submission. You can submit rp logs and images (DA, twitter, tumblr, stash, the forum, discord, and gdocs).</span>
 
                                     <button id="submitGoldBtn" class="submitBtn" onclick="submitGold()">submit</button>
                                 </form>
@@ -381,7 +384,7 @@
                                         <span>link</span>
                                     </label>
                                     <input type="text" id="memory-link" name="memory-link">
-                                    <span class="form-subtext">The link to your proof of completion. You can submit rp logs and images (DA, twitter, tumblr, stash, the forum, and gdocs).</span>
+                                    <span class="form-subtext">The link to your proof of completion. You can submit rp logs and images (DA, twitter, tumblr, stash, the forum, discord, and gdocs).</span>
 
                                     <button id="submitMemoryBtn" class="submitBtn" onclick="submitMemory()">submit</button>
                                 </form>
@@ -625,7 +628,17 @@
         <div data-role="page" id="market" data-theme="a">
             <div role="main" class="ui-content">
                 <div class="container-inner">
-                    <div class="userInfo shorter" id="userInfo"></div>
+                    <div class="userInfo market-shorter">
+                        <div class="userInfoItem">
+                            <div class="skipToBar" id="skipToItem"></div>
+                            <a data-ajax="false" id="itemTop" class="anchor"></a>
+                            <div class="userContentHeader">
+                                town marketplace
+                            </div>
+                            <div class="userContent" id="itemsContainer">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div><!-- /content -->
 
@@ -641,9 +654,6 @@
                 </div><!-- /navbar -->
             </div><!-- /footer -->
         </div><!-- /page -->
-
-        <!-- fixed background -->
-        <div id = "bg"></div>
 
 
         <!-- scripts -->

@@ -1,5 +1,5 @@
 * {
-  font-family: 'Itim', Arial, Helvetica, sans-serif !important;
+  font-family: 'Baloo Thambi', cursive !important;
   text-transform: lowercase !important;
   font-weight: 400 !important;
 }
@@ -7,7 +7,8 @@
   min-height: auto !important;
 }
 body {
-  background: #fff;
+  /* Background pattern from Subtle Patterns */
+  background: url('https://orig00.deviantart.net/674f/f/2018/003/0/4/2_by_toffeebot-dbyuo85.png') !important;
   color: #fff;
   font-size: 18px;
   margin: 0;
@@ -17,23 +18,9 @@ body {
 .container-inner {
   height: 100%;
   width: 100%;
-  overflow: scroll;
-  padding-right: 15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
-  padding-top: 2rem;
-}
-#bg {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1000;
-  background: url("https://orig05.deviantart.net/f634/f/2017/192/a/4/flower_shop_by_toffeebot-dbfzjit.png") no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 }
 .ui-content {
   margin: 0 auto;
@@ -49,21 +36,19 @@ body {
   visibility: hidden;
 }
 .userInfo {
-  padding-left: 0.5em;
   margin: 0 auto;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  margin-top: 2em;
 }
 .member-container {
-  margin: 5rem 2rem 3rem 2rem;
+  margin: 2rem 2rem 3rem 2rem;
+  padding-top: 4rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-}
-#job-list {
-  margin-top: 2.5rem;
 }
 .cell-outer {
   position: relative;
@@ -80,7 +65,7 @@ body {
   z-index: 100;
   width: 175px;
   height: 55px;
-  margin: 0rem 0rem 1rem 1rem;
+  margin: 0rem 0.5rem 1rem 0.5rem;
   padding: 1rem 1rem 2rem 1rem;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
@@ -102,14 +87,17 @@ body {
 .buildingName {
   font-weight: bold !important;
   font-size: 1.5em;
+  font-family: 'Bungee', cursive !important;
 }
 .buildingDesc {
   color: #2595A8;
+  font-size: 0.8em;
 }
 .image img {
   filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
 }
 .username {
+  font-size: 0.9em;
   white-space: nowrap;
   position: absolute;
   background-image: url("https://orig11.deviantart.net/9eac/f/2017/191/f/4/bodybg_by_toffeebot-dbfv43k.png");
@@ -128,26 +116,29 @@ a:hover#userCell {
 .userInfoItem {
   margin: 0 auto;
   margin-bottom: 1rem;
-  width: 95%;
+  max-width: 92%;
 }
-#skipToBar {
+.skipToBar {
   background: #4c322b;
   position: fixed;
-  padding: 0.5em 1em;
   top: 0;
   left: 0;
-  right: 0;
+  right: 12px;
   z-index: 300;
-  margin-left: 1em;
-  margin-right: 1em;
   text-align: center;
-  border-radius: 1em;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
 }
-#skipToBar a {
+.skipToBar a {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
   text-decoration: none;
   color: #ffefd1;
   font-size: 1.1em;
+}
+.skipToBar a:visited {
+  color: #ffefd1 !important;
 }
 .ui-header .ui-title,
 .ui-footer .ui-title {
@@ -169,14 +160,18 @@ html head + body .ui-btn.ui-btn-a:visited {
   border: none;
 }
 .userContentHeader {
+  font-family: 'Bungee', cursive !important;
   background: #4c322b;
-  color: #ffefd1;
+  color: #4c322b;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   padding: 1rem;
   border: 1px solid #4c322b;
-  padding-top: 0;
+  padding-top: 0.2em;
+  padding-left: 0.5em;
+  padding-right: 0;
   text-align: left;
+  text-shadow: 0px -1px 0 #caa380, -1px 0px 0 #caa380, 1px 0px 0 #caa380, 0px 1px 0 #caa380;
 }
 .seasonTitle {
   font-size: 1.5em;
@@ -197,7 +192,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   text-align: center;
 }
 .userBonus {
-  color: #F7A541;
+  color: #e1891f;
 }
 .userGoldTotal {
   color: #2595A8;
@@ -272,7 +267,7 @@ form {
 }
 select option {
   margin: 40px;
-  background: #ad8361;
+  background: #a57a57;
   color: #4c322b;
 }
 .ui-input-text input,
@@ -309,7 +304,7 @@ html body .ui-group-theme-a a:visited {
 }
 .userCharaInfo {
   text-align: right;
-  background: #ad8361;
+  background: #a57a57;
   padding: 3px;
   padding-top: 7px;
   padding-right: 0.5em;
@@ -370,10 +365,10 @@ hr {
 }
 span span,
 .brown-color {
-  color: #ad8361;
+  color: #a57a57;
 }
 .charaHousingInfo ul li {
-  color: #F7A541;
+  color: #e1891f;
 }
 .charaHousingInfo ul li ul li {
   color: #4a8651;
@@ -403,11 +398,11 @@ span#spending {
 .dialog ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(76, 50, 43, 0.3);
   -webkit-box-shadow: inset 0 0 6px rgba(76, 50, 43, 0.3);
-  border-radius: 10px;
+  background-color: #ffefd1;
 }
 .ui-content ::-webkit-scrollbar-thumb,
 .dialog ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #caa380;
 }
 .ui-header .ui-title,
@@ -435,7 +430,7 @@ span#spending {
   z-index: 99999;
   height: 100%;
   width: 100%;
-  background: #ad8361;
+  background: #a57a57;
   text-align: center;
 }
 .loader .auto-center {
@@ -568,6 +563,7 @@ td {
   display: inline-block;
   padding-left: 0.35em;
   margin-bottom: 3rem;
+  margin-top: 2em;
 }
 .calendar-header {
   display: flex;
@@ -601,10 +597,10 @@ a.ui-btn {
   color: #4a8651;
 }
 .summer-background {
-  background: #F7A541;
+  background: #e1891f;
 }
 .summer-color {
-  color: #F7A541;
+  color: #e1891f;
 }
 .fall-background {
   background: #e66b6b;
@@ -671,7 +667,7 @@ a.ui-btn {
   width: 15px;
   height: 15px;
   padding: 5px;
-  font-size: 0.8em;
+  font-size: 0.85em;
   color: #4c322b;
   position: absolute;
   text-shadow: 0px -1px 0 #ffefd1, -1px 0px 0 #ffefd1, 1px 0px 0 #ffefd1, 0px 1px 0 #ffefd1;
@@ -789,7 +785,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 95%;
+  width: 92%;
   max-width: 490px;
   transform: translate(-50%, -50%);
   display: none;
@@ -828,7 +824,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   position: absolute;
   right: 3em;
   top: 1em;
-  display: none;
 }
 #market-button a {
   height: 2em;
@@ -838,7 +833,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 #shop-image-link {
   border: 1px solid #4c322b;
   border-top: none;
-  width: 94.5%;
+  width: 91.5%;
   display: block;
   margin: 0 auto;
   margin-top: -1rem;
@@ -853,17 +848,117 @@ html head + body .ui-btn.ui-btn-a:visited {
 .artist-credit {
   display: block;
   position: absolute;
-  right: 1em;
-  margin-top: -0.2em;
+  right: 1.6em;
+  margin-top: -0.6em;
 }
 .artist-credit a {
   color: #4c322b !important;
   font-family: 'Bungee', cursive !important;
   text-shadow: 0px -1px 0 #ffefd1, -1px 0px 0 #ffefd1, 1px 0px 0 #ffefd1, 0px 1px 0 #ffefd1;
 }
+.marketShopName {
+  padding-top: 2em;
+  margin-left: 1em;
+  font-family: 'Bungee', cursive !important;
+  font-size: 1.2em;
+}
+.market-shorter {
+  margin-top: 3em;
+  max-width: 725px;
+}
+#itemsContainer {
+  padding: 0.5rem;
+}
+#itemsContainer > div:first-child {
+  padding-top: 0;
+}
+.updates {
+  display: block;
+  font-size: 0.8em;
+  color: #4a8651;
+  text-align: left;
+  margin-top: 0.5em;
+}
+.marketItemsContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+}
+.itemDiv {
+  padding: 0.5em;
+  width: 110px;
+  text-align: center;
+}
+.marketShopInfo {
+  color: #a57a57;
+  font-size: 0.7em;
+  margin-left: 1.8em;
+  margin-right: 1.8em;
+}
+.itemPic {
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.itemPic img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.itemName {
+  font-size: 0.7em;
+  height: 35px;
+}
+.itemPrice {
+  font-size: 0.66em;
+  color: #4a8651;
+  font-family: 'Bungee', cursive !important;
+}
+#dialog-portrait {
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.charaPriceInfo {
+  padding-top: 7px;
+}
+.itemCost {
+  float: right;
+  margin-right: 1em;
+  color: #4a8651;
+  font-size: 0.8em;
+}
+.itemCredit {
+  float: left;
+  padding-top: 0.25em;
+  margin-left: 0.5em;
+  color: #4a8651;
+  font-size: 0.65em;
+}
+.itemCredit a {
+  text-decoration: none;
+}
+.psa {
+  font-size: 0.9em;
+}
+.itemDesc {
+  color: #a57a57;
+  font-size: 0.9em;
+}
 @media (max-width: 800px) {
   .member-container {
-    margin: 5rem 1rem 3rem 1rem;
+    margin: 2rem 1rem 3rem 1rem;
+  }
+}
+@media (max-width: 736px) {
+  .market-shorter {
+    max-width: 580px;
   }
 }
 @media (max-width: 650px) {
@@ -874,8 +969,29 @@ html head + body .ui-btn.ui-btn-a:visited {
     padding: .5em;
   }
 }
+@media (max-width: 650px) {
+  .market-shorter {
+    max-width: 440px;
+  }
+}
+@media (max-width: 457px) {
+  .market-shorter {
+    max-width: 300px;
+  }
+}
 @media (max-width: 450px) {
   .calendar td {
     padding: .25em;
+  }
+}
+@media (max-width: 409px) {
+  .userInfoItem {
+    max-width: 100%;
+  }
+  #shop-image-link {
+    width: 100%;
+  }
+  .artist-credit {
+    right: 0.6em;
   }
 }
