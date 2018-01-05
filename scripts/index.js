@@ -417,7 +417,7 @@ function createHouseDB(houseRows) {
 			rowHasPaint = row['gsx$haspaint'].$t,
 			rowHasBathroom = row['gsx$hasbathroom'].$t,
 			rowHasKitchen = row['gsx$haskitchen'].$t,
-			rowHasRoomA = row['gsx$hasrooma'].$t,
+			rowAddRooms = row['gsx$addrooms'].$t,
 			rowImg = row['gsx$img'].$t;
 
 		housingDB[rowAddress] = {
@@ -427,7 +427,7 @@ function createHouseDB(houseRows) {
 			hasPaint: rowHasPaint,
 			hasBathroom: rowHasBathroom,
 			hasKitchen: rowHasKitchen,
-			hasRoomA: rowHasRoomA,
+			addRooms: rowAddRooms,
 			img: rowImg
 		}
 	});
@@ -1057,13 +1057,24 @@ function getHousemates(housematesString, characterName = null, residentTitle = n
 	return newHousemateList !== "" ? (characterName ? (isCommunal ? "<br><span>Roommate" : "<br><span>Housemate") : (residentTitle ? `<span>${residentTitle}` : "<span>Resident")) + (housemateCount > 1 ? "s" : "") + `: <span>${newHousemateList}</span></span>` : "";
 }
 
+function parseSize(numString) {
+	switch(numString) {
+		case "1":
+			return "small";
+		case "2":
+			return "medium";
+		default:
+			return "large";
+	}
+}
+
 function parseUpgrades (locationObj) {
 	var hasPaint = locationObj.hasPaint === "0" ? "" : `<li>Paint Job</li>`,
-		hasKitchen = locationObj.hasKitchen === "0" ? "" : `<li>Kitchen<ul><li>level ${locationObj.hasKitchen}</li></ul></li>`,
-		hasBathroom = locationObj.hasBathroom === "0" ? "" : `<li>Bathroom<ul><li>level ${locationObj.hasBathroom}</li></ul></li>`,
-		hasRoomA = locationObj.hasRoomA === "0" ? "" : `<li>Room A<ul><li>level ${locationObj.hasRoomA}</li></ul></li>`;
+		hasKitchen = locationObj.hasKitchen === "0" ? "" : `<li>Kitchen (${parseSize(locationObj.hasKitchen)})</li>`,
+		hasBathroom = locationObj.hasBathroom === "0" ? "" : `<li>Bathroom (${parseSize(locationObj.hasBathroom)})</li>`,
+		addRooms = locationObj.addRooms === "0" ? "" : `<li>Number of additional rooms: ${locationObj.addRooms}</li>`;
 
-	return hasPaint.concat(hasKitchen, hasBathroom, hasRoomA);
+	return hasPaint.concat(hasKitchen, hasBathroom, addRooms);
 }
 
 function submitGold() {
