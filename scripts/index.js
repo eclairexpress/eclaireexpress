@@ -472,6 +472,10 @@ function createShopsPage() {
 			<br>Birds must be domestic <a href="http://www.allpetbirds.com/types-of-pet-birds/" target="_blank">(see list)</a>. One exception is the falcon (counts as large bird). Chickens may be purchased at the ranch.`;
 		}
 
+		if (buildingName === "souffle smithy") {
+			additionalInfo = `The weapon certification quest must be completed before weapons can be purchased.`;
+		}
+
 		if (additionalInfo) {
 			var additionalDiv = $('<div></div>');
 
