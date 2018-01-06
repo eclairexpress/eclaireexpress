@@ -413,22 +413,23 @@ function createHouseDB(houseRows) {
 	// Populate housing DB
 	houseRows.forEach(function(row) {
 		var rowAddress = row['gsx$address'].$t,
-			rowAddressArray = rowAddress.split('/'),
-			rowHasPaint = row['gsx$haspaint'].$t,
-			rowHasBathroom = row['gsx$hasbathroom'].$t,
-			rowHasKitchen = row['gsx$haskitchen'].$t,
-			rowAddRooms = row['gsx$addrooms'].$t,
-			rowImg = row['gsx$img'].$t;
+			rowAddressArray = rowAddress.split('/');
 
 		housingDB[rowAddress] = {
 			address: rowAddressArray,
 			isCommunal: (rowAddressArray[0] === "ai" || rowAddressArray[0] === "ss"),
 			residents: "",
-			hasPaint: rowHasPaint,
-			hasBathroom: rowHasBathroom,
-			hasKitchen: rowHasKitchen,
-			addRooms: rowAddRooms,
-			img: rowImg
+			level: row['gsx$level'].$t,
+			hasPaint: row['gsx$haspaint'].$t,
+			hasDesign: row['gsx$hasdesign'].$t,
+			hasBathroom: row['gsx$hasbathroom'].$t,
+			hasKitchen: row['gsx$haskitchen'].$t,
+			hasBalcony: row['gsx$hasbalcony'].$t,
+			hasAttic: row['gsx$hasattic'].$t,
+			hasPond: row['gsx$haspond'].$t,
+			hasCoop: row['gsx$hascoop'].$t,
+			addRooms: row['gsx$addrooms'].$t,
+			img: row['gsx$img'].$t
 		}
 	});
 }
@@ -1000,6 +1001,7 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 			template = template.concat(`
 				<br>Upgrades:
 				<br><div class="charaHouseUpgrades">
+					${parseSize(location.level)} house (level ${location.level})
 					<ul>
 						${upgradesTemplate}						
 					</ul>
@@ -1074,11 +1076,16 @@ function parseSize(numString) {
 
 function parseUpgrades (locationObj) {
 	var hasPaint = locationObj.hasPaint === "0" ? "" : `<li>Paint Job</li>`,
+		hasDesign = locationObj.hasDesign === "0" ? "" : `<li>House Redesign</li>`,
 		hasKitchen = locationObj.hasKitchen === "0" ? "" : `<li>Kitchen (${parseSize(locationObj.hasKitchen)})</li>`,
 		hasBathroom = locationObj.hasBathroom === "0" ? "" : `<li>Bathroom (${parseSize(locationObj.hasBathroom)})</li>`,
+		hasBalcony = locationObj.hasBalcony === "0" ? "" : `<li>Balcony</li>`,
+		hasAttic = locationObj.hasAttic === "0" ? "" : `<li>Attic</li>`,
+		hasPond = locationObj.hasPond === "0" ? "" : `<li>Pond</li>`,
+		hasCoop = locationObj.hasCoop === "0" ? "" : `<li>Small Animal Barn</li>`,
 		addRooms = locationObj.addRooms === "0" ? "" : `<li>Number of additional rooms: ${locationObj.addRooms}</li>`;
 
-	return hasPaint.concat(hasKitchen, hasBathroom, addRooms);
+	return hasPaint.concat(hasDesign, hasKitchen, hasBathroom, hasBalcony, hasAttic, hasPond, hasCoop, addRooms);
 }
 
 function submitGold() {
