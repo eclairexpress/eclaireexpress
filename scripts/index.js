@@ -753,7 +753,7 @@ function appendUserInfo (user) {
 				gold
 			</div>
 			<div class="userContent userGold" id="userGold">
-				<span class="userCells userGross">Earned: +${userGross.toLocaleString()} g</span>
+				<span class="userCells userGross">Earned: ${userGross.toLocaleString()} g</span>
 				<span class="userCells userSpendings">Spent: ${userSpent.toLocaleString()} g</span>
 				${submissionsList}
 				<hr/>
