@@ -753,11 +753,11 @@ function appendUserInfo (user) {
 				gold
 			</div>
 			<div class="userContent userGold" id="userGold">
-				<span class="userCells userGross">Earned: +${userGross}</span>
-				<span class="userCells userSpendings">Spent: ${userSpent}</span>
+				<span class="userCells userGross">Earned: +${userGross.toLocaleString()} g</span>
+				<span class="userCells userSpendings">Spent: ${userSpent.toLocaleString()} g</span>
 				${submissionsList}
 				<hr/>
-				<span class="userGoldTotal">Total: ${userTotal}</span>
+				<span class="userGoldTotal">Total: ${userTotal.toLocaleString()} g</span>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -880,7 +880,7 @@ function appendSubmissions(submissionsList) {
 		isSpending = submission[2] < 0 ? " id='spending'" : "";
 		gold = submission[2] < 0 ? submission[2] * -1 : submission[2];
 		submissionLink = submission[0] ? `<a href="${submission[3]}" target="_blank">${submission[1]}</a>` : `${submission[1]}`;
-		submissionsString += `<li${isSpending}><span${isSpending} class="spring-color">${gold}g</span><br>${submissionLink}<br>Recorded: <span class="brown-color">${submissionDate}</span></li>`;
+		submissionsString += `<li${isSpending}><span${isSpending} class="spring-color">${gold.toLocaleString()} g</span><br>${submissionLink}<br>Recorded: <span class="brown-color">${submissionDate}</span></li>`;
 	});
 
 	return `<span class="userCells userSubmissionDate">Last entry: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
