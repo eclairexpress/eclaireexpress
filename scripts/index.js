@@ -999,8 +999,8 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 			}
 
 			template = template.concat(`
-				<br>${parseSize(location.level)} house (level ${location.level})
-				<br><div class="charaHouseUpgrades">
+				<div class="charaHouseLevel">${parseSize(location.level)} house (level ${location.level})</div>
+				<div class="charaHouseUpgrades">
 					<ul>
 						${upgradesTemplate}						
 					</ul>

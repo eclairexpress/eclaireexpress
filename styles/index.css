@@ -320,6 +320,9 @@ html body .ui-group-theme-a a:visited {
   font-size: 0.8em;
   line-height: 1.5em;
 }
+.charaHouseLevel {
+  padding-top: 0.5em;
+}
 hr {
   padding: 0;
   border: none;
