@@ -175,7 +175,7 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 
 	$("span#humanRatio").text("are human: " + (100 - hybrid).toFixed(1) + "%");
 	$("span#hybridRatio").text("are hybrid: " + hybrid + "%");
-	$("span#npcRatio").text("are npcs: " + getPercentage(npcCount) + "%");
+	$("span#npcRatio").text("are npcs (secondary characters): " + getPercentage(npcCount) + "%");
 
 	var spring = getPercentage(bdayCount[0]),
 		summer = getPercentage(bdayCount[1]),
