@@ -470,7 +470,7 @@ function createShopsPage() {
 
 		if (buildingName === "puff-puff pet mart") {
 			additionalInfo = `To decide dog size, see the following links: <a href="http://dogtime.com/dog-breeds/characteristics/small/" target="_blank">small</a>, <a href="http://dogtime.com/dog-breeds/characteristics/medium/" target="_blank">medium</a>, <a href="http://dogtime.com/dog-breeds/characteristics/size/" target="_blank">large</a>. If the breed is not there, decide based on its size vs other dogs.
-			<br>Birds must be domestic <a href="http://www.allpetbirds.com/types-of-pet-birds/" target="_blank">(see list)</a>. One exception is the falcon (counts as large bird). Chickens may be purchased at the ranch.`;
+			<br>Birds must be domestic <a href="http://www.allpetbirds.com/types-of-pet-birds/" target="_blank">(see list)</a>. One exception is the falcon (counts as large bird). Common farm animals may be purchased at the ranch.`;
 		}
 
 		if (buildingName === "souffle smithy") {
