@@ -153,7 +153,10 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 		}
 
 		for (var i = 0; i < users.length; i++) {
-			userDB[users[i]].submissions.push([linkApproved,title,gold,link,date]);
+			if (userDB[users[i]]) {
+				//prevent issues with removed users
+				userDB[users[i]].submissions.push([linkApproved,title,gold,link,date]);
+			}
 		}
 	});
 
