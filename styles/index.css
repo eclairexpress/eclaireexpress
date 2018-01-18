@@ -321,7 +321,8 @@ html body .ui-group-theme-a a:visited {
   line-height: 1.5em;
 }
 .charaHouseLevel {
-  padding-top: 0.5em;
+  padding-left: 0.5em;
+  color: #2595A8;
 }
 hr {
   padding: 0;

@@ -178,7 +178,7 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 
 	$("span#humanRatio").text("are human: " + (100 - hybrid).toFixed(1) + "%");
 	$("span#hybridRatio").text("are hybrid: " + hybrid + "%");
-	$("span#npcRatio").text("are npcs (secondary characters): " + getPercentage(npcCount) + "%");
+	$("span#npcRatio").text("are secondary characters: " + getPercentage(npcCount) + "%");
 
 	var spring = getPercentage(bdayCount[0]),
 		summer = getPercentage(bdayCount[1]),
@@ -904,8 +904,8 @@ function appendCharacterInfo (characterObj, sortEnroll=false) {
 
 	Object.keys(characterObj).forEach(function (characterName) {
 		character = characterObj[characterName];
-		isHybrid = character.isHybrid === "true" ? `<img src="https://orig11.deviantart.net/5717/f/2017/192/d/b/ishybrid_icon_by_toffeebot-dbfzh9l.png">` : "";
-		isNPC = character.isNPC === "true" ? `<img src="https://orig13.deviantart.net/d403/f/2017/192/6/7/isnpc_icon_by_toffeebot-dbfzcxu.png">` : "";
+		isHybrid = character.isHybrid === "true" ? `<img src="https://orig00.deviantart.net/c4f0/f/2018/017/1/2/isnon_human_by_toffeebot-dc0cefu.png">` : "";
+		isNPC = character.isNPC === "true" ? `<img src="https://orig00.deviantart.net/040a/f/2018/017/3/2/issecondary_by_toffeebot-dc0cefl.png">` : "";
 		hasTracker = character.tracker !== "" ? `<a href="${character.tracker}" target="_blank"><img class="image-shadow" src="http://orig13.deviantart.net/a57a/f/2017/224/1/2/trackingbtn_by_toffeebot-dbjt7q0.png"></a>` : "";
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
@@ -994,7 +994,10 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 		}
 
 		if (!location.isCommunal) {
-			//standard housing has upgrades
+			// if they have a house, display the house level
+			template = template.concat(`<div class="charaHouseLevel">${parseSize(location.level)} house (level ${location.level})</div>`);
+
+			// may or may not have upgrades
 			var upgradesTemplate = parseUpgrades(location);
 
 			if (upgradesTemplate === "") {
@@ -1003,7 +1006,6 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 			}
 
 			template = template.concat(`
-				<div class="charaHouseLevel">${parseSize(location.level)} house (level ${location.level})</div>
 				<div class="charaHouseUpgrades">
 					<ul>
 						${upgradesTemplate}						
@@ -1620,6 +1622,8 @@ function calculateFP() {
 	// collect int input
 	var eventBonus = $("#fp-event").val().replace(",", ""),
 		etcBonus = $("#fp-etc").val().replace(",", ""),
+		hasArt = false,
+		artBonus = 0,
 		collabBonus, rpBonus, hqBonus, bdayBonus, itemBonus, total;
 
 	if (eventBonus === "") {
@@ -1645,10 +1649,16 @@ function calculateFP() {
 	}
 
 	// get rest of inputs
-	collabBonus = $("#fp-collab").val() === "true" ? 200 : 0;
+
+	if ($("#fp-art").val() === "true") {
+		hasArt = true;
+		artBonus = 200;
+	}
+
+	collabBonus = $("#fp-collab").val() === "true" && hasArt ? 200 : 0;
 	rpBonus = $("#fp-rp").val() === "true" ? 200 : 0;
-	hqBonus = $("#fp-hq").val() === "true" ? 300 : 0;
-	bdayBonus = $("#fp-bday").val() === "true" ? 2 : 1;
+	hqBonus = $("#fp-hq").val() === "true" && hasArt ? 300 : 0;
+	bdayBonus = $("#fp-bday").val() === "true" && hasArt ? 2 : 1;
 	itemBonus = parseInt($("#fp-item").val(), 10);
 
 	if(bdayBonus === 2 && eventBonus > 0) {
@@ -1667,7 +1677,7 @@ function calculateFP() {
 	}
 
 	// calculate
-	total = (200 + collabBonus + rpBonus) * bdayBonus + hqBonus + itemBonus + eventBonus + etcBonus;
+	total = (artBonus + collabBonus + rpBonus) * bdayBonus + hqBonus + itemBonus + eventBonus + etcBonus;
 
 	$("div#fp-total").text(total + " fp");
 }
