@@ -177,7 +177,7 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 	var hybrid = getPercentage(hybridCount);
 
 	$("span#humanRatio").text("are human: " + (100 - hybrid).toFixed(1) + "%");
-	$("span#hybridRatio").text("are hybrid: " + hybrid + "%");
+	$("span#hybridRatio").text("are non-human: " + hybrid + "%");
 	$("span#npcRatio").text("are secondary characters: " + getPercentage(npcCount) + "%");
 
 	var spring = getPercentage(bdayCount[0]),
