@@ -1655,11 +1655,16 @@ function calculateFP() {
 		artBonus = 200;
 	}
 
-	collabBonus = $("#fp-collab").val() === "true" && hasArt ? 200 : 0;
+	collabBonus = $("#fp-collab").val() === "true" ? 200 : 0;
 	rpBonus = $("#fp-rp").val() === "true" ? 200 : 0;
-	hqBonus = $("#fp-hq").val() === "true" && hasArt ? 300 : 0;
-	bdayBonus = $("#fp-bday").val() === "true" && hasArt ? 2 : 1;
+	hqBonus = $("#fp-hq").val() === "true" ? 300 : 0;
+	bdayBonus = $("#fp-bday").val() === "true" ? 2 : 1;
 	itemBonus = parseInt($("#fp-item").val(), 10);
+
+	if(!hasArt && (hqBonus || bdayBonus === 2 || collabBonus)) {
+		$("div#fp-error-message").text("Collabs, heart events, and birthday quests must have an art submission.");
+		return;
+	}
 
 	if(bdayBonus === 2 && eventBonus > 0) {
 		$("div#fp-error-message").text("You can't apply the birthday bonus and the festival/mini event bonus to the same submission, as a birthday is a special event of its own.");
