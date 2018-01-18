@@ -1660,7 +1660,7 @@ function calculateFP() {
 	itemBonus = parseInt($("#fp-item").val(), 10);
 
 	if(!hasArt && (hqBonus || bdayBonus === 2 || collabBonus)) {
-		$("div#fp-error-message").text("Collabs, heart events, and birthday quests must have the art submission field selected.");
+		$("div#fp-error-message").text("Collabs, heart event bonuses, and birthday bonuses must include an art submission.");
 		return;
 	}
 
