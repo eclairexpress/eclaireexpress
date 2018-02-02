@@ -50,11 +50,17 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
 }
+.ui-page-theme-a a,
+html .ui-bar-a a,
+html .ui-body-a a,
+html body .ui-group-theme-a a {
+  color: #4169ba;
+}
 .cell-outer {
   position: relative;
   z-index: 100;
 }
-.cell-outer a {
+.cell-outer > a {
   text-decoration: none;
 }
 .image {
@@ -110,6 +116,9 @@ body {
   left: 25px;
   z-index: -100;
 }
+a#userCell {
+  color: #4a8651;
+}
 a:hover#userCell {
   color: #e66b6b;
 }
@@ -137,7 +146,8 @@ a:hover#userCell {
   color: #ffefd1;
   font-size: 1.1em;
 }
-.skipToBar a:visited {
+.skipToBar a:visited,
+.skipToBar a:hover {
   color: #ffefd1 !important;
 }
 .ui-header .ui-title,
@@ -293,7 +303,7 @@ html body .ui-group-theme-a a:hover,
 html .ui-bar-a a:visited,
 html .ui-body-a a:visited,
 html body .ui-group-theme-a a:visited {
-  color: #4a8651;
+  color: #4169ba;
 }
 .userCharaPortrait {
   background-image: url("https://orig13.deviantart.net/4214/f/2017/228/9/2/bg_straightpanel_by_toffeebot-dbkc9nw.png");
@@ -562,7 +572,7 @@ td {
   padding: 1em 2em 1.5em 2em;
 }
 .dialog a {
-  color: #4a8651;
+  color: #4169ba;
 }
 .calendar-container {
   display: inline-block;
@@ -857,6 +867,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   margin-top: -0.6em;
 }
 .artist-credit a {
+  text-decoration: none;
   color: #4c322b !important;
   font-family: 'Bungee', cursive !important;
   text-shadow: 0px -1px 0 #ffefd1, -1px 0px 0 #ffefd1, 1px 0px 0 #ffefd1, 0px 1px 0 #ffefd1;
@@ -869,7 +880,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .market-shorter {
   margin-top: 3em;
-  max-width: 725px;
+  max-width: 727px;
 }
 #itemsContainer {
   padding: 0.5rem;
@@ -893,9 +904,13 @@ html head + body .ui-btn.ui-btn-a:visited {
   justify-content: flex-start;
 }
 .itemDiv {
-  padding: 0.5em;
+  padding: 0.25em;
+  margin: 0.25em;
   width: 110px;
   text-align: center;
+  border: 1px solid #4c322b;
+  border-radius: 3px;
+  box-shadow: 1px 2px rgba(76, 50, 43, 0.4);
 }
 .marketShopInfo {
   color: #a57a57;
@@ -943,9 +958,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #4a8651;
   font-size: 0.65em;
 }
-.itemCredit a {
-  text-decoration: none;
-}
 .psa {
   font-size: 0.9em;
 }
@@ -953,14 +965,19 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #a57a57;
   font-size: 0.9em;
 }
+.jobUniform {
+  font-size: 0.85em;
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+}
 @media (max-width: 800px) {
   .member-container {
     margin: 2rem 1rem 3rem 1rem;
   }
 }
-@media (max-width: 736px) {
+@media (max-width: 738px) {
   .market-shorter {
-    max-width: 580px;
+    max-width: 585px;
   }
 }
 @media (max-width: 650px) {
@@ -971,14 +988,14 @@ html head + body .ui-btn.ui-btn-a:visited {
     padding: .5em;
   }
 }
-@media (max-width: 650px) {
+@media (max-width: 596px) {
   .market-shorter {
-    max-width: 440px;
+    max-width: 444px;
   }
 }
-@media (max-width: 457px) {
+@media (max-width: 455px) {
   .market-shorter {
-    max-width: 300px;
+    max-width: 303px;
   }
 }
 @media (max-width: 450px) {
@@ -989,6 +1006,9 @@ html head + body .ui-btn.ui-btn-a:visited {
 @media (max-width: 409px) {
   .userInfoItem {
     max-width: 100%;
+  }
+  .market-shorter {
+    max-width: 278px;
   }
   #shop-image-link {
     width: 100%;

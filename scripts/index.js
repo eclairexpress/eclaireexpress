@@ -402,6 +402,7 @@ function createJobDB(jobRows) {
 				job1: { name: row['gsx$job1'].$t, characters: []},
 				job2: { name: row['gsx$job2'].$t, characters: []},
 				job3: { name: row['gsx$job3'].$t, characters: []},
+				uniform: row['gsx$uniform'].$t,
 				area: row['gsx$area'].$t,
 				hours: row['gsx$hours'].$t,
 				desc: row['gsx$desc'].$t,
@@ -775,6 +776,7 @@ function appendShopInfo (key) {
 		buildingImage = jobData.img,
 		buildingImageArtist = jobData.artist,
 		buildingHours = jobData.hours,
+		buildingUniform = jobData.uniform,
 		buildingArea = jobData.area,
 		characterData = "",
 		characterObj = {},
@@ -823,6 +825,10 @@ function appendShopInfo (key) {
 
 	if (buildingHours) {
 		templateCode += `<span class="userCells userEnroll"><span>${buildingHours}</span></span>`;
+	}
+
+	if (buildingUniform) {
+		templateCode += `<span class="userCells jobUniform"><a href="${buildingUniform}" target="_blank">optional uniform</a></span>`;
 	}
 
 	if (buildingDesc) {

@@ -3,6 +3,7 @@
 @summer: #e1891f;
 @fall: #e66b6b;
 @winter: #2595A8;
+@link: #4169ba;
 @lightBrown: #caa380;
 @brown: #a57a57;
 @dkBrown: #4c322b;
@@ -71,10 +72,14 @@ body {
   flex-wrap: wrap;
 }
 
+.ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a {
+  color: @link;
+}
+
 .cell-outer {
   position: relative;
   z-index: 100;
-  a {
+  > a {
     text-decoration: none;
   }
 }
@@ -138,6 +143,10 @@ body {
   left: 25px;
   z-index: -100;
 }
+
+a#userCell {
+  color: @spring;
+}
 a:hover#userCell {
   color: @fall;
 }
@@ -165,11 +174,11 @@ a:hover#userCell {
   padding-left:0.1em;
   padding-right: 0.1em;
   text-decoration: none;
-  color: @cream;
+  color: @cream ;
   font-size: 1.1em;
 }
 
-.skipToBar a:visited {
+.skipToBar a:visited, .skipToBar a:hover {
   color: @cream !important;
 }
 
@@ -334,7 +343,7 @@ select option {
 }
 
 .ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover, .ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
-  color: @spring;
+  color: @link;
 }
 
 .userCharaPortrait {
@@ -612,7 +621,7 @@ td {
 }
 
 .dialog a {
-  color: @spring;
+  color: @link;
 }
 
 .calendar-container {
@@ -963,6 +972,7 @@ a.ui-btn {
   margin-top: -0.6em;
 
   a {
+    text-decoration: none;
     color: @dkBrown !important;
     font-family: 'Bungee', cursive !important;
     text-shadow:
@@ -982,7 +992,7 @@ a.ui-btn {
 
 .market-shorter {
   margin-top: 3em;
-  max-width: 725px;
+  max-width: 727px;
 }
 
 #itemsContainer {
@@ -1011,9 +1021,13 @@ a.ui-btn {
 }
 
 .itemDiv {
-  padding: 0.5em;
+  padding: 0.25em;
+  margin: 0.25em;
   width: 110px;
   text-align: center;
+  border: 1px solid @dkBrown;
+  border-radius: 3px;
+  box-shadow: 1px 2px rgba(76, 50, 43, 0.4);
 }
 
 .marketShopInfo {
@@ -1068,9 +1082,6 @@ a.ui-btn {
   margin-left: 0.5em;
   color: @spring;
   font-size:0.65em;
-  a {
-    text-decoration: none;
-  }
 }
 
 .psa {
@@ -1082,15 +1093,21 @@ a.ui-btn {
   font-size:0.9em;
 }
 
+.jobUniform {
+  font-size: 0.85em;
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+}
+
 @media (max-width: 800px) {
   .member-container {
     margin: 2rem 1rem 3rem 1rem;
   }
 }
 
-@media (max-width: 736px) {
+@media (max-width: 738px) {
   .market-shorter {
-    max-width: 580px;
+    max-width: 585px;
   }
 }
 
@@ -1104,15 +1121,15 @@ a.ui-btn {
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 596px) {
   .market-shorter {
-    max-width: 440px;
+    max-width: 444px;
   }
 }
 
-@media (max-width: 457px) {
+@media (max-width: 455px) {
   .market-shorter {
-    max-width: 300px;
+    max-width: 303px;
   }
 }
 
@@ -1125,6 +1142,10 @@ a.ui-btn {
 @media (max-width: 409px) { 
   .userInfoItem {
     max-width: 100%;
+  }
+
+  .market-shorter {
+    max-width: 278px;
   }
 
   #shop-image-link {
