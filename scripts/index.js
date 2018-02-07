@@ -1600,17 +1600,36 @@ function parseItemData(itemName, item) {
 
 function getHouseDialog(houseObj, residentTitle) {
 	var house = houseObj.attr('data-id'),
-		template = parseLocation(housingDB[house], undefined, residentTitle);
+		houseObj = housingDB[house],
+		template = parseLocation(houseObj, undefined, residentTitle);
 
-	if (housingDB[house].img !== "") {
-		$("div#dialog-portrait").css('background-image', `url('${housingDB[house].img}')`);
+	if (houseObj.img !== "") {
+		$("div#dialog-portrait").css('background-image', `url('${houseObj.img}')`);
 		$("div#dialog-portrait").css("display", "block");
 	} else {
-		$("div#dialog-portrait").css("display", "none");
+		if (!houseObj.isCommunal && houseObj.residents !== "") {
+			// Show an image based on the house level
+			var houseImage = getHouseImageByLevel(houseObj.level);
+			$("div#dialog-portrait").css('background-image', `url('${houseImage}')`);
+			$("div#dialog-portrait").css("display", "block");
+		} else {
+			$("div#dialog-portrait").css("display", "none");
+		}
 	}
 
 	$("div#housingInfo").empty().append(template);
 	openDialog();
+}
+
+function getHouseImageByLevel(numString) {
+	switch(numString) {
+		case "1":
+			return "https://orig00.deviantart.net/c98e/f/2018/037/5/8/house_lvl1_hub_by_toffeebot-dc2egqj.png";
+		case "2":
+			return "https://orig00.deviantart.net/8cdb/f/2018/037/4/4/house_lvl2_hub_by_toffeebot-dc2egqw.png";
+		default:
+			return "https://orig00.deviantart.net/dab9/f/2018/037/c/6/house_lvl3_hub_by_toffeebot-dc2egr6.png";
+	}
 }
 
 function calculateFP() {
