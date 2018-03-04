@@ -617,6 +617,8 @@ function getActiveSinceDate(enrollNum) {
 		case "5":
 			enrollDate = "enrollment 5 (September 3rd 2016)";
 			break;
+		case "6":
+			enrollDate = "enrollment 6 (March 3rd 2018)";
 		default:
 			enrollDate = "via invite";
 	}
