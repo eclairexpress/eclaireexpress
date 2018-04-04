@@ -1803,7 +1803,3 @@ function addUsername() {
 	}
 	$("textarea#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
 }
-
-function scrollTop() {
-	console.log("test");
-}
