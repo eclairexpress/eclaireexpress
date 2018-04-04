@@ -78,7 +78,7 @@ html body .ui-group-theme-a a {
   width: 175px;
   height: 55px;
   margin: 0rem 0.5rem 1rem 0.5rem;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 0.15rem 1rem 0.25rem 1rem;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
 }
@@ -106,6 +106,7 @@ html body .ui-group-theme-a a {
   font-size: 0.8em;
 }
 .image img {
+  -webkit-filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
   filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
 }
 .username {
