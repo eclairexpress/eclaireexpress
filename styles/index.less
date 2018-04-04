@@ -30,14 +30,21 @@ html, body {
 }
 
 body {
-  /* Background pattern from Subtle Patterns */
-  background-image: url('https://orig00.deviantart.net/35d4/f/2018/093/2/8/2_by_toffeebot-dc7u7e1.png') !important;
-  background-size: contain;
   color: @white;
   font-size: 18px;
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+#bg {
+  /* Background pattern from Subtle Patterns */
+  background-image: url('https://orig00.deviantart.net/35d4/f/2018/093/2/8/2_by_toffeebot-dc7u7e1.png') !important;
+  background-size: contain;
+  z-index: -1;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 
 .container-inner {
