@@ -860,6 +860,7 @@ html head + body .ui-btn.ui-btn-a:visited {
   display: flex;
   right: 1em;
   top: 2em;
+  z-index: 1000;
 }
 #market-button a {
   margin: 0em 0.25em;
