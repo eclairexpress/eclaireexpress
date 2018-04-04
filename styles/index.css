@@ -105,10 +105,6 @@ html body .ui-group-theme-a a {
   color: #2595A8;
   font-size: 0.8em;
 }
-.image img {
-  -webkit-filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
-  filter: drop-shadow(1px 1px 0px rgba(76, 50, 43, 0.6));
-}
 .username {
   font-size: 0.9em;
   white-space: nowrap;
