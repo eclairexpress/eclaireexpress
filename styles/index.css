@@ -27,6 +27,7 @@ body {
   margin: 0 auto;
   overflow: hidden;
   padding: 0;
+  -webkit-overflow-scrolling: auto;
 }
 .shorter {
   max-width: 490px;
