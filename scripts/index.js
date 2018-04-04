@@ -324,7 +324,7 @@ function buildUserPages(mainRows) {
 	skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
 	$('div#skipToUser').html(skipLinks);
 	
-	document.getElementById("userTop").addEventListener("click", () => {
+	document.getElementById("userTop").addEventListener("click", function () {
 		document.getElementById("users-top").scrollTop = 0;
 	});
 }
@@ -527,7 +527,7 @@ function createShopsPage() {
 	skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
 	$('div#skipToItem').html(skipLinks);
 
-	document.getElementById("itemTop").addEventListener("click", () => {
+	document.getElementById("itemTop").addEventListener("click", function () {
 		document.getElementById("market-top").scrollTop = 0;
 	});
 }
