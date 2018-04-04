@@ -14,7 +14,6 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  -webkit-overflow-scrolling: auto;
 }
 .container-inner {
   height: 100%;
@@ -22,7 +21,6 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
-  -webkit-overflow-scrolling: touch;
 }
 .ui-content {
   margin: 0 auto;
