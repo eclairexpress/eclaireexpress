@@ -249,8 +249,8 @@ function createItemDB(rawData) {
 }
 
 function buildUserPages(mainRows) {
-	var skipLinks = "<a data-ajax='false' href='#userTop'>a</a>",
-		charCode = 97; // a
+	var skipLinks = "",
+		charCode = 96; // a
 
 	mainRows.forEach(function(row) {
 		var rowUsername = row['gsx$username'].$t,
@@ -321,7 +321,12 @@ function buildUserPages(mainRows) {
 		}
 	}, this);
 
+	skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
 	$('div#skipToUser').html(skipLinks);
+	
+	document.getElementById("userTop").addEventListener("click", () => {
+		document.getElementById("users-top").scrollTop = 0;
+	});
 }
 
 function buildShopPages() {
@@ -439,8 +444,9 @@ function createHouseDB(houseRows) {
 }
 
 function createShopsPage() {
-	var skipLinks = "<a data-ajax='false' href='#itemTop'>a</a>",
-		charCode = 97;
+	var skipLinks = "",
+		first = "",
+		charCode = 96;
 
 	Object.keys(itemDB).forEach (function(key) {
 		var titleDiv = $('<div></div>'),
@@ -450,17 +456,22 @@ function createShopsPage() {
 			anchor,
 			additionalInfo;
 
-		if (buildingName.charCodeAt(0) > charCode) {
+		if (buildingName.charCodeAt(0) > charCode && !buildingName.startsWith("event")) {
 			skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
 			anchor = document.createElement('a');
-			anchor.className = "anchor";
+			anchor.className = "anchor2";
 			anchor.id = buildingName;
 			charCode = buildingName.charCodeAt(0);
 			$('div#itemsContainer').append(anchor);
 		}
 
-		titleDiv.attr('class', "marketShopName");
+		titleDiv.attr('class', "marketShopName" + (!first ? " firstShop" : ""));
 		titleDiv.html(buildingName);
+
+		if (!first) {
+			first = buildingName;
+		}
+
 		$('div#itemsContainer').append(titleDiv);
 
 		if (buildingName === "eclair station") {
@@ -478,6 +489,10 @@ function createShopsPage() {
 
 		if (buildingName === "souffle smithy") {
 			additionalInfo = `The weapon certification quest must be completed before weapons can be purchased.`;
+		}
+
+		if (buildingName.startsWith("event")) {
+			additionalInfo = `These items are available for a limited time! They will be gone once the festival ends!`;
 		}
 
 		if (additionalInfo) {
@@ -509,7 +524,12 @@ function createShopsPage() {
 		$('div#itemsContainer').append(itemsDiv);
 	});
 
+	skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
 	$('div#skipToItem').html(skipLinks);
+
+	document.getElementById("itemTop").addEventListener("click", () => {
+		document.getElementById("market-top").scrollTop = 0;
+	});
 }
 
 function createInitialCalendar() {
@@ -1782,4 +1802,8 @@ function addUsername() {
 		return;
 	}
 	$("textarea#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
+}
+
+function scrollTop() {
+	console.log("test");
 }
