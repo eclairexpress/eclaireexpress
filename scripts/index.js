@@ -1106,7 +1106,7 @@ function createDialog(div, residentTitle, isItem) {
         // reset click event
         $("div#dialog-portrait").prop('onclick', null).off('click');
         $("div#priceInfo").attr('display', 'none');
-        $("div#priceInfo").attr('padding-top', '0');
+        $("div#priceInfo").attr('style', 'padding-top: 0; border: 0;');
         $("div#priceInfo").height('0px');
         $("div#priceInfo").empty();
         $("div#housingInfo").height('150px');
@@ -1131,7 +1131,7 @@ function parseItemData(itemName, item) {
     $("div#dialog-portrait").css("display", "block");
     $("div#priceInfo").attr('display', 'block');
     $("div#priceInfo").height('23px');
-    $("div#priceInfo").attr('padding-top', '7px');
+    $("div#priceInfo").attr('style', 'padding-top: 5px; border-top: 1px solid #4c322b;');
     $("div#housingInfo").height('120px');
     $("div#priceInfo").html("\n\t\t<div class=\"itemCredit\"><a href=\"https://" + item.artist + ".deviantart.com/\" target=\"_blank\">art by " + item.artist + "</a></div>\n\t\t<div class=\"itemCost\">" + item.price + " " + item.currency + "</div>\n\t");
     $("div#dialog-portrait").click(function () {

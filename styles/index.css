@@ -993,6 +993,10 @@ html head + body .ui-btn.ui-btn-a:visited {
 .itemDesc {
   color: #a57a57;
   font-size: 0.9em;
+  text-transform: initial !important;
+}
+.buildingDesc {
+  text-transform: initial !important;
 }
 .jobUniform {
   font-size: 0.85em;
