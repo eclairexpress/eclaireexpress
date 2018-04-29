@@ -1107,4 +1107,10 @@ html head + body .ui-btn.ui-btn-a:visited {
   .artist-credit {
     right: 0.6em;
   }
+  .activity-monitor {
+    flex-direction: column;
+  }
+  .activity-monitor div {
+    margin: 0.25em 0em;
+  }
 }
