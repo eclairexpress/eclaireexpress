@@ -870,7 +870,6 @@ html head + body .ui-btn.ui-btn-a:visited {
   text-shadow: none !important;
 }
 #market-button {
-  margin: 0 auto;
   display: flex;
   padding-top: 2em;
 }
@@ -990,6 +989,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 .job-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 #dialog-portrait {
   background-size: 100px;
