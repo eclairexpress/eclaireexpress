@@ -102,6 +102,9 @@ html body .ui-group-theme-a a {
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
   border: 1px solid #4c322b;
 }
+.filter-wrapper {
+  -webkit-transform: translate3d(0, 0, 0);
+}
 .inactive {
   filter: gray;
   /* IE6-9 */
@@ -110,7 +113,6 @@ html body .ui-group-theme-a a {
   filter: grayscale(1);
   /* Microsoft Edge and Firefox 35+ */
   -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
   -webkit-transform-style: preserve-3d;
 }
 .activity-monitor {
