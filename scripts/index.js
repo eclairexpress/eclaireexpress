@@ -9,7 +9,7 @@ https://codepen.io/volv/pen/bpwRLL
 //     //this callback will be fired once all ajax calls have finished.
 // });
 // local database where the info from the spreadsheets are compiled
-var isFullJobList = true, userDB = {
+var isFullJobList = false, userDB = {
     "reference": {
         "memories": {}
     }

@@ -11,7 +11,7 @@ https://codepen.io/volv/pen/bpwRLL
 // });
 
 // local database where the info from the spreadsheets are compiled
-var isFullJobList = true,
+var isFullJobList = false,
 	userDB = {
 		"reference": {
 			"memories": {}

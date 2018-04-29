@@ -133,6 +133,8 @@ body {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
 }
 .activity-monitor {
   display: flex;
@@ -219,30 +221,30 @@ a:hover#userCell {
   max-width: 92%;
 }
 
-.skipToBar {
-  background: @dkBrown;
-  position: fixed;
-  top:0;
-  left: 0;
-  right:12px;
-  z-index:1000;
-  text-align: center;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
-}
+// .skipToBar {
+//   background: @dkBrown;
+//   position: fixed;
+//   top:0;
+//   left: 0;
+//   right:12px;
+//   z-index:1000;
+//   text-align: center;
+//   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+//   padding-top: 0.25em;
+//   padding-bottom: 0.25em;
+// }
 
-.skipToBar a {
-  padding-left:0.1em;
-  padding-right: 0.1em;
-  text-decoration: none;
-  color: @cream ;
-  font-size: 1.1em;
-}
+// .skipToBar a {
+//   padding-left:0.1em;
+//   padding-right: 0.1em;
+//   text-decoration: none;
+//   color: @cream ;
+//   font-size: 1.1em;
+// }
 
-.skipToBar a:visited, .skipToBar a:hover {
-  color: @cream !important;
-}
+// .skipToBar a:visited, .skipToBar a:hover {
+//   color: @cream !important;
+// }
 
 .ui-header .ui-title,
 .ui-footer .ui-title {
@@ -1013,6 +1015,7 @@ a.ui-btn {
 }
 
 #job-list {
+  display: none;
   margin-top: 0.5em;
   padding-top: 0;
 }
@@ -1186,12 +1189,8 @@ a.ui-btn {
   margin-bottom: 1em;
 }
 
-#job-list-text-only {
-  display: none;
-
-  >div {
-    margin-top: 0.5em;
-  }
+#job-list-text-only>div {
+  margin-top: 0.5em;
 }
 
 .shopGroup {
