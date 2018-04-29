@@ -14,7 +14,7 @@
 
 
         <link rel="stylesheet" href="styles/index.css" />
-        <link href="https://fonts.googleapis.com/css?family=Bungee|Baloo+Thambi" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bungee|Hammersmith+One" rel="stylesheet">
     </head>
     <body>
         <!-- loader -->
@@ -65,11 +65,11 @@
                                 <br>here you can find all the member relevant data in one place.
                                 <br><span><span style="font-size:0.8em;">if you find any bugs, please report to <a href="https://arcanium.deviantart.com/" target="_blank">arcanium</a></span></span>
                                 <hr/>
-                                <span>current version: <span>1.1</span>
+                                <span>current version: <span>1.2</span>
                                     <span class="updates">
-                                            Now has two new pages (both accessible from the same tab: town) - the jobs list and the marketplace (items).
-                                            Everything is view only, unfortunately!
-                                            You can click on the shop and item images to expand them.
+                                            Activity is now shown on the users directory.
+                                            There is also a text only version of the job list (like the old deviantart days), for quick searching!
+                                            Also, font change. Hopefully, it's easier to read.
                                     </span>
                                 </span>
                             </div>
@@ -114,7 +114,7 @@
                                 important
                             </div>
                             <div class="userContent">
-                                <span><span class="psa">content made for and to be used by <a href="https://eclairexpress.deviantart.com/">eclairexpress</a> only</span></span>
+                                <span><span class="psa">content made for and used by <a href="https://eclairexpress.deviantart.com/">eclairexpress</a> only</span></span>
                             </div>
                         </div>
                     </div>
@@ -595,10 +595,24 @@
             <div role="main" class="ui-content">
                 <div class="container-inner">
                     <div>
-                        <div id="market-button">
-                            <a href="#market" data-role="button" data-transition="slide" data-icon="shop" data-iconpos="notext">market</a>
-                        </div>
-                        <div id="job-list" class="member-container">
+                        <div class="job-wrapper">
+                            <div id="market-button">
+                                <a href="#" id="toggleText" data-role="button" data-transition="slide" data-icon="eye">text only</a>
+                                <a href="#market" data-role="button" data-transition="slide" data-icon="shop">market</a>
+                            </div>
+                            <div id="job-list" class="member-container">
+                            </div>
+                            <div id="job-list-text-only">
+                                <div class="userInfo shorter">
+                                    <div class="userInfoItem">
+                                        <div class="userContentHeader">
+                                            job list
+                                        </div>
+                                        <div class="userContent" id="jobsTextOnlyContainer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

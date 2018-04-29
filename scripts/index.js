@@ -9,7 +9,7 @@ https://codepen.io/volv/pen/bpwRLL
 //     //this callback will be fired once all ajax calls have finished.
 // });
 // local database where the info from the spreadsheets are compiled
-var userDB = {
+var isFullJobList = true, userDB = {
     "reference": {
         "memories": {}
     }
@@ -150,6 +150,7 @@ function compileData(main, housing, jobList, submissions, memories, items) {
     $(document).on("pagehide", "#addmemory", function () {
         $("div#memory-form").css("display", "none");
     });
+    document.getElementById("toggleText").addEventListener("click", showHideJobs);
     // Show page
     $("#loader").delay(1500).slideToggle("slow");
 }
@@ -174,7 +175,7 @@ function createItemDB(rawData) {
 function buildUserPages(mainRows) {
     var skipLinks = "", charCode = 96; // a
     mainRows.forEach(function (row) {
-        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div'), anchor;
+        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActiveGold = (row['gsx$active-gold'].$t).toLowerCase(), rowActiveRp = (row['gsx$active-rp'].$t).toLowerCase(), active = rowActiveGold === "true" && rowActiveRp === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div'), anchor;
         if (rowUsername.charCodeAt(0) > charCode) {
             skipLinks += "<a data-ajax=\"false\" href=\"#" + rowUsername + "\">" + rowUsername.charAt(0) + "</a>";
             anchor = document.createElement('a');
@@ -191,10 +192,12 @@ function buildUserPages(mainRows) {
             total: rowTotal,
             characters: rowCharacters,
             memories: {},
-            submissions: []
+            submissions: [],
+            activeGold: rowActiveGold,
+            activeRp: rowActiveRp
         };
         div.className = 'cell-outer';
-        div.innerHTML = "<a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a>";
+        div.innerHTML = "<a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image" + (!active ? " inactive" : "") + "\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a>";
         $('a#userCell', div).on('click', function (ev) {
             var user = ev.currentTarget.dataset['id'], pageContent = appendUserInfo(user);
             $('div#userInfo').empty().append(pageContent);
@@ -227,6 +230,7 @@ function buildUserPages(mainRows) {
     });
 }
 function buildShopPages() {
+    var textOnly = "";
     Object.keys(jobDB).forEach(function (rowKey) {
         var row = jobDB[rowKey], div = document.createElement('div');
         div.className = 'cell-outer';
@@ -237,7 +241,89 @@ function buildShopPages() {
             $.mobile.changePage('#view-job', { transition: 'slide' });
         });
         $('div#job-list').append(div);
+        textOnly += parseJobAsText(row);
     }, this);
+    document.getElementById("jobsTextOnlyContainer").innerHTML = textOnly;
+}
+function parseJobAsText(job) {
+    var isCivilian = job.building === "civilians", buildingDesc = job.desc, buildingHours = job.hours, buildingUniform = job.uniform, buildingArea = job.area, characters = job.characters, textString = "<div class=\"shopGroup " + (!!characters ? "noBottomPadding" : "") + "\">";
+    if (!isCivilian) {
+        textString += "<span class=\"userCells buildingName\">" + (!!characters ? "Other" : job.building) + "</span>";
+    }
+    if (buildingArea) {
+        textString += "<span class=\"userCells\"><span>" + buildingArea + "</span></span>";
+    }
+    if (buildingHours) {
+        textString += "<span class=\"userCells userEnroll\"><span>" + buildingHours + "</span></span>";
+    }
+    if (buildingUniform) {
+        textString += "<span class=\"userCells jobUniform\"><a href=\"" + buildingUniform + "\" target=\"_blank\">optional uniform</a></span>";
+    }
+    if (buildingDesc) {
+        textString += "<span class=\"buildingDesc\">" + buildingDesc + "</span><div class=\"clear\"></div>";
+    }
+    if (!!characters) {
+        if (isCivilian) {
+            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + job.building + "</span> " + processCharacterArrayForJobText(characters) + "</div>";
+        }
+        else {
+            // Group jobs by same name, for ease
+            var jobDict_1 = getJobDict(characters), keys = Object.keys(jobDict_1).sort(function (a, b) { return a > b ? 1 : -1; });
+            keys.forEach(function (key) {
+                textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + key + "</span> " + processCharacterArrayForJobText(jobDict_1[key]) + "</div>";
+            });
+        }
+    }
+    else {
+        var job1 = job.job1, job1Characters = job1.characters, job2 = job.job2, job2Characters = job2.characters, job3 = job.job3, job3Characters = job3.characters;
+        if (job1Characters.length > 0) {
+            // should only ever be one boss
+            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + job1.name + "</span> " + processCharacterArrayForJobText(job1Characters) + "</div>";
+        }
+        if (job2Characters.length > 0) {
+            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + job2.name + "s</span> " + processCharacterArrayForJobText(job2Characters) + "</div>";
+        }
+        if (job3Characters.length > 0) {
+            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + job3.name + "s</span> " + processCharacterArrayForJobText(job3Characters) + "</div>";
+        }
+    }
+    textString += "</div>";
+    return textString;
+}
+function getJobDict(characters) {
+    var dict = {}, job, list;
+    characters.forEach(function (character) {
+        job = characterDB[character].job.toLowerCase();
+        list = dict[job];
+        if (!!list) {
+            list.push(character);
+        }
+        else {
+            dict[job] = [character];
+        }
+    });
+    return dict;
+}
+function processCharacterArrayForJobText(characters, isIndependent) {
+    if (isIndependent === void 0) { isIndependent = false; }
+    var textString = "";
+    if (!isIndependent) {
+        textString += "<div class=\"listForJobs\">";
+    }
+    characters.forEach(function (character) {
+        var charaObj = characterDB[character];
+        if (isIndependent) {
+            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + charaObj.job + "s</span><div class=\"listForJobs\">";
+        }
+        textString += "<div class=\"textCharaName\"><a href=\"" + charaObj.app + "\" target=\"_blank\">" + character + "</a></div>";
+        if (isIndependent) {
+            textString += "</div></div>";
+        }
+    });
+    if (!isIndependent) {
+        textString += "</div>";
+    }
+    return textString;
 }
 function populateMemoriesRemaining(memoriesList) {
     var memoryKeys = Object.keys(memoriesList), memoryArray, key, memoryOptionsString = "<option value=\"\" selected></option>";
@@ -520,9 +606,9 @@ function getHousing(housingObj, characterName) {
     return housing;
 }
 function appendUserInfo(user) {
-    var userData = userDB[user], username = userData.username, userLink = "https://${username}.deviantart.com/", userGross = userData.gold, userSpent = userData.spending, userTotal = userData.total, memberSince = userData.enroll, memoriesData = appendMemoryInfo(userData.memories), userCharacterData = appendCharacterInfo(userData.characters), submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions), div = document.createElement('div');
+    var userData = userDB[user], username = userData.username, userLink = "https://${username}.deviantart.com/", userGross = userData.gold, userSpent = userData.spending, userTotal = userData.total, memberSince = userData.enroll, memoriesData = appendMemoryInfo(userData.memories), userCharacterData = appendCharacterInfo(userData.characters), submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions), goldOk = userData.activeGold === "true", rpOk = userData.activeRp === "true", div = document.createElement('div');
     div.className = 'cell-outer';
-    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
+    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t<div class=\"activity-monitor\">\n\t\t\t\t\t<div class=\"" + (goldOk ? "activity-pass" : "activity-fail") + "\">" + (goldOk ? "✔" : "❌") + " earned 1000 G</div>\n\t\t\t\t\t<div class=\"" + (rpOk ? "activity-pass" : "activity-fail") + "\">" + (rpOk ? "✔" : "❌") + " interacted</div></div>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
     return div;
 }
 function appendShopInfo(key) {
@@ -588,7 +674,7 @@ function appendMemoryInfo(memoriesList) {
             collectedMemoriesList += "<img src=\"" + userDB["reference"]["memories"][key][1] + "\">";
         }
     }
-    return (collectedMemoriesList === "" ? "" : "<hr/><span class=\"userCells userMemories\">" + collectedMemoriesList + "</span>");
+    return (collectedMemoriesList === "" ? "" : "<span class=\"userCells userMemories\">" + collectedMemoriesList + "</span>");
 }
 function appendSubmissions(submissionsList) {
     var submissionLink, submissionsString = "", submissionDate = "", submissionLastDate = new Date(submissionsList[0][4]).toLocaleString(), isSpending, gold;
@@ -1285,3 +1371,17 @@ function addUsername() {
     }
     $("textarea#gold-users").val(currentUsers === "" ? user : currentUsers.concat("," + user));
 }
+function showHideJobs() {
+    isFullJobList = !isFullJobList;
+    if (isFullJobList) {
+        document.getElementById("job-list").style.display = "flex";
+        document.getElementById("job-list-text-only").style.display = "none";
+        document.getElementById("toggleText").textContent = "text only";
+    }
+    else {
+        document.getElementById("job-list").style.display = "none";
+        document.getElementById("job-list-text-only").style.display = "block";
+        document.getElementById("toggleText").textContent = "show full";
+    }
+}
+//# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 * {
-  font-family: 'Baloo Thambi', cursive !important;
+  font-family: 'Hammersmith One', sans-serif !important;
   text-transform: lowercase !important;
   font-weight: 400 !important;
 }
@@ -98,6 +98,36 @@ html body .ui-group-theme-a a {
   padding: 0.15rem 1rem 0.25rem 1rem;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
+  border: 1px solid #4c322b;
+}
+.inactive {
+  filter: gray;
+  /* IE6-9 */
+  -webkit-filter: grayscale(1);
+  /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1);
+  /* Microsoft Edge and Firefox 35+ */
+}
+.activity-monitor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+.activity-monitor div {
+  margin: 0em 0.25em;
+  padding: 0.3em 0em 0.25em 0em;
+  min-width: 165px;
+  border-radius: 5px;
+}
+.activity-monitor .activity-fail {
+  border: 2px dashed #e66b6b;
+  color: #992b2b;
+}
+.activity-monitor .activity-pass {
+  border: 2px dashed #4a8651;
+  color: #245d2a;
 }
 .shop-buttons {
   display: flex;
@@ -358,7 +388,7 @@ html body .ui-group-theme-a a:visited {
 hr {
   padding: 0;
   border: none;
-  border-top: 1px dashed #4c322b;
+  border-top: 2px dashed #4c322b;
   color: #4c322b;
   text-align: center;
   margin: 1em;
@@ -856,17 +886,20 @@ html head + body .ui-btn.ui-btn-a:visited {
   text-shadow: none !important;
 }
 #market-button {
-  position: absolute;
+  margin: 0 auto;
   display: flex;
-  right: 1em;
-  top: 2em;
-  z-index: 1000;
+  padding-top: 4em;
 }
 #market-button a {
+  border: 1px solid #4c322b;
   margin: 0em 0.25em;
-  height: 2em;
-  width: 2em;
-  box-shadow: 0px 3px 1px #4c322b;
+  min-width: 70px;
+  background: #2595A8;
+  color: #fff;
+}
+#job-list {
+  margin-top: 0.5em;
+  padding-top: 0;
 }
 #shop-image-link {
   border: 1px solid #4c322b;
@@ -969,6 +1002,10 @@ html head + body .ui-btn.ui-btn-a:visited {
   color: #4a8651;
   font-family: 'Bungee', cursive !important;
 }
+.job-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 #dialog-portrait {
   background-size: 100px;
   background-repeat: no-repeat;
@@ -1003,6 +1040,32 @@ html head + body .ui-btn.ui-btn-a:visited {
   margin-top: -0.5em;
   margin-bottom: 1em;
 }
+#job-list-text-only {
+  display: none;
+}
+#job-list-text-only > div {
+  margin-top: 0.5em;
+}
+.shopGroup {
+  text-align: center;
+}
+.shopGroup {
+  padding-bottom: 2.5em;
+}
+.noBottomPadding {
+  padding: 0;
+}
+.jobGroup {
+  text-align: left;
+  margin-top: 0.75em;
+  padding: 0em 1em;
+}
+.listForJobs {
+  margin-left: 2em;
+}
+.jobTitle {
+  display: block;
+}
 @media (max-width: 738px) {
   .market-shorter {
     max-width: 585px;
@@ -1010,7 +1073,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 @media (max-width: 650px) {
   .calendar {
-    padding: 1.5em;
+    padding: 1em;
   }
   .calendar td {
     padding: .5em;

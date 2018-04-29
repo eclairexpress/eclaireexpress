@@ -1,4 +1,6 @@
 // colours
+@darkGreen: #245d2a;
+@darkRed: #992b2b;
 @spring: #4a8651;
 @summer: #e1891f;
 @fall: #e66b6b;
@@ -14,7 +16,7 @@
 @loading-duration: 3s;
 
 * {
-  font-family: 'Baloo Thambi', cursive !important;
+  font-family: 'Hammersmith One', sans-serif !important;
   text-transform: lowercase !important;
   font-weight: 400 !important;
 }
@@ -123,7 +125,40 @@ body {
   padding: 0.15rem 1rem 0.25rem 1rem;
   border-radius: 5px;
   box-shadow: 2px 2px 2px 1px rgba(76, 50, 43, 0.4);
+  border: 1px solid @dkBrown;
 }
+.inactive {
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+.activity-monitor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin-bottom: 1em;
+
+  div {
+    margin: 0em 0.25em;
+    padding: 0.3em 0em 0.25em 0em;
+    min-width: 165px;
+    border-radius: 5px;
+    
+  }
+
+  .activity-fail {
+    border: 2px dashed @fall;
+    color: @darkRed;
+  }
+
+  .activity-pass {
+    border: 2px dashed @spring;
+    color: @darkGreen;
+  }
+}
+
+
 .shop-buttons {
   display: flex;
   align-items: center;
@@ -404,7 +439,7 @@ select option {
 hr {
   padding: 0;
   border: none;
-  border-top: 1px dashed @dkBrown;
+  border-top: 2px dashed @dkBrown;
   color: @dkBrown;
   text-align: center;
   margin: 1em;
@@ -962,18 +997,22 @@ a.ui-btn {
 }
 
 #market-button {
-  position: absolute;
+  margin: 0 auto;
   display: flex;
-  right: 1em;
-  top: 2em;
-  z-index: 1000;
+  padding-top: 4em;
 }
 
 #market-button a {
+  border: 1px solid @dkBrown;
   margin: 0em 0.25em;
-  height: 2em;
-  width: 2em;
-  box-shadow: 0px 3px 1px @dkBrown;
+  min-width: 70px;
+  background: @winter;
+  color: @white;
+}
+
+#job-list {
+  margin-top: 0.5em;
+  padding-top: 0;
 }
 
 #shop-image-link {
@@ -1099,6 +1138,11 @@ a.ui-btn {
   font-family: 'Bungee', cursive !important;
 }
 
+.job-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 #dialog-portrait {
   background-size: 100px;
   background-repeat: no-repeat;
@@ -1140,6 +1184,40 @@ a.ui-btn {
   margin-bottom: 1em;
 }
 
+#job-list-text-only {
+  display: none;
+
+  >div {
+    margin-top: 0.5em;
+  }
+}
+
+.shopGroup {
+  text-align: center;
+}
+
+.shopGroup {
+  padding-bottom: 2.5em;
+}
+
+.noBottomPadding {
+  padding: 0;
+}
+
+.jobGroup {
+  text-align: left;
+  margin-top: 0.75em;
+  padding: 0em 1em;
+}
+
+.listForJobs {
+  margin-left: 2em;
+}
+
+.jobTitle {
+  display: block;
+}
+
 @media (max-width: 738px) {
   .market-shorter {
     max-width: 585px;
@@ -1148,7 +1226,7 @@ a.ui-btn {
 
 @media (max-width: 650px) {
     .calendar {
-      padding: 1.5em;
+      padding: 1em;
     }
 
     .calendar td {
