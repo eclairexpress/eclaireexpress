@@ -870,7 +870,7 @@ function getHousing(housingObj, characterName) {
 function appendUserInfo (user) {
   	var	userData = userDB[user],
 	  	username = userData.username,
-	  	userLink = "https://${username}.deviantart.com/",
+	  	userLink = `https://${username}.deviantart.com/`,
 	  	userGross = userData.gold,
 		userSpent = userData.spending,
 		userTotal = userData.total,
