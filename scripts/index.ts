@@ -269,13 +269,13 @@ function buildUserPages(mainRows) {
 			div = document.createElement('div'),
 			anchor;
 
-		if (rowUsername.charCodeAt(0) > charCode) {
-			skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
-			anchor = document.createElement('a');
-			anchor.className = "anchor";
-			anchor.id = rowUsername;
-			charCode = rowUsername.charCodeAt(0);
-		}
+		// if (rowUsername.charCodeAt(0) > charCode) {
+		// 	skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
+		// 	anchor = document.createElement('a');
+		// 	anchor.className = "anchor";
+		// 	anchor.id = rowUsername;
+		// 	charCode = rowUsername.charCodeAt(0);
+		// }
 
 		userDB[rowUsername] = {
 			username: rowUsername,
@@ -324,17 +324,17 @@ function buildUserPages(mainRows) {
 			$.mobile.changePage('#view', {transition:'slide'});
 		});
 		$('div#member-list').append(div);
-		if (anchor) {
-			$('div#member-list').append(anchor);
-		}
+		// if (anchor) {
+		// 	$('div#member-list').append(anchor);
+		// }
 	}, this);
 
-	skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
-	$('div#skipToUser').html(skipLinks);
+	// skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
+	// $('div#skipToUser').html(skipLinks);
 	
-	document.getElementById("userTop").addEventListener("click", function () {
-		document.getElementById("users-top").scrollTop = 0;
-	});
+	// document.getElementById("userTop").addEventListener("click", function () {
+	// 	document.getElementById("users-top").scrollTop = 0;
+	// });
 }
 
 function buildShopPages() {
@@ -586,14 +586,14 @@ function createShopsPage() {
 			anchor,
 			additionalInfo;
 
-        if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
-			skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
-			anchor = document.createElement('a');
-			anchor.className = "anchor2";
-			anchor.id = buildingName;
-			charCode = buildingName.charCodeAt(0);
-			$('div#itemsContainer').append(anchor);
-		}
+        // if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
+		// 	skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
+		// 	anchor = document.createElement('a');
+		// 	anchor.className = "anchor2";
+		// 	anchor.id = buildingName;
+		// 	charCode = buildingName.charCodeAt(0);
+		// 	$('div#itemsContainer').append(anchor);
+		// }
 
 		titleDiv.attr('class', "marketShopName" + (!first ? " firstShop" : ""));
 		titleDiv.html(buildingName);
@@ -654,12 +654,12 @@ function createShopsPage() {
 		$('div#itemsContainer').append(itemsDiv);
 	});
 
-	skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
-	$('div#skipToItem').html(skipLinks);
+	//skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
+	//$('div#skipToItem').html(skipLinks);
 
-	document.getElementById("itemTop").addEventListener("click", function () {
-		document.getElementById("market-top").scrollTop = 0;
-	});
+	// document.getElementById("itemTop").addEventListener("click", function () {
+	// 	document.getElementById("market-top").scrollTop = 0;
+	// });
 }
 
 function createInitialCalendar() {

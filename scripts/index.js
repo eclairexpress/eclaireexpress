@@ -176,13 +176,13 @@ function buildUserPages(mainRows) {
     var skipLinks = "", charCode = 96; // a
     mainRows.forEach(function (row) {
         var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActiveGold = (row['gsx$active-gold'].$t).toLowerCase(), rowActiveRp = (row['gsx$active-rp'].$t).toLowerCase(), active = rowActiveGold === "true" && rowActiveRp === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div'), anchor;
-        if (rowUsername.charCodeAt(0) > charCode) {
-            skipLinks += "<a data-ajax=\"false\" href=\"#" + rowUsername + "\">" + rowUsername.charAt(0) + "</a>";
-            anchor = document.createElement('a');
-            anchor.className = "anchor";
-            anchor.id = rowUsername;
-            charCode = rowUsername.charCodeAt(0);
-        }
+        // if (rowUsername.charCodeAt(0) > charCode) {
+        // 	skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
+        // 	anchor = document.createElement('a');
+        // 	anchor.className = "anchor";
+        // 	anchor.id = rowUsername;
+        // 	charCode = rowUsername.charCodeAt(0);
+        // }
         userDB[rowUsername] = {
             username: rowUsername,
             img: rowImg,
@@ -219,15 +219,15 @@ function buildUserPages(mainRows) {
             $.mobile.changePage('#view', { transition: 'slide' });
         });
         $('div#member-list').append(div);
-        if (anchor) {
-            $('div#member-list').append(anchor);
-        }
+        // if (anchor) {
+        // 	$('div#member-list').append(anchor);
+        // }
     }, this);
-    skipLinks = "<a data-ajax='false' href='#' id=\"userTop\" class=\"top\">[ top ]</a>" + skipLinks;
-    $('div#skipToUser').html(skipLinks);
-    document.getElementById("userTop").addEventListener("click", function () {
-        document.getElementById("users-top").scrollTop = 0;
-    });
+    // skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
+    // $('div#skipToUser').html(skipLinks);
+    // document.getElementById("userTop").addEventListener("click", function () {
+    // 	document.getElementById("users-top").scrollTop = 0;
+    // });
 }
 function buildShopPages() {
     var textOnly = "";
@@ -410,14 +410,14 @@ function createShopsPage() {
     var skipLinks = "", first = "", charCode = 96;
     Object.keys(itemDB).forEach(function (key) {
         var titleDiv = $('<div></div>'), itemsDiv = $('<div></div>'), buildingName = jobDB[key] ? jobDB[key].building : key, items = itemDB[key], anchor, additionalInfo;
-        if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
-            skipLinks += "<a data-ajax=\"false\" href=\"#" + buildingName + "\">" + buildingName.charAt(0) + "</a>";
-            anchor = document.createElement('a');
-            anchor.className = "anchor2";
-            anchor.id = buildingName;
-            charCode = buildingName.charCodeAt(0);
-            $('div#itemsContainer').append(anchor);
-        }
+        // if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
+        // 	skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
+        // 	anchor = document.createElement('a');
+        // 	anchor.className = "anchor2";
+        // 	anchor.id = buildingName;
+        // 	charCode = buildingName.charCodeAt(0);
+        // 	$('div#itemsContainer').append(anchor);
+        // }
         titleDiv.attr('class', "marketShopName" + (!first ? " firstShop" : ""));
         titleDiv.html(buildingName);
         if (!first) {
@@ -457,11 +457,11 @@ function createShopsPage() {
         });
         $('div#itemsContainer').append(itemsDiv);
     });
-    skipLinks = "<a data-ajax='false' href='#' id=\"itemTop\" class=\"top\">[ top ]</a>" + skipLinks;
-    $('div#skipToItem').html(skipLinks);
-    document.getElementById("itemTop").addEventListener("click", function () {
-        document.getElementById("market-top").scrollTop = 0;
-    });
+    //skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
+    //$('div#skipToItem').html(skipLinks);
+    // document.getElementById("itemTop").addEventListener("click", function () {
+    // 	document.getElementById("market-top").scrollTop = 0;
+    // });
 }
 function createInitialCalendar() {
     var table = $('<table></table>'), tbody = $('<tbody></tbody>'), date = 1;
