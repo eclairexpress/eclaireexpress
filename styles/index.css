@@ -1073,7 +1073,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 @media (max-width: 450px) {
   .calendar td {
-    padding: .25em;
+    padding: .35em;
   }
 }
 @media (max-width: 409px) {
