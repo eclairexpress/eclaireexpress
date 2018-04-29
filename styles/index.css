@@ -888,7 +888,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 #market-button {
   margin: 0 auto;
   display: flex;
-  padding-top: 4em;
+  padding-top: 2em;
 }
 #market-button a {
   border: 1px solid #4c322b;
