@@ -506,32 +506,31 @@ function getBdayDiv(season, day) {
         return template;
     }
 }
-function getActiveSinceDate(enrollNum) {
+function getActiveSinceDate(enrollNum, dateOnly) {
+    if (enrollNum === void 0) { enrollNum = ""; }
+    if (dateOnly === void 0) { dateOnly = false; }
     var enrollDate;
     switch (enrollNum) {
         case "0":
-            enrollDate = "the beginning (june 3rd, 2014)";
+            enrollDate = "june 3rd, 2014";
             break;
         case "1":
-            enrollDate = "enrollment 1 (August 3rd, 2014)";
+            enrollDate = "August 3rd, 2014 (E1)";
             break;
         case "2":
-            enrollDate = "enrollment 2 (January 13th 2015)";
+            enrollDate = "January 13th, 2015 (E2)";
             break;
         case "3":
-            enrollDate = "enrollment 3 (July 14th 2015)";
+            enrollDate = "July 14th, 2015 (E3)";
             break;
         case "4":
-            enrollDate = "enrollment 4 (January 24th 2016)";
+            enrollDate = "January 24th, 2016 (E4)";
             break;
         case "5":
-            enrollDate = "enrollment 5 (September 3rd 2016)";
-            break;
-        case "6":
-            enrollDate = "enrollment 6 (March 3rd 2018)";
+            enrollDate = "September 3rd, 2016 (E5)";
             break;
         default:
-            enrollDate = "via invite";
+            enrollDate = "March 3rd, 2018" + (dateOnly ? "" : " (E6)");
     }
     return enrollDate;
 }
@@ -614,7 +613,7 @@ function getHousing(housingObj, characterName) {
 function appendUserInfo(user) {
     var userData = userDB[user], username = userData.username, userLink = "https://" + username + ".deviantart.com/", userGross = userData.gold, userSpent = userData.spending, userTotal = userData.total, memberSince = userData.enroll, memoriesData = appendMemoryInfo(userData.memories), userCharacterData = appendCharacterInfo(userData.characters), submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions), goldOk = userData.activeGold === "true", rpOk = userData.activeRp === "true", div = document.createElement('div');
     div.className = 'cell-outer';
-    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t<div class=\"activity-monitor\">\n\t\t\t\t\t<div class=\"" + (goldOk ? "activity-pass" : "activity-fail") + "\">" + (goldOk ? "✔" : "❌") + " earned 1000 G</div>\n\t\t\t\t\t<div class=\"" + (rpOk ? "activity-pass" : "activity-fail") + "\">" + (rpOk ? "✔" : "❌") + " interacted</div></div>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
+    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short add-left\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t<span class=\"userCells userActivity\">activity since " + getActiveSinceDate("", true) + ":</span>\n\t\t\t\t<div class=\"activity-monitor add-center\">\n\t\t\t\t\t<div class=\"" + (goldOk ? "activity-pass" : "activity-fail") + "\">" + (goldOk ? "✔" : "❌") + " earned 1000 G</div>\n\t\t\t\t\t<div class=\"" + (rpOk ? "activity-pass" : "activity-fail") + "\">" + (rpOk ? "✔" : "❌") + " interacted</div></div>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
     return div;
 }
 function appendShopInfo(key) {
@@ -680,7 +679,7 @@ function appendMemoryInfo(memoriesList) {
             collectedMemoriesList += "<img src=\"" + userDB["reference"]["memories"][key][1] + "\">";
         }
     }
-    return (collectedMemoriesList === "" ? "" : "<span class=\"userCells userMemories\">" + collectedMemoriesList + "</span>");
+    return (collectedMemoriesList === "" ? "" : "<span class=\"userCells userMemories add-center\">" + collectedMemoriesList + "</span>");
 }
 function appendSubmissions(submissionsList) {
     var submissionLink, submissionsString = "", submissionDate = "", submissionLastDate = new Date(submissionsList[0][4]).toLocaleString(), isSpending, gold;

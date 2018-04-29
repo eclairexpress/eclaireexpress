@@ -745,33 +745,30 @@ function getBdayDiv(season, day) {
 	}
 }
 
-function getActiveSinceDate(enrollNum) {
+function getActiveSinceDate(enrollNum = "", dateOnly = false) {
 	var enrollDate;
 
 	switch (enrollNum) {
 		case "0": 
-			enrollDate = "the beginning (june 3rd, 2014)";
+			enrollDate = "june 3rd, 2014";
 			break;
 		case "1":
-			enrollDate = "enrollment 1 (August 3rd, 2014)";
+			enrollDate = "August 3rd, 2014 (E1)";
 			break;
 		case "2":
-			enrollDate = "enrollment 2 (January 13th 2015)";
+			enrollDate = "January 13th, 2015 (E2)";
 			break;
 		case "3":
-			enrollDate = "enrollment 3 (July 14th 2015)";
+			enrollDate = "July 14th, 2015 (E3)";
 			break;
 		case "4":
-			enrollDate = "enrollment 4 (January 24th 2016)";
+			enrollDate = "January 24th, 2016 (E4)";
 			break;
 		case "5":
-			enrollDate = "enrollment 5 (September 3rd 2016)";
-			break;
-		case "6":
-			enrollDate = "enrollment 6 (March 3rd 2018)";
+			enrollDate = "September 3rd, 2016 (E5)";
 			break;
 		default:
-			enrollDate = "via invite";
+			enrollDate = "March 3rd, 2018" + (dateOnly ? "" : " (E6)");
 	}
 	
 	return enrollDate;
@@ -897,10 +894,11 @@ function appendUserInfo (user) {
 			<div class="userContentHeader">
 				stats
 			</div>
-			<div class="userContent userStats padding-bottom-short" id="userStats">
+			<div class="userContent userStats padding-bottom-short add-left" id="userStats">
 				<span class="userCells usersName">Username: <a href="${userLink}" target="_blank">${username}</a></span>
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
-				<div class="activity-monitor">
+				<span class="userCells userActivity">activity since ${getActiveSinceDate("", true)}:</span>
+				<div class="activity-monitor add-center">
 					<div class="${goldOk ? "activity-pass" : "activity-fail"}">${goldOk ? "✔" : "❌"} earned 1000 G</div>
 					<div class="${rpOk ? "activity-pass" : "activity-fail"}">${rpOk ? "✔" : "❌"} interacted</div></div>
 				${memoriesData}
@@ -1031,7 +1029,7 @@ function appendMemoryInfo (memoriesList) {
 		}
 	}
 
-	return (collectedMemoriesList === "" ? "" : `<span class="userCells userMemories">${collectedMemoriesList}</span>`);
+	return (collectedMemoriesList === "" ? "" : `<span class="userCells userMemories add-center">${collectedMemoriesList}</span>`);
 }
 
 function appendSubmissions(submissionsList) {
