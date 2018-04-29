@@ -197,7 +197,7 @@ function buildUserPages(mainRows) {
             activeRp: rowActiveRp
         };
         div.className = 'cell-outer';
-        div.innerHTML = "<a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image" + (!active ? " inactive" : "") + "\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a>";
+        div.innerHTML = "<div class=\"filter-wrapper" + (!active ? " inactive" : "") + "\"><a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a></div>";
         $('a#userCell', div).on('click', function (ev) {
             var user = ev.currentTarget.dataset['id'], pageContent = appendUserInfo(user);
             $('div#userInfo').empty().append(pageContent);

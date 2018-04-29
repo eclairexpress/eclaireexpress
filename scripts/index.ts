@@ -292,10 +292,10 @@ function buildUserPages(mainRows) {
 		}
 
 		div.className = 'cell-outer';
-		div.innerHTML = `<a href="#" id="userCell" data-id="${rowUsername}">
+		div.innerHTML = `<div class="filter-wrapper${!active ? " inactive" : ""}"><a href="#" id="userCell" data-id="${rowUsername}">
 							<div class="username" role="userName">${rowUsername}</div>
-							<div class="image${!active ? " inactive" : ""}" role="image"><img src="${rowImg}"></div>
-						</a>`;
+							<div class="image" role="image"><img src="${rowImg}"></div>
+						</a></div>`;
 
 		$('a#userCell', div ).on( 'click', function( ev ){
 			var user = ev.currentTarget.dataset['id'],
