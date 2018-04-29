@@ -399,9 +399,18 @@ function parseJobAsText(job) {
 		} else {
 			// Group jobs by same name, for ease
 			let jobDict = getJobDict(characters),
-				keys = Object.keys(jobDict).sort((a,b) => a > b ? 1 : -1);
+				keys = Object.keys(jobDict).sort((a,b) => a > b ? 1 : -1),
+				jobName;
+
 			keys.forEach(key => {
-				textString += `<div class="jobGroup"><span class="jobTitle">${key}</span> ${processCharacterArrayForJobText(jobDict[key])}</div>`;
+				if (key.slice(-3) === "ary") {
+					jobName = key.slice(0,-3) + "aries"
+
+				} else if (key.charAt(-1) !== "s") {
+					jobName = key + "s";
+				}
+
+				textString += `<div class="jobGroup"><span class="jobTitle">${jobName}</span> ${processCharacterArrayForJobText(jobDict[key])}</div>`;
 			});
 		}
 	} else {
