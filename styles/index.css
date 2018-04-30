@@ -36,6 +36,9 @@ body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
+.container-inner > div {
+  margin-bottom: 5em;
+}
 .ui-content {
   margin: 0 auto;
   overflow: hidden;
