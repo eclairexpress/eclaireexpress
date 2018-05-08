@@ -403,11 +403,14 @@ function parseJobAsText(job) {
 				jobName;
 
 			keys.forEach(key => {
-				if (key.slice(-3) === "ary") {
-					jobName = key.slice(0,-3) + "aries"
-
-				} else if (key.charAt(-1) !== "s") {
-					jobName = key + "s";
+				jobName = key;
+				if (jobDict[key].length > 1) {
+					if (key.slice(-3) === "ary") {
+						jobName = key.slice(0,-3) + "aries"
+	
+					} else if (key.charAt(key.length-1) !== "s") {
+						jobName = key + "s";
+					}
 				}
 
 				textString += `<div class="jobGroup"><span class="jobTitle">${jobName}</span> ${processCharacterArrayForJobText(jobDict[key])}</div>`;

@@ -270,11 +270,14 @@ function parseJobAsText(job) {
             // Group jobs by same name, for ease
             var jobDict_1 = getJobDict(characters), keys = Object.keys(jobDict_1).sort(function (a, b) { return a > b ? 1 : -1; }), jobName_1;
             keys.forEach(function (key) {
-                if (key.slice(-3) === "ary") {
-                    jobName_1 = key.slice(0, -3) + "aries";
-                }
-                else if (key.charAt(-1) !== "s") {
-                    jobName_1 = key + "s";
+                jobName_1 = key;
+                if (jobDict_1[key].length > 1) {
+                    if (key.slice(-3) === "ary") {
+                        jobName_1 = key.slice(0, -3) + "aries";
+                    }
+                    else if (key.charAt(key.length - 1) !== "s") {
+                        jobName_1 = key + "s";
+                    }
                 }
                 textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + jobName_1 + "</span> " + processCharacterArrayForJobText(jobDict_1[key]) + "</div>";
             });
