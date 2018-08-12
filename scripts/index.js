@@ -532,8 +532,11 @@ function getActiveSinceDate(enrollNum, dateOnly) {
         case "5":
             enrollDate = "September 3rd, 2016 (E5)";
             break;
+        case "6":
+            enrollDate = "March 3rd, 2018 (E6)";
+            break;
         default:
-            enrollDate = "March 3rd, 2018" + (dateOnly ? "" : " (E6)");
+            enrollDate = "August 12th, 2018" + (dateOnly ? "" : " (E7)");
     }
     return enrollDate;
 }
