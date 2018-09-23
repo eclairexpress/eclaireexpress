@@ -754,7 +754,7 @@ function parseLocation(location, characterName, residentTitle) {
         if (!characterName) {
             $("div#dialogTitle").text(address);
             if (housemates === "") {
-                return (location.isCommunal ? "<span class=\"add-center\">This room is currently unoccupied!</span></span>" : "<span class=\"add-center\">This lot is unoccupied!<br><span>Make it your home today!</span></span>");
+                return (location.isCommunal ? "<span class=\"add-center no-transform\">This room is currently unoccupied!</span></span>" : "<span class=\"add-center no-transform\">This lot is unoccupied!<br><span class=\"no-transform\">Make it your home today!</span></span>");
             }
         }
         if (!location.isCommunal) {

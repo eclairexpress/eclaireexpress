@@ -125,7 +125,7 @@ body {
   background-position: -155px 0px;
   text-align: center;
   z-index: 100;
-  width: 175px;
+  width: 140px;
   height: 55px;
   margin: 0rem 0.5rem 1rem 0.5rem;
   padding: 0.15rem 1rem 0.25rem 1rem;
@@ -135,13 +135,16 @@ body {
 }
 .filter-wrapper {
   -webkit-transform:translate3d(0,0,0);
+  transform:translate3d(0,0,0);
 }
 .inactive {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 .activity-monitor {
   display: flex;
@@ -210,7 +213,7 @@ body {
   border-top-left-radius: 5px;
   border: 1px solid @dkBrown;
   top: -25px;
-  left: 25px;
+  left: 15px;
   z-index: -100;
 }
 
@@ -1223,6 +1226,10 @@ a.ui-btn {
 
 .jobTitle {
   display: block;
+}
+
+.no-transform {
+  text-transform: none !important;
 }
 
 @media (max-width: 738px) {

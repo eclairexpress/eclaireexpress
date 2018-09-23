@@ -97,7 +97,7 @@ html body .ui-group-theme-a a {
   background-position: -155px 0px;
   text-align: center;
   z-index: 100;
-  width: 175px;
+  width: 140px;
   height: 55px;
   margin: 0rem 0.5rem 1rem 0.5rem;
   padding: 0.15rem 1rem 0.25rem 1rem;
@@ -107,6 +107,7 @@ html body .ui-group-theme-a a {
 }
 .filter-wrapper {
   -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .inactive {
   filter: gray;
@@ -116,7 +117,9 @@ html body .ui-group-theme-a a {
   filter: grayscale(1);
   /* Microsoft Edge and Firefox 35+ */
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 .activity-monitor {
   display: flex;
@@ -173,7 +176,7 @@ html body .ui-group-theme-a a {
   border-top-left-radius: 5px;
   border: 1px solid #4c322b;
   top: -25px;
-  left: 25px;
+  left: 15px;
   z-index: -100;
 }
 a#userCell {
@@ -1050,6 +1053,9 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .jobTitle {
   display: block;
+}
+.no-transform {
+  text-transform: none !important;
 }
 @media (max-width: 738px) {
   .market-shorter {
