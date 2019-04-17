@@ -260,7 +260,6 @@ function addNpcsToCharacters(npcsRows) {
 			}
 		}
 	});
-	console.log(characterDB);
 }
 
 function createItemDB(rawData) {

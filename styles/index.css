@@ -1030,7 +1030,6 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .jobUniform {
   font-size: 0.85em;
-  margin-top: -0.5em;
   margin-bottom: 1em;
 }
 #job-list-text-only > div {
