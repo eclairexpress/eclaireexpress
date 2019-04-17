@@ -9,7 +9,7 @@ https://codepen.io/volv/pen/bpwRLL
 //     //this callback will be fired once all ajax calls have finished.
 // });
 // local database where the info from the spreadsheets are compiled
-var isFullJobList = false, userDB = {
+var isActivityCheckPeriod = false, isFullJobList = false, userDB = {
     "reference": {
         "memories": {}
     }
@@ -53,8 +53,11 @@ $(function () {
     }), $.ajax({
         url: 'https://spreadsheets.google.com/feeds/list/1QtrZ8TdV9NayyXquBMhp-3ywwIjjMhQoJwmMBynZTjU/od6/public/values?alt=json-in-script',
         dataType: 'jsonp'
+    }), $.ajax({
+        url: 'https://spreadsheets.google.com/feeds/list/12rNhHS0HsSpKjfovyb26ZQ4x4eOA_2rbLDMC7uc5R1s/omw59hq/public/values?alt=json-in-script',
+        dataType: 'jsonp'
     }))
-        .done(function (main, housing, jobList, submissions, memories, items) { compileData(main, housing, jobList, submissions, memories, items); });
+        .done(function (main, housing, jobList, submissions, memories, items, npcs) { compileData(main, housing, jobList, submissions, memories, items, npcs); });
 });
 // Resize the background
 function resizeBackground() {
@@ -71,17 +74,18 @@ function createBdayDB() {
     }
 }
 // Process the gold calculation based on the spreadsheets.
-function compileData(main, housing, jobList, submissions, memories, items) {
+function compileData(main, housing, jobList, submissions, memories, items, npcs) {
     // If something messed up here, stop processing.
-    if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0] || !items[0]) {
+    if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0] || !items[0] || !npcs[0]) {
         return;
     }
     createBdayDB();
-    var mainFeed = main[0].feed, housingFeed = housing[0].feed, jobFeed = jobList[0].feed, submissionsFeed = submissions[0].feed, memoriesFeed = memories[0].feed, itemsFeed = items[0].feed, mainRows = mainFeed.entry || [], housingRows = housingFeed.entry || [], jobRows = jobFeed.entry || [], submissionsRows = submissionsFeed.entry || [], memoriesRows = memoriesFeed.entry || [], itemsRows = itemsFeed.entry || [];
+    var mainFeed = main[0].feed, housingFeed = housing[0].feed, jobFeed = jobList[0].feed, submissionsFeed = submissions[0].feed, memoriesFeed = memories[0].feed, itemsFeed = items[0].feed, npcsFeed = npcs[0].feed, mainRows = mainFeed.entry || [], housingRows = housingFeed.entry || [], jobRows = jobFeed.entry || [], submissionsRows = submissionsFeed.entry || [], memoriesRows = memoriesFeed.entry || [], itemsRows = itemsFeed.entry || [], npcsRows = npcsFeed.entry || [];
     createJobDB(jobRows);
     createItemDB(itemsRows);
     createHouseDB(housingRows);
     buildUserPages(mainRows);
+    addNpcsToCharacters(npcsRows);
     buildShopPages();
     // Populate memories
     memoriesRows.forEach(function (row) {
@@ -154,6 +158,28 @@ function compileData(main, housing, jobList, submissions, memories, items) {
     // Show page
     $("#loader").delay(1500).slideToggle("slow");
 }
+function addNpcsToCharacters(npcsRows) {
+    npcsRows.forEach(function (row) {
+        var characterName = row['gsx$name'].$t;
+        var characterApp = row['gsx$app'].$t;
+        for (var i = 1; i <= 3; i++) {
+            var link = row['gsx$link' + i].$t;
+            if (link) {
+                var characterLink = link.split(",");
+                var linkName = characterLink[0].toLowerCase();
+                var linkRelationship = characterLink[1];
+                var characterObj = characterDB[linkName];
+                if (characterObj) {
+                    if (!characterObj["npcs"].hasOwnProperty(linkRelationship)) {
+                        characterObj["npcs"][linkRelationship] = [];
+                    }
+                    characterObj["npcs"][linkRelationship].push([characterName, characterApp]);
+                }
+            }
+        }
+    });
+    console.log(characterDB);
+}
 function createItemDB(rawData) {
     var key, shop;
     rawData.forEach(function (row) {
@@ -173,16 +199,8 @@ function createItemDB(rawData) {
     });
 }
 function buildUserPages(mainRows) {
-    var skipLinks = "", charCode = 96; // a
     mainRows.forEach(function (row) {
-        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActiveGold = (row['gsx$active-gold'].$t).toLowerCase(), rowActiveRp = (row['gsx$active-rp'].$t).toLowerCase(), active = rowActiveGold === "true" && rowActiveRp === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div'), anchor;
-        // if (rowUsername.charCodeAt(0) > charCode) {
-        // 	skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
-        // 	anchor = document.createElement('a');
-        // 	anchor.className = "anchor";
-        // 	anchor.id = rowUsername;
-        // 	charCode = rowUsername.charCodeAt(0);
-        // }
+        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActive = (row['gsx$active'].$t).toLowerCase() === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div');
         userDB[rowUsername] = {
             username: rowUsername,
             img: rowImg,
@@ -193,11 +211,10 @@ function buildUserPages(mainRows) {
             characters: rowCharacters,
             memories: {},
             submissions: [],
-            activeGold: rowActiveGold,
-            activeRp: rowActiveRp
+            active: rowActive
         };
         div.className = 'cell-outer';
-        div.innerHTML = "<div class=\"filter-wrapper" + (!active ? " inactive" : "") + "\"><a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a></div>";
+        div.innerHTML = "<div class=\"filter-wrapper" + (!rowActive && isActivityCheckPeriod ? " inactive" : "") + "\"><a href=\"#\" id=\"userCell\" data-id=\"" + rowUsername + "\">\n\t\t\t\t\t\t\t<div class=\"username\" role=\"userName\">" + rowUsername + "</div>\n\t\t\t\t\t\t\t<div class=\"image\" role=\"image\"><img src=\"" + rowImg + "\"></div>\n\t\t\t\t\t\t</a></div>";
         $('a#userCell', div).on('click', function (ev) {
             var user = ev.currentTarget.dataset['id'], pageContent = appendUserInfo(user);
             $('div#userInfo').empty().append(pageContent);
@@ -214,20 +231,12 @@ function buildUserPages(mainRows) {
                 $("div#submit-memory-error").empty();
                 $("div#submit-memory-result").empty();
                 $("div#memory-form").css("display", "block");
-                $.mobile.changePage('#addmemory', { transition: 'slide' });
+                $.mobile.changePage('#addmemory');
             });
-            $.mobile.changePage('#view', { transition: 'slide' });
+            $.mobile.changePage('#view');
         });
         $('div#member-list').append(div);
-        // if (anchor) {
-        // 	$('div#member-list').append(anchor);
-        // }
     }, this);
-    // skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
-    // $('div#skipToUser').html(skipLinks);
-    // document.getElementById("userTop").addEventListener("click", function () {
-    // 	document.getElementById("users-top").scrollTop = 0;
-    // });
 }
 function buildShopPages() {
     var textOnly = "";
@@ -238,7 +247,7 @@ function buildShopPages() {
         $('a#userCell', div).on('click', function (ev) {
             var shopkey = ev.currentTarget.dataset['id'], pageContent = appendShopInfo(shopkey);
             $('div#jobInfo').empty().append(pageContent);
-            $.mobile.changePage('#view-job', { transition: 'slide' });
+            $.mobile.changePage('#view-job');
         });
         $('div#job-list').append(div);
         textOnly += parseJobAsText(row);
@@ -358,7 +367,7 @@ function populateUserList() {
     $("select#submit-userList").append(optionsString);
 }
 function getPercentage(number) {
-    return (number / characterCount * 100).toFixed(1);
+    return parseFloat((number / characterCount * 100).toFixed(1));
 }
 function createJobDB(jobRows) {
     jobRows.forEach(function (row) {
@@ -413,14 +422,6 @@ function createShopsPage() {
     var skipLinks = "", first = "", charCode = 96;
     Object.keys(itemDB).forEach(function (key) {
         var titleDiv = $('<div></div>'), itemsDiv = $('<div></div>'), buildingName = jobDB[key] ? jobDB[key].building : key, items = itemDB[key], anchor, additionalInfo;
-        // if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
-        // 	skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
-        // 	anchor = document.createElement('a');
-        // 	anchor.className = "anchor2";
-        // 	anchor.id = buildingName;
-        // 	charCode = buildingName.charCodeAt(0);
-        // 	$('div#itemsContainer').append(anchor);
-        // }
         titleDiv.attr('class', "marketShopName" + (!first ? " firstShop" : ""));
         titleDiv.html(buildingName);
         if (!first) {
@@ -460,11 +461,6 @@ function createShopsPage() {
         });
         $('div#itemsContainer').append(itemsDiv);
     });
-    //skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
-    //$('div#skipToItem').html(skipLinks);
-    // document.getElementById("itemTop").addEventListener("click", function () {
-    // 	document.getElementById("market-top").scrollTop = 0;
-    // });
 }
 function createInitialCalendar() {
     var table = $('<table></table>'), tbody = $('<tbody></tbody>'), date = 1;
@@ -509,9 +505,8 @@ function getBdayDiv(season, day) {
         return template;
     }
 }
-function getActiveSinceDate(enrollNum, dateOnly) {
+function getActiveSinceDate(enrollNum) {
     if (enrollNum === void 0) { enrollNum = ""; }
-    if (dateOnly === void 0) { dateOnly = false; }
     var enrollDate;
     switch (enrollNum) {
         case "0":
@@ -536,7 +531,7 @@ function getActiveSinceDate(enrollNum, dateOnly) {
             enrollDate = "March 3rd, 2018 (E6)";
             break;
         default:
-            enrollDate = "August 11th, 2018" + (dateOnly ? "" : " (E7)");
+            enrollDate = "August 11th, 2018 (E7)";
     }
     return enrollDate;
 }
@@ -565,7 +560,8 @@ function getCharacterArray(row, enrollNum) {
                 job: getJob(characterArray[6].split('/'), characterName),
                 image: characterArray[7],
                 tracker: characterArray[8] ? characterArray[8] : "",
-                enroll: enrollNum
+                enroll: enrollNum,
+                npcs: []
             };
             if (characterArray[3] === "true") {
                 hybridCount++;
@@ -617,9 +613,9 @@ function getHousing(housingObj, characterName) {
     return housing;
 }
 function appendUserInfo(user) {
-    var userData = userDB[user], username = userData.username, userLink = "https://" + username + ".deviantart.com/", userGross = userData.gold, userSpent = userData.spending, userTotal = userData.total, memberSince = userData.enroll, memoriesData = appendMemoryInfo(userData.memories), userCharacterData = appendCharacterInfo(userData.characters), submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions), goldOk = userData.activeGold === "true", rpOk = userData.activeRp === "true", div = document.createElement('div');
+    var userData = userDB[user], username = userData.username, userLink = "https://" + username + ".deviantart.com/", userGross = userData.gold, userSpent = userData.spending, userTotal = userData.total, memberSince = userData.enroll, memoriesData = appendMemoryInfo(userData.memories), userCharacterData = appendCharacterInfo(userData.characters), submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions), rpOk = userData.active, div = document.createElement('div');
     div.className = 'cell-outer';
-    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short add-left\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t<span class=\"userCells userActivity\">activity since " + getActiveSinceDate("", true) + ":</span>\n\t\t\t\t<div class=\"activity-monitor add-center\">\n\t\t\t\t\t<div class=\"" + (goldOk ? "activity-pass" : "activity-fail") + "\">" + (goldOk ? "✔" : "❌") + " earned 1000 G</div>\n\t\t\t\t\t<div class=\"" + (rpOk ? "activity-pass" : "activity-fail") + "\">" + (rpOk ? "✔" : "❌") + " interacted</div></div>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
+    div.innerHTML = "\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tstats\n\t\t\t</div>\n\t\t\t<div class=\"userContent userStats padding-bottom-short add-left\" id=\"userStats\">\n\t\t\t\t<span class=\"userCells usersName\">Username: <a href=\"" + userLink + "\" target=\"_blank\">" + username + "</a></span>\n\t\t\t\t<span class=\"userCells userEnroll\">joined: <span>" + memberSince + "</span></span>\n\t\t\t\t<div class=\"activity-monitor add-center\"" + (isActivityCheckPeriod ? "" : ' style="display:none;"') + ">\n\t\t\t\t\t<div class=\"" + (rpOk ? "activity-pass" : "activity-fail") + "\">" + (rpOk ? "✔" : "❌") + " completed season end review</div>\n\t\t\t\t</div>\n\t\t\t\t<hr/>\n\t\t\t\t" + memoriesData + "\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t\t<div class=\"add-memory-button\" data-id=\"" + username + "\" id=\"add-memory-button\"><img class=\"image-shadow\" src=\"https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png\"></div>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"userInfoItem\">\n\t\t\t<div class=\"userContentHeader\">\n\t\t\t\tgold\n\t\t\t</div>\n\t\t\t<div class=\"userContent userGold\" id=\"userGold\">\n\t\t\t\t<span class=\"userCells userGross\">Earned: " + userGross.toLocaleString() + " g</span>\n\t\t\t\t<span class=\"userCells userSpendings\">Spent: " + userSpent.toLocaleString() + " g</span>\n\t\t\t\t" + submissionsList + "\n\t\t\t\t<hr/>\n\t\t\t\t<span class=\"userGoldTotal\">Total: " + userTotal.toLocaleString() + " g</span>\n\t\t\t\t<div class=\"clear\"></div>\n\t\t\t</div>\n\t\t</div>\n\t\t" + userCharacterData;
     return div;
 }
 function appendShopInfo(key) {
@@ -698,9 +694,21 @@ function appendSubmissions(submissionsList) {
     });
     return "<span class=\"userCells userSubmissionDate\">Last entry: <span>" + submissionLastDate + "</span></span><div class=\"submissionsList\"><ul>" + submissionsString + "</ul></div>";
 }
+function appendNpcsInfo(npcsObj) {
+    var templateString = "";
+    Object.keys(npcsObj).forEach(function (npcRelationship) {
+        var npcs = npcsObj[npcRelationship];
+        var npcsInfo = [];
+        npcs.forEach(function (npc) {
+            npcsInfo.push("<a href=\"" + npc[1] + "\" target=\"_blank\">" + npc[0] + "</a>");
+        });
+        templateString += "<br><span>" + npcRelationship + ": <span>" + npcsInfo.join(", ") + "</span></span>";
+    });
+    return templateString;
+}
 function appendCharacterInfo(characterObj, sortEnroll) {
     if (sortEnroll === void 0) { sortEnroll = false; }
-    var template, templateArray = [], compiledTemplate = "", character, birthday, location, hasTracker, isHybrid, isNPC, image;
+    var template, templateArray = [], compiledTemplate = "", character, birthday, location, hasTracker, isHybrid, isNPC, image, npcsInfo;
     Object.keys(characterObj).forEach(function (characterName) {
         character = characterObj[characterName];
         isHybrid = character.isHybrid === "true" ? "<img src=\"https://orig00.deviantart.net/c4f0/f/2018/017/1/2/isnon_human_by_toffeebot-dc0cefu.png\">" : "";
@@ -709,7 +717,8 @@ function appendCharacterInfo(characterObj, sortEnroll) {
         birthday = parseBirthday(character.birthday);
         location = parseLocation(character.housing, characterName);
         image = " style=\"background-image: url('" + character.image + "');\"";
-        template = "<div class=\"userInfoItem\">\n\t\t\t\t<div class=\"userContentHeader\">\n\t\t\t\t\t" + character.name + "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"userContent userCharacter\">\n\t\t\t\t\t<div class=\"userCharaLeft\">\n\t\t\t\t\t\t<div class=\"userCharaPortrait\"" + image + "></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"userCharaRight\">\n\t\t\t\t\t\t<div class=\"userCharaInfo\">\n\t\t\t\t\t\t\t<a href=\"" + character.app + "\" target=\"_blank\"><img class=\"image-shadow\" src=\"http://orig14.deviantart.net/e128/f/2017/224/2/b/appbtn_by_toffeebot-dbjt7q1.png\"></a>\n\t\t\t\t\t\t\t" + hasTracker + "\n\t\t\t\t\t\t\t" + isHybrid + "\n\t\t\t\t\t\t\t" + isNPC + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"charaHousingInfo\">\n\t\t\t\t\t\t\t<span>birthday: <span>" + birthday + "</span></span>\n\t\t\t\t\t\t\t<br><span>job: <span>" + character.job + "</span></span>\n\t\t\t\t\t\t\t" + location + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>";
+        npcsInfo = appendNpcsInfo(character.npcs);
+        template = "<div class=\"userInfoItem\">\n\t\t\t\t<div class=\"userContentHeader\">\n\t\t\t\t\t" + character.name + "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"userContent userCharacter\">\n\t\t\t\t\t<div class=\"userCharaLeft\">\n\t\t\t\t\t\t<div class=\"userCharaPortrait\"" + image + "></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"userCharaRight\">\n\t\t\t\t\t\t<div class=\"userCharaInfo\">\n\t\t\t\t\t\t\t<a href=\"" + character.app + "\" target=\"_blank\"><img class=\"image-shadow\" src=\"http://orig14.deviantart.net/e128/f/2017/224/2/b/appbtn_by_toffeebot-dbjt7q1.png\"></a>\n\t\t\t\t\t\t\t" + hasTracker + "\n\t\t\t\t\t\t\t" + isHybrid + "\n\t\t\t\t\t\t\t" + isNPC + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"charaHousingInfo\">\n\t\t\t\t\t\t\t<span>birthday: <span>" + birthday + "</span></span>\n\t\t\t\t\t\t\t<br><span>job: <span>" + character.job + "</span></span>\n\t\t\t\t\t\t\t" + npcsInfo + "\n\t\t\t\t\t\t\t" + location + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>";
         templateArray.push({ enroll: character.enroll, template: template });
     });
     if (sortEnroll) {
@@ -745,12 +754,12 @@ function parseLocation(location, characterName, residentTitle) {
     var template, housemates, address;
     if (location.residents === undefined) {
         // not an object, would be a shop building
-        template = "<br><span>Home Address: <span>" + location + "</span></span>";
+        template = "<br><span class=\"home-address\">Home Address: <span>" + location + "</span></span>";
     }
     else {
         housemates = getHousemates(location.residents, characterName, residentTitle, location.isCommunal);
         address = getAddress(location.address, location.address[1] === "cc");
-        template = (characterName ? "<br><span>Home Address: <span>" + address + "</span></span>" : "") + housemates;
+        template = (characterName ? "<br><span class=\"home-address\">Home Address: <span>" + address + "</span></span>" : "") + housemates;
         if (!characterName) {
             $("div#dialogTitle").text(address);
             if (housemates === "") {
@@ -1276,18 +1285,18 @@ function calculateFP() {
         return;
     }
     // collect int input
-    var eventBonus = $("#fp-event").val().replace(",", ""), etcBonus = $("#fp-etc").val().replace(",", ""), hasArt = false, artBonus = 0, collabBonus, rpBonus, hqBonus, bdayBonus, itemBonus, total;
-    if (eventBonus === "") {
+    var eventBonusInput = $("#fp-event").val().replace(",", ""), etcBonusInput = $("#fp-etc").val().replace(",", ""), eventBonus, etcBonus, hasArt = false, artBonus = 0, collabBonus, rpBonus, hqBonus, bdayBonus, itemBonus, total;
+    if (eventBonusInput === "") {
         eventBonus = 0;
     }
     else {
-        eventBonus = parseInt(eventBonus, 10);
+        eventBonus = parseInt(eventBonusInput, 10);
     }
-    if (etcBonus === "") {
+    if (etcBonusInput === "") {
         etcBonus = 0;
     }
     else {
-        etcBonus = parseInt(etcBonus, 10);
+        etcBonus = parseInt(etcBonusInput, 10);
     }
     if (isNaN(eventBonus)) {
         $("div#fp-error-message").text("Your event bonus input is incorrect. Please only use numbers, no text or special characters!");
@@ -1331,18 +1340,18 @@ function calculateRP() {
     // Clear displayed inputs
     $("div#rp-total").empty();
     $("div#rp-error-message").empty();
-    var numRpers = $("#rp-num").val().replace(",", ""), wordCount = $("#rp-wc").val().replace(",", ""), total;
-    if (numRpers === "") {
+    var numRpersInput = $("#rp-num").val().replace(",", ""), wordCountInput = $("#rp-wc").val().replace(",", ""), numRpers, wordCount, total;
+    if (numRpersInput === "") {
         numRpers = 0;
     }
     else {
-        numRpers = parseInt(numRpers, 10);
+        numRpers = parseInt(numRpersInput, 10);
     }
-    if (wordCount === "") {
+    if (wordCountInput === "") {
         wordCount = 0;
     }
     else {
-        wordCount = parseInt(wordCount, 10);
+        wordCount = parseInt(wordCountInput, 10);
     }
     if (isNaN(numRpers)) {
         $("div#rp-error-message").text("Your number of participants input is incorrect. Please only use numbers, no text or special characters!");

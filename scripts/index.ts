@@ -11,7 +11,8 @@ https://codepen.io/volv/pen/bpwRLL
 // });
 
 // local database where the info from the spreadsheets are compiled
-var isFullJobList = false,
+var isActivityCheckPeriod = false,
+	isFullJobList = false,
 	userDB = {
 		"reference": {
 			"memories": {}
@@ -75,9 +76,13 @@ $(function() {
 		$.ajax({
 			url: 'https://spreadsheets.google.com/feeds/list/1QtrZ8TdV9NayyXquBMhp-3ywwIjjMhQoJwmMBynZTjU/od6/public/values?alt=json-in-script',
 			dataType: 'jsonp'
+		}),
+		$.ajax({
+			url: 'https://spreadsheets.google.com/feeds/list/12rNhHS0HsSpKjfovyb26ZQ4x4eOA_2rbLDMC7uc5R1s/omw59hq/public/values?alt=json-in-script',
+			dataType: 'jsonp'
 		})
 	)
-	.done(function(main, housing, jobList, submissions, memories, items) {compileData(main, housing, jobList, submissions, memories, items);});
+	.done(function(main, housing, jobList, submissions, memories, items, npcs) {compileData(main, housing, jobList, submissions, memories, items, npcs);});
   });
 
 // Resize the background
@@ -98,9 +103,9 @@ function createBdayDB() {
 }
 
 // Process the gold calculation based on the spreadsheets.
-function compileData (main, housing, jobList, submissions, memories, items) {
+function compileData (main, housing, jobList, submissions, memories, items, npcs) {
 	// If something messed up here, stop processing.
-	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0] || !items[0]) {
+	if (!main[0] || !housing[0] || !jobList[0] || !submissions[0] || !memories[0] || !items[0] || !npcs[0]) {
 		return;
 	}
 
@@ -112,17 +117,20 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 		submissionsFeed = submissions[0].feed,
 		memoriesFeed = memories[0].feed,
 		itemsFeed = items[0].feed,
+		npcsFeed = npcs[0].feed,
 		mainRows = mainFeed.entry || [],
 		housingRows = housingFeed.entry || [],
 		jobRows = jobFeed.entry || [],
 		submissionsRows = submissionsFeed.entry || [],
 		memoriesRows = memoriesFeed.entry || [],
-		itemsRows = itemsFeed.entry || [];
+		itemsRows = itemsFeed.entry || [],
+		npcsRows = npcsFeed.entry || [];
 
 	createJobDB(jobRows);
 	createItemDB(itemsRows);
 	createHouseDB(housingRows);
 	buildUserPages(mainRows);
+	addNpcsToCharacters(npcsRows);
 	buildShopPages();
 
 	// Populate memories
@@ -205,7 +213,7 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 	});
 
 	$("select#memory-memory").on("change", function(e){
-		var selectedKey = e.currentTarget.value;
+		var selectedKey = (e.currentTarget as HTMLSelectElement).value;
 		if (selectedKey === "") {
 			$("div#memory-image").empty();
 			$("div#memory-obtain").empty();
@@ -226,6 +234,33 @@ function compileData (main, housing, jobList, submissions, memories, items) {
 
 	// Show page
 	$("#loader").delay(1500).slideToggle("slow");
+}
+
+function addNpcsToCharacters(npcsRows) {
+	npcsRows.forEach(row => {
+		let characterName = row['gsx$name'].$t;
+		let characterApp = row['gsx$app'].$t;
+
+		for (let i = 1; i <= 3; i++) {
+			let link = row['gsx$link' + i].$t
+			if (link) {
+				let characterLink = link.split(",");
+				let linkName = characterLink[0].toLowerCase();
+				let linkRelationship = characterLink[1];
+
+				let characterObj = characterDB[linkName];
+
+				if (characterObj) {
+					if (!characterObj["npcs"].hasOwnProperty(linkRelationship)) {
+						characterObj["npcs"][linkRelationship] = [];
+					}
+	
+					characterObj["npcs"][linkRelationship].push([characterName, characterApp]);
+				}
+			}
+		}
+	});
+	console.log(characterDB);
 }
 
 function createItemDB(rawData) {
@@ -252,30 +287,16 @@ function createItemDB(rawData) {
 }
 
 function buildUserPages(mainRows) {
-	var skipLinks = "",
-		charCode = 96; // a
-
 	mainRows.forEach(function(row) {
 		var rowUsername = row['gsx$username'].$t,
 			rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png",
 			rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t),
 			rowGold = parseInt(row['gsx$gross'].$t),
 			rowSpending = parseInt(row['gsx$spending'].$t),
-			rowActiveGold = (row['gsx$active-gold'].$t).toLowerCase(),
-			rowActiveRp = (row['gsx$active-rp'].$t).toLowerCase(),
-			active = rowActiveGold === "true" && rowActiveRp === "true",
+			rowActive = (row['gsx$active'].$t).toLowerCase() === "true",
 			rowTotal = rowGold + rowSpending,
 			rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)),
-			div = document.createElement('div'),
-			anchor;
-
-		// if (rowUsername.charCodeAt(0) > charCode) {
-		// 	skipLinks += `<a data-ajax="false" href="#${rowUsername}">${rowUsername.charAt(0)}</a>`;
-		// 	anchor = document.createElement('a');
-		// 	anchor.className = "anchor";
-		// 	anchor.id = rowUsername;
-		// 	charCode = rowUsername.charCodeAt(0);
-		// }
+			div = document.createElement('div');
 
 		userDB[rowUsername] = {
 			username: rowUsername,
@@ -287,12 +308,11 @@ function buildUserPages(mainRows) {
 			characters: rowCharacters,
 			memories: {},
 			submissions: [],
-			activeGold: rowActiveGold,
-			activeRp: rowActiveRp
+			active: rowActive
 		}
 
 		div.className = 'cell-outer';
-		div.innerHTML = `<div class="filter-wrapper${!active ? " inactive" : ""}"><a href="#" id="userCell" data-id="${rowUsername}">
+		div.innerHTML = `<div class="filter-wrapper${!rowActive && isActivityCheckPeriod ? " inactive" : ""}"><a href="#" id="userCell" data-id="${rowUsername}">
 							<div class="username" role="userName">${rowUsername}</div>
 							<div class="image" role="image"><img src="${rowImg}"></div>
 						</a></div>`;
@@ -319,22 +339,12 @@ function buildUserPages(mainRows) {
 				$("div#submit-memory-result").empty();
 				$("div#memory-form").css("display", "block");
 
-				$.mobile.changePage('#addmemory', {transition:'slide'});
+				$.mobile.changePage('#addmemory');
 			});
-			$.mobile.changePage('#view', {transition:'slide'});
+			$.mobile.changePage('#view');
 		});
 		$('div#member-list').append(div);
-		// if (anchor) {
-		// 	$('div#member-list').append(anchor);
-		// }
 	}, this);
-
-	// skipLinks = `<a data-ajax='false' href='#' id="userTop" class="top">[ top ]</a>` + skipLinks;
-	// $('div#skipToUser').html(skipLinks);
-	
-	// document.getElementById("userTop").addEventListener("click", function () {
-	// 	document.getElementById("users-top").scrollTop = 0;
-	// });
 }
 
 function buildShopPages() {
@@ -354,7 +364,7 @@ function buildShopPages() {
 				pageContent = appendShopInfo(shopkey);
 			
 			$('div#jobInfo').empty().append(pageContent);
-			$.mobile.changePage('#view-job', {transition:'slide'});
+			$.mobile.changePage('#view-job');
 		});
 
 		$('div#job-list').append(div);
@@ -520,7 +530,7 @@ function populateUserList() {
 }
 
 function getPercentage(number) {
-	return (number / characterCount * 100).toFixed(1);
+	return parseFloat((number / characterCount * 100).toFixed(1));
 }
 
 function createJobDB(jobRows) {
@@ -589,15 +599,6 @@ function createShopsPage() {
 			anchor,
 			additionalInfo;
 
-        // if (buildingName.charCodeAt(0) > charCode && !(/^event/.test(buildingName))) {
-		// 	skipLinks += `<a data-ajax="false" href="#${buildingName}">${buildingName.charAt(0)}</a>`;
-		// 	anchor = document.createElement('a');
-		// 	anchor.className = "anchor2";
-		// 	anchor.id = buildingName;
-		// 	charCode = buildingName.charCodeAt(0);
-		// 	$('div#itemsContainer').append(anchor);
-		// }
-
 		titleDiv.attr('class', "marketShopName" + (!first ? " firstShop" : ""));
 		titleDiv.html(buildingName);
 
@@ -656,13 +657,6 @@ function createShopsPage() {
 
 		$('div#itemsContainer').append(itemsDiv);
 	});
-
-	//skipLinks = `<a data-ajax='false' href='#' id="itemTop" class="top">[ top ]</a>` + skipLinks;
-	//$('div#skipToItem').html(skipLinks);
-
-	// document.getElementById("itemTop").addEventListener("click", function () {
-	// 	document.getElementById("market-top").scrollTop = 0;
-	// });
 }
 
 function createInitialCalendar() {
@@ -748,7 +742,7 @@ function getBdayDiv(season, day) {
 	}
 }
 
-function getActiveSinceDate(enrollNum = "", dateOnly = false) {
+function getActiveSinceDate(enrollNum = "") {
 	var enrollDate;
 
 	switch (enrollNum) {
@@ -774,7 +768,7 @@ function getActiveSinceDate(enrollNum = "", dateOnly = false) {
 			enrollDate = "March 3rd, 2018 (E6)";
 			break;
 		default:
-			enrollDate = "August 11th, 2018" + (dateOnly ? "" : " (E7)");
+			enrollDate = "August 11th, 2018 (E7)";
 	}
 	
 	return enrollDate;
@@ -816,7 +810,8 @@ function getCharacterArray(row, enrollNum) {
 				job: getJob(characterArray[6].split('/'), characterName),
 				image: characterArray[7],
 				tracker: characterArray[8] ? characterArray[8] : "",
-				enroll: enrollNum
+				enroll: enrollNum,
+				npcs: []
 			};
 
 			if (characterArray[3] === "true") {
@@ -890,8 +885,7 @@ function appendUserInfo (user) {
 		memoriesData = appendMemoryInfo(userData.memories),
 		userCharacterData = appendCharacterInfo(userData.characters),
 		submissionsList = userData.submissions.length === 0 ? "" : appendSubmissions(userData.submissions),
-		goldOk = userData.activeGold === "true",
-		rpOk = userData.activeRp === "true",
+		rpOk = userData.active,
 	  	div = document.createElement('div');
 
 	div.className = 'cell-outer';
@@ -903,10 +897,10 @@ function appendUserInfo (user) {
 			<div class="userContent userStats padding-bottom-short add-left" id="userStats">
 				<span class="userCells usersName">Username: <a href="${userLink}" target="_blank">${username}</a></span>
 				<span class="userCells userEnroll">joined: <span>${memberSince}</span></span>
-				<span class="userCells userActivity">activity since ${getActiveSinceDate("", true)}:</span>
-				<div class="activity-monitor add-center">
-					<div class="${goldOk ? "activity-pass" : "activity-fail"}">${goldOk ? "✔" : "❌"} earned 1000 G</div>
-					<div class="${rpOk ? "activity-pass" : "activity-fail"}">${rpOk ? "✔" : "❌"} interacted</div></div>
+				<div class="activity-monitor add-center"${ isActivityCheckPeriod ? "" : ' style="display:none;"' }>
+					<div class="${ rpOk ? "activity-pass" : "activity-fail" }">${ rpOk ? "✔" : "❌" } completed season end review</div>
+				</div>
+				<hr/>
 				${memoriesData}
 				<div class="clear"></div>
 				<div class="add-memory-button" data-id="${username}" id="add-memory-button"><img class="image-shadow" src="https://orig10.deviantart.net/51df/f/2017/224/0/2/addbtn_by_toffeebot-dbjsi7w.png"></div>
@@ -1056,6 +1050,21 @@ function appendSubmissions(submissionsList) {
 	return `<span class="userCells userSubmissionDate">Last entry: <span>${submissionLastDate}</span></span><div class="submissionsList"><ul>${submissionsString}</ul></div>`;
 }
 
+function appendNpcsInfo (npcsObj) {
+	let templateString = "";
+
+	Object.keys(npcsObj).forEach(npcRelationship => {
+		let npcs = npcsObj[npcRelationship];
+		let npcsInfo = [];
+		npcs.forEach(npc => {
+			npcsInfo.push(`<a href="${ npc[1] }" target="_blank">${ npc[0] }</a>`);
+		});
+		templateString += `<br><span>${ npcRelationship }: <span>${ npcsInfo.join(", ") }</span></span>`;
+	});
+
+	return templateString;
+}
+
 function appendCharacterInfo (characterObj, sortEnroll=false) {
 	var template,
 		templateArray = [],
@@ -1066,7 +1075,8 @@ function appendCharacterInfo (characterObj, sortEnroll=false) {
 		hasTracker,
 		isHybrid,
 		isNPC,
-		image;
+		image,
+		npcsInfo;
 
 	Object.keys(characterObj).forEach(function (characterName) {
 		character = characterObj[characterName];
@@ -1076,6 +1086,7 @@ function appendCharacterInfo (characterObj, sortEnroll=false) {
 		birthday = parseBirthday(character.birthday);
 		location = parseLocation(character.housing, characterName);
 		image = ` style="background-image: url('${character.image}');"`;
+		npcsInfo = appendNpcsInfo(character.npcs);
 
 		template = `<div class="userInfoItem">
 				<div class="userContentHeader">
@@ -1095,7 +1106,8 @@ function appendCharacterInfo (characterObj, sortEnroll=false) {
 						<div class="charaHousingInfo">
 							<span>birthday: <span>${birthday}</span></span>
 							<br><span>job: <span>${character.job}</span></span>
-							${location}
+							${ npcsInfo }
+							${ location }
 						</div>
 					</div>
 				</div>
@@ -1145,11 +1157,11 @@ function parseLocation(location, characterName = null, residentTitle = null) {
 
 	if (location.residents === undefined) {
 		// not an object, would be a shop building
-		template = `<br><span>Home Address: <span>${location}</span></span>`;
+		template = `<br><span class="home-address">Home Address: <span>${location}</span></span>`;
 	} else {
 		housemates = getHousemates(location.residents, characterName, residentTitle, location.isCommunal);
 		address = getAddress(location.address, location.address[1] === "cc");
-		template = (characterName ? `<br><span>Home Address: <span>${address}</span></span>` : "") + housemates;
+		template = (characterName ? `<br><span class="home-address">Home Address: <span>${address}</span></span>` : "") + housemates;
 
 		if (!characterName) {
 			$("div#dialogTitle").text(address);
@@ -1264,7 +1276,7 @@ function submitGold() {
 	$("div#submit-gold-result").empty();
 
 	var usernames = $("textarea#gold-users").val(),
-		gold = parseInt($("input#gold-gold").val().replace(",", "")),
+		gold = parseInt(($("input#gold-gold").val() as string).replace(",", "")),
 		link = $("input#gold-link").val();
 
 	// handle error
@@ -1307,7 +1319,7 @@ function submitGold() {
 			$("input#gold-gold").val("");
 			$("input#gold-link").val("");
 
-			var users = usernames.split(",");
+			var users = (usernames as string).split(",");
 			users.forEach(function(user) {
 				userDB[user].submissions.unshift([false,"pending approval",gold,link,new Date().toISOString()]);
 				userDB[user].gold += gold;
@@ -1805,22 +1817,24 @@ function calculateFP() {
 	}
 
 	// collect int input
-	var eventBonus = $("#fp-event").val().replace(",", ""),
-		etcBonus = $("#fp-etc").val().replace(",", ""),
+	var eventBonusInput = ($("#fp-event").val() as string).replace(",", ""),
+		etcBonusInput = ($("#fp-etc").val() as string).replace(",", ""),
+		eventBonus,
+		etcBonus,
 		hasArt = false,
 		artBonus = 0,
 		collabBonus, rpBonus, hqBonus, bdayBonus, itemBonus, total;
 
-	if (eventBonus === "") {
+	if (eventBonusInput === "") {
 		eventBonus = 0;
 	} else {
-		eventBonus = parseInt(eventBonus, 10);
+		eventBonus = parseInt(eventBonusInput, 10);
 	}
 
-	if (etcBonus === "") {
+	if (etcBonusInput === "") {
 		etcBonus = 0;
 	} else {
-		etcBonus = parseInt(etcBonus, 10);
+		etcBonus = parseInt(etcBonusInput, 10);
 	}
 
 	if(isNaN(eventBonus)) {
@@ -1844,7 +1858,7 @@ function calculateFP() {
 	rpBonus = $("#fp-rp").val() === "true" ? 200 : 0;
 	hqBonus = $("#fp-hq").val() === "true" ? 300 : 0;
 	bdayBonus = $("#fp-bday").val() === "true" ? 2 : 1;
-	itemBonus = parseInt($("#fp-item").val(), 10);
+	itemBonus = parseInt(($("#fp-item").val() as string), 10);
 
 	if(!hasArt && (hqBonus || bdayBonus === 2 || collabBonus)) {
 		$("div#fp-error-message").text("Collabs, heart event bonuses, and birthday bonuses must include an art submission.");
@@ -1877,20 +1891,22 @@ function calculateRP() {
 	$("div#rp-total").empty();
 	$("div#rp-error-message").empty();
 
-	var numRpers = $("#rp-num").val().replace(",", ""),
-		wordCount = $("#rp-wc").val().replace(",", ""),
+	var numRpersInput = ($("#rp-num").val() as string).replace(",", ""),
+		wordCountInput = ($("#rp-wc").val() as string).replace(",", ""),
+		numRpers,
+		wordCount,
 		total;
 	
-	if (numRpers === "") {
+	if (numRpersInput === "") {
 		numRpers = 0;
 	} else {
-		numRpers = parseInt(numRpers, 10);
+		numRpers = parseInt(numRpersInput, 10);
 	}
 
-	if (wordCount === "") {
+	if (wordCountInput === "") {
 		wordCount = 0;
 	} else {
-		wordCount = parseInt(wordCount, 10);
+		wordCount = parseInt(wordCountInput, 10);
 	}
 
 	if(isNaN(numRpers)) {
@@ -1929,8 +1945,8 @@ function addUsername() {
 	$("div#submit-gold-error").empty();
 	$("div#submit-gold-result").empty();
 
-	var user = $("select#submit-userList").val(),
-		currentUsers = $("textarea#gold-users").val();
+	var user = $("select#submit-userList").val() as string,
+		currentUsers = $("textarea#gold-users").val() as string;
 
 	if (user === "") {
 		return; // no user, we're done

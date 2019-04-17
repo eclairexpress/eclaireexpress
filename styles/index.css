@@ -122,16 +122,12 @@ html body .ui-group-theme-a a {
   transform-style: preserve-3d;
 }
 .activity-monitor {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
   margin-bottom: 1em;
 }
 .activity-monitor div {
   margin: 0em 0.25em;
   padding: 0.3em 0em 0.25em 0em;
-  width: 50%;
+  width: 100%;
   border-radius: 5px;
 }
 .activity-monitor .activity-fail {
@@ -188,7 +184,6 @@ a:hover#userCell {
 .userInfoItem {
   margin: 0 auto;
   margin-bottom: 1rem;
-  max-width: 92%;
 }
 .ui-header .ui-title,
 .ui-footer .ui-title {
@@ -240,6 +235,7 @@ html head + body .ui-btn.ui-btn-a:visited {
 }
 .userStats {
   text-align: center;
+  margin-bottom: 1rem;
 }
 .userBonus {
   color: #e1891f;
@@ -380,6 +376,9 @@ hr {
   text-align: center;
   margin: 1em;
 }
+.userMemories {
+  margin-bottom: 1rem;
+}
 .userMemories > img,
 .userMemories > a > img {
   margin: 0.25em;
@@ -400,6 +399,10 @@ hr {
 #memory-link,
 #gold-link {
   text-transform: none !important;
+}
+.home-address {
+  display: inline-block;
+  padding-top: 1rem;
 }
 .submissionsList {
   padding: 0em 1em;
@@ -894,7 +897,6 @@ html head + body .ui-btn.ui-btn-a:visited {
 #shop-image-link {
   border: 1px solid #4c322b;
   border-top: none;
-  width: 91.5%;
   display: block;
   margin: 0 auto;
   margin-top: -1rem;
@@ -1097,12 +1099,5 @@ html head + body .ui-btn.ui-btn-a:visited {
   }
   .artist-credit {
     right: 0.6em;
-  }
-  .activity-monitor {
-    flex-direction: column;
-  }
-  .activity-monitor div {
-    margin: 0.15em 0em;
-    width: 100%;
   }
 }
