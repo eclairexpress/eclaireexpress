@@ -5,9 +5,6 @@ https://codepen.io/ensustudio/pen/BWeLaN
 https://codepen.io/mochaNate/pen/WrbZgJ
 https://codepen.io/volv/pen/bpwRLL
 */
-// $.when($.ajax(...), $.ajax(...)).then(function (resp1, resp2) {
-//     //this callback will be fired once all ajax calls have finished.
-// });
 // local database where the info from the spreadsheets are compiled
 var isActivityCheckPeriod = false, isFullJobList = false, userDB = {
     "reference": {
@@ -932,7 +929,8 @@ function isAcceptedLink(string) {
         "://comments.deviantart.com/",
         "://eclairexpress.wikia.com/wiki/",
         "://eclairexpress.proboards.com/",
-        "://media.discordapp.net/attachments/"];
+        "://media.discordapp.net/attachments/",
+        "://cdn.discordapp.com/attachments/"];
     if (!(/^http/.test(string))) {
         return false;
     }
