@@ -318,25 +318,14 @@ function getJobDict(characters) {
     });
     return dict;
 }
-function processCharacterArrayForJobText(characters, isIndependent) {
-    if (isIndependent === void 0) { isIndependent = false; }
-    var textString = "";
-    if (!isIndependent) {
-        textString += "<div class=\"listForJobs\">";
-    }
+function processCharacterArrayForJobText(characters) {
+    var textString = "<div class=\"listForJobs\">";
+    characters.sort();
     characters.forEach(function (character) {
         var charaObj = characterDB[character];
-        if (isIndependent) {
-            textString += "<div class=\"jobGroup\"><span class=\"jobTitle\">" + charaObj.job + "s</span><div class=\"listForJobs\">";
-        }
         textString += "<div class=\"textCharaName\"><a href=\"" + charaObj.app + "\" target=\"_blank\">" + character + "</a></div>";
-        if (isIndependent) {
-            textString += "</div></div>";
-        }
     });
-    if (!isIndependent) {
-        textString += "</div>";
-    }
+    textString += "</div>";
     return textString;
 }
 function populateMemoriesRemaining(memoriesList) {
@@ -617,10 +606,11 @@ function appendShopInfo(key) {
     if (key === "c" || key === "o") {
         // indepedent / civvy
         if (jobData.characters.length > 0) {
+            jobData.characters.sort();
             jobData.characters.forEach(function (name) {
                 characterObj[name] = characterDB[name];
             });
-            characterData = appendCharacterInfo(characterObj, true);
+            characterData = appendCharacterInfo(characterObj);
         }
     }
     else {
@@ -629,10 +619,11 @@ function appendShopInfo(key) {
             job = jobData["job" + i];
             characterObj = {};
             if (job.characters.length > 0) {
+                job.characters.sort();
                 job.characters.forEach(function (name) {
                     characterObj[name] = characterDB[name];
                 });
-                characterData += appendCharacterInfo(characterObj, true);
+                characterData += appendCharacterInfo(characterObj);
             }
         }
     }
@@ -699,8 +690,7 @@ function appendNpcsInfo(npcsObj) {
     });
     return templateString;
 }
-function appendCharacterInfo(characterObj, sortEnroll) {
-    if (sortEnroll === void 0) { sortEnroll = false; }
+function appendCharacterInfo(characterObj) {
     var template, templateArray = [], compiledTemplate = "", character, birthday, location, hasTracker, isHybrid, isNPC, image, npcsInfo;
     Object.keys(characterObj).forEach(function (characterName) {
         character = characterObj[characterName];
@@ -714,11 +704,6 @@ function appendCharacterInfo(characterObj, sortEnroll) {
         template = "<div class=\"userInfoItem\">\n\t\t\t\t<div class=\"userContentHeader\">\n\t\t\t\t\t" + character.name + "\n\t\t\t\t</div>\n\t\t\t\t<div class=\"userContent userCharacter\">\n\t\t\t\t\t<div class=\"userCharaLeft\">\n\t\t\t\t\t\t<div class=\"userCharaPortrait\"" + image + "></div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"userCharaRight\">\n\t\t\t\t\t\t<div class=\"userCharaInfo\">\n\t\t\t\t\t\t\t<a href=\"" + character.app + "\" target=\"_blank\"><img class=\"image-shadow\" src=\"http://orig14.deviantart.net/e128/f/2017/224/2/b/appbtn_by_toffeebot-dbjt7q1.png\"></a>\n\t\t\t\t\t\t\t" + hasTracker + "\n\t\t\t\t\t\t\t" + isHybrid + "\n\t\t\t\t\t\t\t" + isNPC + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"charaHousingInfo\">\n\t\t\t\t\t\t\t<span>birthday: <span>" + birthday + "</span></span>\n\t\t\t\t\t\t\t<br><span>job: <span>" + character.job + "</span></span>\n\t\t\t\t\t\t\t" + npcsInfo + "\n\t\t\t\t\t\t\t" + location + "\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>";
         templateArray.push({ enroll: character.enroll, template: template });
     });
-    if (sortEnroll) {
-        templateArray = templateArray.sort(function (a, b) {
-            return a.enroll > b.enroll ? 1 : -1;
-        });
-    }
     templateArray.forEach(function (pageHtml) {
         compiledTemplate += pageHtml.template;
     });
@@ -924,7 +909,7 @@ function isAcceptedLink(string) {
         "://sta.sh/",
         "://sta.sh/comments/",
         "://comments.deviantart.com/",
-        "://eclairexpress.wikia.com/wiki/",
+        "://eclairexpress.fandom.com/wiki/",
         "://eclairexpress.proboards.com/",
         "://media.discordapp.net/attachments/",
         "://cdn.discordapp.com/attachments/"];
@@ -1328,6 +1313,10 @@ function calculateFP() {
     }
     // calculate
     total = (artBonus + collabBonus + rpBonus) * bdayBonus + hqBonus + itemBonus + eventBonus + etcBonus;
+    if (total < 0) {
+        $("div#fp-error-message").text("You can't use negative numbers!");
+        return;
+    }
     $("div#fp-total").text(total + " fp");
 }
 function calculateRP() {
@@ -1365,6 +1354,10 @@ function calculateRP() {
     }
     // calculate
     total = Math.floor(wordCount / numRpers / 10 / 25) * 25;
+    if (total < 0) {
+        $("div#rp-error-message").text("You can't use negative numbers!");
+        return;
+    }
     $("div#rp-total").text(total + "g");
 }
 function clearUsernames() {
