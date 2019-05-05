@@ -424,9 +424,6 @@ function createShopsPage() {
             first = buildingName;
         }
         $('div#itemsContainer').append(titleDiv);
-        if (buildingName === "eclair station") {
-            additionalInfo = "Train tickets are to be purchased if you'd like canon events to occur in other places outside of the Toffee Town region, and also if you'd like to shop at Fortune Fair.\n\t\t\tThe train ticket home and train ticket to Toffee Town will also allow you to submit images depicting non-official npcs for gold (when they are out of town or when someone is visiting).";
-        }
         if (buildingName === "fortune fair") {
             additionalInfo = "A fortune fair train ticket is required to visit the fair and purchase these items.";
         }
