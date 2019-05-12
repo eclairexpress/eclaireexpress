@@ -512,8 +512,11 @@ function getActiveSinceDate(enrollNum) {
         case "6":
             enrollDate = "March 3rd, 2018 (E6)";
             break;
-        default:
+        case "7":
             enrollDate = "August 11th, 2018 (E7)";
+            break;
+        default:
+            enrollDate = "May 11th, 2019 (E8)";
     }
     return enrollDate;
 }
