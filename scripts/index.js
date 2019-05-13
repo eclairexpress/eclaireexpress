@@ -237,6 +237,10 @@ function buildUserPages(mainRows) {
 function buildShopPages() {
     var textOnly = "";
     Object.keys(jobDB).forEach(function (rowKey) {
+        if (rowKey === "tth") {
+            // rip town hall
+            return;
+        }
         var row = jobDB[rowKey], div = document.createElement('div');
         div.className = 'cell-outer';
         div.innerHTML = "<a href=\"#\" id=\"userCell\" data-id=\"" + rowKey + "\">\n\t\t\t\t\t\t\t<div class=\"image shop-buttons\" role=\"image\">" + row.building + "</div>\n\t\t\t\t\t\t</a>";

@@ -346,6 +346,11 @@ function buildShopPages() {
 	var textOnly = "";
 
 	Object.keys(jobDB).forEach(function(rowKey) {
+		if (rowKey === "tth") {
+			// rip town hall
+			return;
+		}
+
 		var row = jobDB[rowKey],
 			div = document.createElement('div');
 
