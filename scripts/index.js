@@ -196,7 +196,7 @@ function createItemDB(rawData) {
 }
 function buildUserPages(mainRows) {
     mainRows.forEach(function (row) {
-        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://orig09.deviantart.net/b2eb/f/2017/191/c/0/px_blank_by_toffeebot-dbfv3db.png", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActive = (row['gsx$active'].$t).toLowerCase() === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div');
+        var rowUsername = row['gsx$username'].$t, rowImg = row['gsx$img'].$t !== "" ? row['gsx$img'].$t : "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d6155b58-5126-439a-ade3-895083fe1973/dddubwa-17fbff18-e86e-4765-a4e6-e459b24cdac6.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2Q2MTU1YjU4LTUxMjYtNDM5YS1hZGUzLTg5NTA4M2ZlMTk3M1wvZGRkdWJ3YS0xN2ZiZmYxOC1lODZlLTQ3NjUtYTRlNi1lNDU5YjI0Y2RhYzYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.vtGW91heGJBVAs3ZccbOIVXhSuQ1jXqNDzck09P7IhM", rowEnroll = getActiveSinceDate(row['gsx$enroll'].$t), rowGold = parseInt(row['gsx$gross'].$t), rowSpending = parseInt(row['gsx$spending'].$t), rowActive = (row['gsx$active'].$t).toLowerCase() === "true", rowTotal = rowGold + rowSpending, rowCharacters = getCharacterArray(row, parseInt(row['gsx$enroll'].$t)), div = document.createElement('div');
         userDB[rowUsername] = {
             username: rowUsername,
             img: rowImg,
